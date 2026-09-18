@@ -93,6 +93,46 @@ companions from the Party page (during setup or anytime after). What that touche
 - **Relationships**: one companion→human record per companion (`{companionId}__human`),
   each with its own owner-scoped private read.
 
+## How a turn actually flows
+
+Playtesting surfaced this immediately: sending a message used to always require picking
+exactly one specific agent from a dropdown, one at a time -- type an action, manually
+pick "DM Agent," wait, then manually pick "ask Mira," wait, then "ask Bram," wait. That
+is not how a table actually plays; a human says or does something and the party reacts
+on its own judgment, with the DM stepping in only when a beat genuinely needs a ruling
+or a push forward.
+
+Sending a message now defaults to **"Let the table respond"** (`ask_agent: "auto"` in
+`routes/play.js`), which runs an actual chain instead of one call:
+
+1. Each companion, in party order, gets a live call and may genuinely say nothing —
+   `agents.js formatPassInstructions` tells them to respond with exactly `NO_ACTION`
+   unless they have a specific, real reason to react (an opinion, an action, something
+   their character would clearly say right now). Default tone is reserved: passing is
+   the expected outcome most of the time, not chattering to fill space.
+2. The DM goes last, with the same pass option, instructed to only step in for an
+   actual ruling, a roll, new information, or moving the scene forward — not to narrate
+   after every single beat.
+3. Each step re-reads campaign state fresh before calling (rather than manually
+   threading a running history array), so a later companion or the DM sees whatever
+   earlier agents in the same chain already said.
+
+The old behavior — picking exactly one agent who always replies — is still there
+(`DM Agent only`, `Ask <name> only`, `Lore Agent`) for directing a question at one
+specific person, where silently passing would just look broken. Real cost tradeoff,
+worth knowing: the auto-chain means up to *(companions + 1)* live calls per human turn
+instead of one, though a pass reply is short and cheap (often single-digit output
+tokens) compared to a full narrative reply.
+
+Verified live: a message that invited reactions ("anyone else hear that?") got real,
+distinct in-character replies from both companions and the DM stayed silent since
+nothing needed a ruling; a separate low-key message ("adjusts his shield, saying
+nothing") still drew companion banter but correctly produced *no* DM reply at all
+(confirmed via the usage log — a 9-output-token call, consistent with a bare
+`NO_ACTION`, not a truncated narrative). Explicitly targeting one agent (e.g. asking
+Mira directly) is unaffected and always gets a reply, since the pass instruction is
+only ever added for the auto-chain.
+
 ## Genre / ruleset packs
 
 The core resolution math (d20 + ability modifier vs. a target number, HP as a damage

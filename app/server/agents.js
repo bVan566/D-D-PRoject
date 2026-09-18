@@ -166,7 +166,30 @@ If the location/scene has NOT changed, either omit this block entirely or includ
 valid JSON between the markers, and must never appear inside your narrative text.
 `.trim();
 
-function buildSystemPrompt(role, projectedState, activeLearning, ruleset) {
+// A real tabletop turn isn't "human speaks, human manually picks exactly one
+// responder, repeat" -- companions react (or don't) on their own judgment, and the DM
+// steps in only when something actually needs it. PASS_TOKEN is how an agent opts out
+// of a beat instead of being forced to always produce a line; the "reserved" wording
+// below (vs. a "look for reasons to jump in" chattier version) is a deliberate default
+// tone choice, not a hardcoded rule -- pass true/false switches it off entirely for a
+// human-directed single-agent ask, where going silent would just look broken.
+const PASS_TOKEN = "NO_ACTION";
+
+function formatPassInstructions(role) {
+  const body =
+    role === "dm"
+      ? `Only respond if this beat genuinely needs you right now -- adjudicating an action, calling for or resolving a roll, revealing new information, or clearly advancing the scene. If the human and party's exchange so far doesn't yet need DM input, respond with EXACTLY the text ${PASS_TOKEN} and nothing else.`
+      : `Default to staying silent unless you have a genuine, specific reason to react right now -- a strong opinion, relevant knowledge, a visible action you'd take, or something your character would clearly say in this exact moment. Do not respond just to fill space, acknowledge what happened, or because it's technically your turn. If you have nothing real to add, respond with EXACTLY the text ${PASS_TOKEN} and nothing else.`;
+  return ["---", "This is part of an automatic party-reaction beat, not a direct question aimed at you.", body].join(
+    "\n"
+  );
+}
+
+function isPass(text) {
+  return (text || "").trim().toUpperCase() === PASS_TOKEN;
+}
+
+function buildSystemPrompt(role, projectedState, activeLearning, ruleset, allowPass) {
   const sources = SYSTEM_PROMPT_SOURCES[role] || [];
   const specText = sources.map(readEngineFile).join("\n\n");
   const stateText = JSON.stringify(projectedState, null, 2);
@@ -184,6 +207,7 @@ function buildSystemPrompt(role, projectedState, activeLearning, ruleset) {
     "Stay strictly in role. Do not narrate or decide for the human player's character",
     "or for any other AI party member.",
     role === "dm" ? SCENE_STATE_INSTRUCTIONS : "",
+    allowPass ? formatPassInstructions(role) : "",
     "---",
     `CURRENT STATE (role=${role}):`,
     stateText,
@@ -209,11 +233,20 @@ function extractSceneUpdate(text) {
   }
 }
 
-async function callClaude({ role, projectedState, history, userMessage, activeLearning, ruleset }) {
-  const system = buildSystemPrompt(role, projectedState, activeLearning, ruleset);
+async function callClaude({ role, projectedState, history, userMessage, activeLearning, ruleset, allowPass }) {
+  const system = buildSystemPrompt(role, projectedState, activeLearning, ruleset, allowPass);
+  // A companion-role history entry is only THIS agent's own past turn if the
+  // character_id also matches -- multiple companions all share role "companion" in
+  // play_log, distinguished only by character_id. Without that check, calling Bram's
+  // agent would see Mira's earlier lines mapped as "assistant" (as if Bram himself had
+  // said them) instead of "user" (another party member talking) -- harmless when only
+  // one companion ever existed, actively confusing now that an auto-reaction beat
+  // routinely puts more than one companion's lines in the same short window.
+  const isOwnPastTurn = (m) =>
+    m.role === role && (role !== "companion" || m.character_id === projectedState.companionId);
   const messages = [
     ...history.map((m) => ({
-      role: m.role === role ? "assistant" : "user",
+      role: isOwnPastTurn(m) ? "assistant" : "user",
       content: `[${m.speaker_name || m.role}] ${m.content}`,
     })),
     { role: "user", content: userMessage },
@@ -304,5 +337,6 @@ module.exports = {
   askWorldbuilder,
   reviewSession,
   extractSceneUpdate,
+  isPass,
   ROLE_TO_LEARNING_AGENT,
 };

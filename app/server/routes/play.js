@@ -2,7 +2,7 @@ const express = require("express");
 const state = require("../state");
 const { projectState } = require("../visibility");
 const { requireCampaign, resolveRole, resolveCompanionId } = require("../middleware");
-const { callClaude, isConfigured, ROLE_TO_LEARNING_AGENT, extractSceneUpdate } = require("../agents");
+const { callClaude, isConfigured, ROLE_TO_LEARNING_AGENT, extractSceneUpdate, isPass } = require("../agents");
 const { recordUsage } = require("../usage");
 const { getRuleset } = require("../rulesets");
 
@@ -188,9 +188,68 @@ router.post("/play/message", async (req, res) => {
     }));
   }
 
-  // ask_agent is "dm" | "lore" | "companion:<character_id>" -- a specific party member,
-  // since "ask the companion" is ambiguous once there's more than one.
-  if (b.ask_agent) {
+  // ask_agent is "auto" (let the table respond naturally) | "dm" | "lore" |
+  // "companion:<character_id>" -- a specific party member, since "ask the companion" is
+  // ambiguous once there's more than one.
+  if (b.ask_agent === "auto") {
+    // A real tabletop turn isn't "human speaks, human manually names exactly one
+    // responder" -- each companion gets a chance to react on its own judgment (and may
+    // genuinely say nothing, see agents.js formatPassInstructions), then the DM goes
+    // last and only steps in when the beat actually needs it (a ruling, a roll, moving
+    // the scene forward). Re-reading state fresh before each call (rather than manually
+    // threading a running history array) is what lets each later agent in the chain see
+    // whatever earlier agents in this same chain already said -- the same "state is
+    // cheap to re-read" pattern this whole app already relies on everywhere else.
+    const continuePrompt = "(Continue the scene. React if you genuinely have something to add, or stay silent.)";
+
+    const tryAgent = async (targetRole, targetCompanionId) => {
+      const full = state.loadCampaign(req.campaignId);
+      const projected = projectState(full, targetRole, targetCompanionId);
+      const history = full.play_log.slice(-20);
+      const result = await callClaude({
+        role: targetRole,
+        projectedState: projected,
+        history,
+        userMessage: continuePrompt,
+        activeLearning: activeLearningFor(full, targetRole),
+        ruleset: getRuleset(full.campaign.ruleset),
+        allowPass: true,
+      });
+      recordUsage(req.campaignId, { agentRole: targetRole, usage: result.usage });
+      if (!result.ok) {
+        console.error(`Auto-chain ${targetRole} call failed:`, result.reason);
+        return;
+      }
+      const { cleanText, sceneUpdate } = extractSceneUpdate(result.text);
+      if (!cleanText || isPass(cleanText)) return;
+      const speaker =
+        targetRole === "dm" ? "DM" : full.characters.companions.find((c) => c.character_id === targetCompanionId)?.name || "Companion";
+      const reply = {
+        id: state.newId("msg"),
+        timestamp: new Date().toISOString(),
+        role: targetRole,
+        character_id: targetRole === "companion" ? targetCompanionId : undefined,
+        speaker_name: speaker,
+        content: cleanText,
+        visibility: "public",
+      };
+      state.updateSlice(req.campaignId, "play_log", (log) => [...log, reply]);
+      if (sceneUpdate) {
+        state.updateSlice(req.campaignId, "scene", (s) => ({
+          ...s,
+          location_name: sceneUpdate.location_name || s.location_name,
+          description_public: sceneUpdate.description_public || s.description_public,
+          environment: sceneUpdate.environment || s.environment,
+        }));
+      }
+    };
+
+    const companionRoster = state.readSlice(req.campaignId, "characters").companions || [];
+    for (const companion of companionRoster) {
+      await tryAgent("companion", companion.character_id);
+    }
+    await tryAgent("dm", undefined);
+  } else if (b.ask_agent) {
     const [targetRole, targetCompanionId] = b.ask_agent.split(":");
     const full = state.loadCampaign(req.campaignId);
     const projected = projectState(full, targetRole, targetCompanionId);

@@ -108,15 +108,19 @@
           <label><input type="checkbox" name="declares_action" style="width:auto;display:inline-block" /> This is an independent action declaration (counts toward Player Agent independence metrics)</label>
         <% } %>
         <% if (llmConfigured) { %>
-          <label>Ask an agent to respond in character</label>
+          <label>Who responds</label>
           <select name="ask_agent">
-            <option value="dm" selected>DM Agent</option>
+            <option value="auto" selected>Let the table respond (companions react or pass, then DM if needed)</option>
+            <option value="dm">DM Agent only</option>
             <% view.characters.companions.forEach(c => { %>
-              <option value="companion:<%= c.character_id %>">Ask <%= c.name %> (Player Agent)</option>
+              <option value="companion:<%= c.character_id %>">Ask <%= c.name %> only (Player Agent)</option>
             <% }) %>
             <option value="lore">Lore Agent</option>
             <option value="">(no — just log this message)</option>
           </select>
+          <p class="hint">"Let the table respond" runs each companion's own judgment first (they may say nothing),
+            then the DM only if the beat actually calls for a ruling or scene progression — the other options
+            address one specific agent directly and always get a reply.</p>
         <% } %>
         <div class="btn-row"><button type="submit">Send</button></div>
       </form>
