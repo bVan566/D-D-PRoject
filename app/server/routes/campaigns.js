@@ -56,7 +56,13 @@ router.post("/campaigns/:id/session-zero", requireCampaign, (req, res) => {
 });
 
 router.get("/campaigns/:id/characters/human/new", requireCampaign, (req, res) => {
-  res.render("character-new-human", { campaign: state.readSlice(req.campaignId, "campaign") });
+  const campaign = state.readSlice(req.campaignId, "campaign");
+  const ruleset = getRuleset(campaign.ruleset);
+  res.render("character-new-human", {
+    campaign,
+    abilityLabels: ruleset.abilities || {},
+    currencyLabel: (ruleset.vocabulary && ruleset.vocabulary.currency) || "gp",
+  });
 });
 
 router.post("/campaigns/:id/characters/human/new", requireCampaign, (req, res) => {
@@ -104,7 +110,13 @@ router.post("/campaigns/:id/characters/human/new", requireCampaign, (req, res) =
 });
 
 router.get("/campaigns/:id/characters/companion/new", requireCampaign, (req, res) => {
-  res.render("character-new-companion", { campaign: state.readSlice(req.campaignId, "campaign") });
+  const campaign = state.readSlice(req.campaignId, "campaign");
+  const ruleset = getRuleset(campaign.ruleset);
+  res.render("character-new-companion", {
+    campaign,
+    abilityLabels: ruleset.abilities || {},
+    currencyLabel: (ruleset.vocabulary && ruleset.vocabulary.currency) || "gp",
+  });
 });
 
 router.post("/campaigns/:id/characters/companion/new", requireCampaign, (req, res) => {

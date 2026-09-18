@@ -37,6 +37,7 @@ router.get("/sheet/:charId", (req, res) => {
     charId,
     character,
     abilityLabels: ruleset.abilities || {},
+    currencyLabel: (ruleset.vocabulary && ruleset.vocabulary.currency) || "gp",
     campaignId: req.campaignId,
     active: "sheet-" + charId,
   });

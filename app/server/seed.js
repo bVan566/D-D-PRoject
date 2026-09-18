@@ -574,7 +574,7 @@ function runNeonSprawl() {
       { item: "armored jacket", qty: 1 },
       { item: "burner commlink", qty: 2 },
     ],
-    currency: { eb: 850 },
+    currency: { gp: 850 },
     personality: {
       traits: "Charming when it costs nothing, ruthless when it doesn't.",
       ideals: "Everyone's for sale; the trick is knowing the price.",
@@ -605,7 +605,7 @@ function runNeonSprawl() {
       { item: "deck (custom rig)", qty: 1 },
       { item: "holdout pistol", qty: 1 },
     ],
-    currency: { eb: 140 },
+    currency: { gp: 140 },
     personality: {
       traits: "Blunt, allergic to small talk, trusts code more than people.",
       ideals: "Information wants to be free; people who hoard it are the enemy.",

@@ -20,5 +20,16 @@
     "cha": "Charisma"
   },
   "skill_examples": ["Investigation", "Perception", "Persuasion", "Athletics", "Arcana", "Survival"],
-  "narration_notes": "Checks are called by their 5e-style names (Investigation, Perception, Athletics, etc.). Treat found gear, coin, and combat in classic fantasy terms — no technology anachronisms unless the campaign's own canon has introduced one."
+  "narration_notes": "Checks are called by their 5e-style names (Investigation, Perception, Athletics, etc.). Treat found gear, coin, and combat in classic fantasy terms — no technology anachronisms unless the campaign's own canon has introduced one.",
+  "theme": {
+    "bg": "#16151b",
+    "bgRaised": "#1d1c24",
+    "bgCard": "#221f2b",
+    "border": "#34313f",
+    "text": "#e9e4d8",
+    "textDim": "#a49d8c",
+    "accent": "#c9a24b",
+    "accentSoft": "#8a6f2e",
+    "font": "'Iowan Old Style', 'Palatino Linotype', Georgia, serif"
+  }
 }

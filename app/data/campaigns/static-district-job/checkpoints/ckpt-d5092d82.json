@@ -1,8 +1,8 @@
 {
-  "checkpoint_id": "ckpt-cfc8295d",
+  "checkpoint_id": "ckpt-d5092d82",
   "label": "Neon Sprawl demo seeded",
   "trigger": "session_start",
-  "created_at": "2026-09-18T18:47:30.517Z",
+  "created_at": "2026-09-18T18:58:30.558Z",
   "session_number": 1,
   "state": {
     "campaign_id": "static-district-job",
@@ -26,8 +26,8 @@
         "difficulty": "standard",
         "content_boundaries": "Broadly open unless changed by the human player during play."
       },
-      "created_at": "2026-09-18T18:47:30.513Z",
-      "updated_at": "2026-09-18T18:47:30.516Z"
+      "created_at": "2026-09-18T18:58:30.554Z",
+      "updated_at": "2026-09-18T18:58:30.557Z"
     },
     "characters": {
       "human": {
@@ -69,7 +69,7 @@
           }
         ],
         "currency": {
-          "eb": 850
+          "gp": 850
         },
         "personality": {
           "traits": "Charming when it costs nothing, ruthless when it doesn't.",
@@ -121,7 +121,7 @@
             }
           ],
           "currency": {
-            "eb": 140
+            "gp": 140
           },
           "personality": {
             "traits": "Blunt, allergic to small talk, trusts code more than people.",

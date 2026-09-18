@@ -38,7 +38,7 @@
     <h2 style="margin-top:0">Inventory &amp; Resources</h2>
     <label>Inventory (one item per line)</label>
     <textarea name="inventory"><%= (character.inventory||[]).map(i=>i.item).join('\n') %></textarea>
-    <label>Currency (gp)</label>
+    <label>Currency: <%= typeof currencyLabel !== 'undefined' ? currencyLabel : 'gp' %></label>
     <input name="gp" type="number" value="<%= character.currency ? character.currency.gp : 0 %>" />
   </div>
 

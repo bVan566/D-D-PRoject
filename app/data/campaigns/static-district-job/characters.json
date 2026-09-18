@@ -38,7 +38,7 @@
       }
     ],
     "currency": {
-      "eb": 850
+      "gp": 850
     },
     "personality": {
       "traits": "Charming when it costs nothing, ruthless when it doesn't.",
@@ -90,7 +90,7 @@
         }
       ],
       "currency": {
-        "eb": 140
+        "gp": 140
       },
       "personality": {
         "traits": "Blunt, allergic to small talk, trusts code more than people.",

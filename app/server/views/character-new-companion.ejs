@@ -16,19 +16,19 @@
       <label>Class &amp; level<input name="class_level" placeholder="Rogue 4" /></label>
       <label>Background<input name="background" placeholder="Courier / former border runner" /></label>
       <label>Alignment<input name="alignment" placeholder="Neutral Good" /></label>
-      <label>Starting gold<input name="gp" type="number" value="20" /></label>
+      <label>Starting <%= typeof currencyLabel !== 'undefined' ? currencyLabel : 'gold' %><input name="gp" type="number" value="20" /></label>
     </div>
   </div>
 
   <div class="card">
     <h2 style="margin-top:0">Abilities</h2>
     <div class="grid cols-3">
-      <label>STR<input name="str" type="number" value="10" /></label>
-      <label>DEX<input name="dex" type="number" value="10" /></label>
-      <label>CON<input name="con" type="number" value="10" /></label>
-      <label>INT<input name="int" type="number" value="10" /></label>
-      <label>WIS<input name="wis" type="number" value="10" /></label>
-      <label>CHA<input name="cha" type="number" value="10" /></label>
+      <label><%= (abilityLabels && abilityLabels.str) || 'STR' %><input name="str" type="number" value="10" /></label>
+      <label><%= (abilityLabels && abilityLabels.dex) || 'DEX' %><input name="dex" type="number" value="10" /></label>
+      <label><%= (abilityLabels && abilityLabels.con) || 'CON' %><input name="con" type="number" value="10" /></label>
+      <label><%= (abilityLabels && abilityLabels.int) || 'INT' %><input name="int" type="number" value="10" /></label>
+      <label><%= (abilityLabels && abilityLabels.wis) || 'WIS' %><input name="wis" type="number" value="10" /></label>
+      <label><%= (abilityLabels && abilityLabels.cha) || 'CHA' %><input name="cha" type="number" value="10" /></label>
     </div>
   </div>
 

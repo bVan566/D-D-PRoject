@@ -20,5 +20,16 @@
     "cha": "Cool"
   },
   "skill_examples": ["Hacking", "Streetwise", "Ballistics", "Stealth", "Interface", "Intimidation"],
-  "narration_notes": "Rename ability-driven checks to this pack's vocabulary (Body instead of Strength, Tech instead of Intelligence, etc.) even though the underlying numbers and math work exactly the same as any other campaign. No swords, no spellcasting, no fantasy-world nouns (kingdoms, gold pieces, magic) unless the campaign's own established canon has specifically introduced one. Prefer guns, hacking, and corporate leverage over blades and spells for how problems get solved."
+  "narration_notes": "Rename ability-driven checks to this pack's vocabulary (Body instead of Strength, Tech instead of Intelligence, etc.) even though the underlying numbers and math work exactly the same as any other campaign. No swords, no spellcasting, no fantasy-world nouns (kingdoms, gold pieces, magic) unless the campaign's own established canon has specifically introduced one. Prefer guns, hacking, and corporate leverage over blades and spells for how problems get solved.",
+  "theme": {
+    "bg": "#080b10",
+    "bgRaised": "#0c1219",
+    "bgCard": "#0f1922",
+    "border": "#1d3b45",
+    "text": "#d3fbf1",
+    "textDim": "#5f9aa8",
+    "accent": "#00e5c7",
+    "accentSoft": "#0aa88f",
+    "font": "'Courier New', 'Fira Code', ui-monospace, monospace"
+  }
 }

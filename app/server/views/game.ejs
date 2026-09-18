@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title><%= campaignTitle %> — Play (Beta)</title>
   <link rel="stylesheet" href="/css/style.css" />
+  <% if (typeof themeCss !== 'undefined' && themeCss) { %><style><%- themeCss %></style><% } %>
   <style>
     body { display: flex; flex-direction: column; align-items: center; }
     #game-header { width: 100%; max-width: 1000px; padding: 10px 20px; box-sizing: border-box; }

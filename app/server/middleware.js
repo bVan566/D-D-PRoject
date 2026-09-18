@@ -1,4 +1,19 @@
 const state = require("./state");
+const { getRuleset } = require("./rulesets");
+
+// Turns a ruleset pack's theme block into a small :root override, so a campaign's
+// chosen genre pack changes how the page actually looks (palette, font) and not just
+// how the AI narrates. Values come only from our own bundled ruleset JSON files, never
+// from user input, so writing them straight into a <style> tag is safe.
+function themeCssFor(ruleset) {
+  const t = ruleset && ruleset.theme;
+  if (!t) return "";
+  return (
+    `:root{--bg:${t.bg};--bg-raised:${t.bgRaised};--bg-card:${t.bgCard};--border:${t.border};` +
+    `--text:${t.text};--text-dim:${t.textDim};--accent:${t.accent};--accent-soft:${t.accentSoft};}` +
+    `body{font-family:${t.font};}`
+  );
+}
 
 function requireCampaign(req, res, next) {
   const id = req.params.id;
@@ -15,6 +30,8 @@ function requireCampaign(req, res, next) {
     character_id: c.character_id,
     name: c.name,
   }));
+  const campaign = state.readSlice(id, "campaign");
+  res.locals.themeCss = themeCssFor(getRuleset(campaign.ruleset));
   next();
 }
 
