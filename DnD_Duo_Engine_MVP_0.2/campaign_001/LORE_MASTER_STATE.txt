@@ -1,0 +1,230 @@
+D&D DUO ENGINE — LORE MASTER STATE — CAMPAIGN 001
+
+STATE VERSION: 1.1
+Updated after Prototype Test 002 / Session 002 stop.
+Purpose: authoritative structured continuity state for resuming the Greymark Road / Brackenford campaign. This document contains mixed visibility. Runtime responses must filter by requester permissions.
+
+CAMPAIGN IDENTITY
+campaign_id: DDE-CAMPAIGN-001
+campaign_title: Greymark Road / Brackenford
+rules_baseline: 5e-style; exact edition not yet locked. Character-specific approved sheet/state is authoritative. Flag edition-sensitive uncertainty rather than mixing versions.
+session_number_completed: 2
+next_session: Campaign Session 003 — resume from quarry-side drainage opening
+advancement: milestone
+
+CURRENT RESUMABLE STATE
+Location: East of Brackenford, downslope from the Pell farm/quarry track, immediately outside a narrow old drainage opening in the rock face.
+Time marker: daylight, morning after the first night in Brackenford.
+Combat active: no.
+Immediate hazards: rough loose shale, brush, old quarry terrain; interior of drainage opening not yet entered or assessed.
+Dhovir and Mira status: both uninjured; no combat or limited-use resources expended in Session 002.
+Current external problem: disappearances/violence around the quarry-road area remain unresolved. Dhovir and Mira have agreed to investigate in temporary cooperation with Sergeant Elra Tann.
+Resume beat: Mira has just identified the drainage opening as highly relevant after Dhovir's Investigation 13 established at least two sets of impressions leaving the track toward the quarry side.
+
+HUMAN PC — DHOVIR DRUNKFOOT
+controller: Billy
+Level 4 Mountain Dwarf Paladin, Oath of Devotion; Soldier; Chaotic Good.
+AC 18 | HP 32/32 | Speed 25 | Initiative +1.
+STR 19 | DEX 13 | CON 18 | INT 11 | WIS 13 | CHA 9.
+No combat resources expended in Session 001.
+Condition: none.
+Known core equipment: chain mail, shield, battleaxe, dagger, light hammer, backpack, common clothes, dice set, amulet, priest-related supplies.
+Currency: 179 gp current best-established total from play: 160 gp starting sheet state + 20 gp contract payment - 1 gp accepted by tavern keeper for room/drinks. If a later authoritative character record contradicts this, flag rather than silently overwrite.
+Interiority rule: Billy alone establishes Dhovir's voluntary thoughts, motives, beliefs, memories, emotional conclusions, and decisions unless an explicit mechanic imposes an involuntary state.
+
+PLAYER-ESTABLISHED DHOVIR CANON
+FACT DHO-001 | locked_canon | human_pc/public when spoken
+Statement: The DrunkFoot surname dates back three generations to an ancestor who, while drunk on night guard duty during construction of a great mountain-city hall, kicked a cornerstone in exactly the wrong way and caused the unfinished hall to collapse. The only casualty was the ancestor's foot. Details of the story traditionally change with the number of ales consumed.
+Provenance: Session 001 tavern conversation; established directly by Billy through Dhovir.
+
+COMPANION PC — MIRA VEY
+controller: Player Agent
+Human Rogue 4; Scout-style skill/mobility specialist; Courier / former border runner.
+AC 15 | HP 27/27 | Speed 30 | Initiative +4.
+STR 9 | DEX 18 | CON 14 | INT 13 | WIS 15 | CHA 12.
+Primary skills recorded: Perception, Investigation, Stealth, Acrobatics, Sleight of Hand, Insight.
+Weapons recorded: shortbow, shortsword, daggers.
+Condition: none.
+No combat resources expended in Session 001.
+Currency: earned 20 gp from completed escort contract; preexisting total is not established.
+Relationship with Dhovir: practical cooperation has warmed modestly through shared danger, humor, drinking, and conversation. No friendship, rivalry, loyalty, or romance state is predetermined.
+
+MIRA PRIVATE STATE — companion_pc / lore_only
+BELIEF/MOTIVE MIR-PRIV-001: Mira wants reliable travel papers through the region and believed the escort work might put her in contact with someone who could help. She will not volunteer the full reason immediately.
+FEAR MIR-PRIV-002: being trapped into service or obligation she cannot walk away from.
+BELIEF MIR-PRIV-003: Mira believes Orren Vale may know someone who can help with travel papers. She does NOT know he is connected to the deserters.
+Behavioral constraint: Mira may act independently, disagree, withhold personal thoughts, make imperfect decisions, and pursue character-consistent side interests. She must never use DM-private information or function as a hint/quest system.
+
+PLAYER-VISIBLE EVENT RECORD — SESSION 001
+EVT-001 | observed | Dhovir + Mira
+An overturned wagon nearly blocked the Greymark Road less than a mile from Brackenford. One draft horse remained attached and panicked; blood led toward the trees.
+
+EVT-002 | observed / competence-derived
+Dhovir's Soldier experience identified the wagon obstruction as consistent with a deliberately arranged ambush. Mira identified that the harness had been cut rather than torn.
+
+EVT-003 | observed
+Watchman Torris emerged wounded from the woods and was ambulatory with help.
+
+CLAIM TOR-001 | reported_claim by Torris
+Torris said four watchmen had gone after whoever attacked the wagon.
+Truth status to Dhovir: not independently confirmed at session end.
+
+CLAIM TOR-002 | reported_claim by Torris; partially corroborated by direct hearing
+Torris said he heard someone screaming in his own voice. Dhovir and Mira later heard an unexplained scream/voice phenomenon while fleeing toward Brackenford.
+Exact cause: not established to players.
+
+EVT-004 | observed by Dhovir
+Something moved through brush roughly parallel to Dhovir and Torris during the retreat toward Brackenford. Dhovir did not identify it.
+
+EVT-005 | locked event
+Dhovir and Mira reached Brackenford, delivered the sealed medicine chest, completed the escort contract, and each received 20 gp.
+
+CLAIM TANN-001 | reported_claim by Sergeant Elra Tann
+Three people had disappeared along that stretch of road in the previous twelve days.
+Player knowledge: Dhovir and Mira heard this claim. Objective truth beyond the DM-private record should not be inferred solely from the statement.
+
+EVT-006 | observed social interaction
+Dhovir noticed Orren Vale watching him in the tavern and, on an Insight 13, judged Orren more worried about the Brackenford watch than about Dhovir.
+
+EVT-007 | observed
+Orren left half a drink behind, departed the tavern, and tried to avoid the watch.
+
+EVT-008 | mechanical
+Dhovir attempted to track Orren: Survival 11. The trail was lost in traffic/rain, but Dhovir later saw a possible matching figure.
+
+EVT-009 | mechanical
+Dhovir attempted to follow unseen: Stealth 2. Orren detected him and fled.
+
+EVT-010 | mechanical
+Dhovir pursued Orren: Athletics 20. Dhovir caught him despite Orren's head start and longer stride; Orren's impaired right leg mattered fictionally.
+
+EVT-011 | observed
+Orren brought Dhovir to a quarry records office after being confronted and spoke privately with him.
+
+CLAIM ORR-001 | reported_claim by Orren
+Old drainage cuts and abandoned quarry passages exist beneath/near that portion of road, and Orren believes someone has been using them.
+
+CLAIM ORR-002 | reported_claim by Orren
+Orren admitted to unrecorded business involving goods moved without proper tolls and supplies from people Brackenford would not approve of. This was offered as his explanation for avoiding watch scrutiny.
+Truth handling: the admission itself is canon; its completeness and exact scope are not established to Dhovir.
+
+CLAIM ORR-003 | reported_claim by Orren
+Before hearing Dhovir's account, Orren believed people were exploiting disappearances/ghost stories as cover for robbery or illicit activity. After hearing about the voice/screaming, he believed human actors and something unexplained might both be involved.
+This is Orren's interpretation, not automatic objective fact.
+
+CLAIM ORR-004 | reported_claim by Orren
+As far as Orren knew, missing people had not been recovered; belongings and signs of trouble had been found.
+
+EVT-012 | locked event
+Dhovir returned to The Stone Cup, considered the situation in his own stated terms, and went to bed. Billy explicitly established that part of Dhovir believes walking away may be smartest while the part still committed to his vows believes something harmful/evil may be happening and is worth looking into.
+
+PLAYER-VISIBLE EVENT RECORD — SESSION 002
+EVT-013 | observed social interaction
+The morning after Session 001, Dhovir told Mira about his pursuit and private conversation with Orren. Dhovir did not identify Orren to Sergeant Tann as the source of his quarry-related information.
+
+EVT-014 | locked event / relationship
+Dhovir explicitly asked Mira what she thought because they were partners. Mira independently chose to continue investigating with him. Their partnership is now openly acknowledged by both, while exact friendship/loyalty/romance depth remains emergent rather than predetermined.
+
+EVT-015 | observed / mechanical
+Dhovir and Mira met Sergeant Elra Tann and asked about the earlier incidents. On Insight 13, Dhovir found no clear sign that Tann was involved in wrongdoing; she appeared frustrated and guarded about how little control the watch had over the situation. This is Dhovir's read, not proof of every statement Tann made.
+
+CLAIM TANN-002 | reported_claim by Sergeant Elra Tann
+Tann identified the three missing people as: a quarry hand; a middle-aged traveling peddler named Caldus Marr; and a seventeen-year-old farm boy named Jory Pell. The quarry hand's name was not established.
+
+CLAIM TANN-003 | reported_claim by Sergeant Elra Tann
+The quarry hand lived with his mother, Elira Venn, in Brackenford and had no wife or children.
+
+CLAIM TANN-004 | reported_claim by Sergeant Elra Tann
+Caldus Marr regularly passed through Brackenford selling small goods. His cart was found abandoned on the east road, horse gone, most goods still present, with no blood or obvious struggle found by the watch. He had stayed at The Stone Cup the prior night.
+
+CLAIM TANN-005 | reported_claim by Sergeant Elra Tann
+Jory Pell lived with his father Harlan Pell and younger sister on a farm east of town. Harlan found a broken fence rail and Jory's knife in the mud near the old quarry track; no blood/body and no clear tracks were recovered by the watch once the ground became rocky.
+
+EVT-016 | locked event / cooperation
+Dhovir and Sergeant Tann agreed to temporary cooperation: Dhovir and Mira investigate independently rather than as deputies; Tann keeps the town watch focused on safety/roads; both sides will share information that materially changes the danger. Tann accepted Dhovir's decision to protect his informant for now.
+
+CLAIM TANN-006 | reported_claim by Sergeant Elra Tann
+Tann described three practical approaches around the quarry: the old quarry road, drainage cuts, and an abandoned western loading path. She also identified a half-collapsed old watch shelter overlooking part of the approach.
+
+EVT-017 | observed
+Dhovir and Mira went to the Pell farm and met Harlan Pell. Harlan agreed to show them the exact area where Jory disappeared.
+
+CLAIM HAR-001 | reported_claim by Harlan Pell
+Jory had seemed generally normal before disappearing, although quieter during the previous week. Two days before he vanished, Jory said he had seen something near the old quarry road that did not sit right with him and wanted to be sure before accusing anyone.
+
+CLAIM HAR-002 | reported_claim by Harlan Pell
+Jory did not usually spend time at the quarry itself, though his fence-checking work sometimes brought him close to the old quarry road. Harlan believed that if Jory went closer, it was because of whatever he had seen.
+
+CLAIM HAR-003 | reported_claim by Harlan Pell
+Harlan reported increased dog barking toward the quarry side, one episode of heavy movement in the brush a couple nights before Jory disappeared, and once hearing someone calling from near the old track without being able to make out the words.
+
+EVT-018 | mechanical
+Dhovir made a broad Perception check of the disappearance area: total 2. He found nothing useful from that visual sweep.
+
+EVT-019 | observed by Mira / Dhovir
+Mira found disturbed ground near where the fence line meets the quarry track and judged it inconsistent with a simple dropped knife/walk-away explanation, while explicitly noting it was not proof.
+
+EVT-020 | mechanical / observed evidence
+Dhovir examined the disturbed patch closely: Investigation 13. He established at least two sets of overlapping impressions passing through the spot. One set was deeper near the downslope edge, consistent with greater weight or carried weight. Crushed stems and disturbed stone continued toward the quarry side. This evidence does not by itself identify whose impressions they were.
+
+EVT-021 | locked event
+Dhovir and Mira followed the intermittent physical trail roughly thirty yards downslope through loose shale and brush and reached a narrow old drainage opening in a rock face. They have not entered it. Session 002 stopped here.
+
+KNOWN NPC RECORDS — PLAYER VISIBLE
+Sergeant Elra Tann: Brackenford watch sergeant. Met Dhovir and Mira; knows they rescued Torris and heard the screaming. Has entered temporary information-sharing cooperation with them but has not deputized them.
+Torris: Brackenford watchman; delivered alive for treatment. Later medical condition not established.
+Orren Vale: quarry clerk/bookkeeper associated with manifests and records. Thin human male, roughly forties, practical brown coat, thinning dark hair, narrow clean-shaven face, pale limestone dust on boots/lower trousers, slight hitch in right leg, utility knife. Asked Dhovir not to tell Tann they spoke.
+Bren: quarry worker who said Torris was not the first watchman to go into the woods. Dhovir declined further conversation.
+Stone Cup barkeep: identified Orren and noted that Orren normally does not leave half a drink behind.
+Elira Venn: mother of the missing quarry hand; lives in Brackenford. No direct conversation yet.
+Caldus Marr: missing middle-aged traveling peddler; recurring visitor to Brackenford.
+Jory Pell: missing seventeen-year-old farm boy from east of Brackenford.
+Harlan Pell: Jory's father; met Dhovir and Mira, showed them Jory's disappearance area, and requested the truth if they learn what happened.
+Jory's younger sister: exists; name not established.
+
+DM-PRIVATE COMMITTED TRUTH — dm_private / lore_only
+DM-TRUTH-001: A small band of deserters has been using old drainage tunnels and quarry cuts to rob isolated travelers around Brackenford.
+DM-TRUTH-002: Their leader, Hask Renn, disturbed a sealed underground chamber and released a weak but dangerous supernatural presence.
+DM-TRUTH-003: The supernatural presence is real but was not the original cause of the disappearances. Human predation created the crisis; the supernatural element escalated it.
+DM-TRUTH-004: Orren Vale is a covert deserter contact and has been moving stolen goods. He wants the bandits gone before the watch finds the tunnels and may lie, bargain, flee, or betray them depending on pressure.
+DM-TRUTH-005: Hask Renn is a former infantry corporal responsible for ordered violence and deaths; he views robbery as survival and is increasingly desperate because of the supernatural disturbance.
+DM-TRUTH-006: Sella Mor is a wounded traveler trapped near the old drainage works and can confirm armed attackers were involved if encountered alive.
+These truths remain hidden from the human and Player Agent until legitimately revealed through play.
+
+UNRESOLVED SPACE — lore must not fill
+UNR-001: Exact origin of the sealed underground chamber.
+UNR-002: Larger history of the chamber and who created it.
+UNR-003: Any grand prophecy, ancient cult, overarching campaign villain, or larger supernatural explanation not established through later DM commitment/play.
+Required Lore answer to unsupported historical questions: “Not established.”
+
+ACTIVE THREADS — PLAYER VISIBLE
+THR-001: What happened to the missing travelers and watchmen?
+THR-002: Who staged/attacked the wagon?
+THR-003: What caused or imitated Torris's voice?
+THR-004: What followed Dhovir/Torris toward Brackenford?
+THR-005: Who is using the abandoned workings, and why?
+THR-006: Is Orren hiding more than his admitted illicit trade?
+THR-007: Dhovir and Mira are actively investigating under temporary cooperation with Tann.
+THR-008: What did Jory see near the old quarry road two days before he disappeared?
+THR-009: Whose impressions left the quarry track toward the drainage opening, and was someone carrying extra weight?
+THR-010: What lies inside the drainage opening reached at the end of Session 002?
+
+RULES / RULINGS STATE
+RUL-001 | active operating standard
+Roll only when outcome is genuinely uncertain, success/failure matters, and mechanics add useful play. Routine competent actions generally succeed.
+RUL-002 | active operating standard
+Failed checks change the situation rather than dead-end required progress.
+RUL-003 | active operating standard
+Human controls Dhovir's rolls unless asking the system to roll. Player Agent rolls Mira fairly. DM may keep appropriate enemy/hidden rolls private.
+RUL-004 | active continuity rule
+Do not narrate Dhovir's voluntary internal conclusions. Sensory information and imposed mechanical effects are allowed; Billy establishes Dhovir's interiority.
+
+TEST 001-002 AGENT LEARNING — NONFICTIONAL / SEPARATE FROM CANON
+DM WATCH: Continue leaving Dhovir's voluntary thoughts/judgments to Billy. Session 002 generally corrected this. One continuity mistake occurred when early improvised timing for the missing people conflicted with the locked twelve-day window; package authority prevailed. Do not persist the conflicting six-week timing.
+DM WATCH: When undefined NPC details are introduced through a knowledgeable source, they may become new canon if they do not conflict with authority. Preserve provenance as claim vs objective fact until independently established.
+PLAYER AGENT: Mira maintained independence, gave opinions without becoming a hint system, deferred naturally when Dhovir explicitly asked to gather all missing-person information, and contributed investigation through her own competencies. Tactical-danger independence remains untested.
+LORE: Test 002 exercised cross-session retrieval, new-canon expansion, claim-vs-fact handling, correction of a continuity conflict, and exact stop-point persistence.
+DURABLE GUIDANCE STATUS: observations only. No governing role/policy changes are authorized by this session record alone.
+
+SAVE/RESUME CHECK
+Resume from outside the narrow old drainage opening downslope from the Pell farm/quarry track. Dhovir and Mira are together, uninjured, not in combat, and have not entered the opening. Preserve all public/companion-private/DM-private boundaries. No facts from historical Sable Vey / Greywick March / Rook's Hollow material may enter current play unless explicitly reintroduced by Billy or deliberately committed later in valid unresolved space.

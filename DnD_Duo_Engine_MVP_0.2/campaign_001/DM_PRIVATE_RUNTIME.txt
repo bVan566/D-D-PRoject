@@ -1,0 +1,107 @@
+D&D Duo Engine — DM Private Runtime — Prototype Test 001
+
+SPOILER CONTROL
+DM-private. Do not expose hidden truths, secret motives, unrevealed encounter data, unresolved possibilities, or concealed DCs to either player unless revealed through play.
+
+MICRO-SETTING: THE GREYMARK ROAD
+A rough frontier corridor between old hill forts, quarry settlements, and rain-dark pine country. The road crosses land once held by several minor warlords and later absorbed into a loose regional compact. Most people care more about safe roads, fair tolls, and surviving winter than distant politics.
+
+STARTING LOCATION: BRACKENFORD
+A small fortified road-town built around a stone bridge and abandoned signal tower. Traders, discharged soldiers, quarry crews, pilgrims, and couriers pass through. The town is functional rather than picturesque.
+
+STRONG START
+Dhovir and Mira are already traveling under the same short-term contract escorting a sealed medicine chest toward Brackenford. Less than a mile from town they find a wagon overturned across the road, one draft animal alive and panicked, no driver visible, and fresh blood leading toward the tree line. Before they can fully inspect it, a wounded local watchman emerges and warns them not to follow the blood because 'the road has started taking people.'
+
+The watchman is frightened, exhausted, and partially wrong.
+
+ADVENTURE SITUATION
+Several recent disappearances around Brackenford are being blamed on an old roadside shrine and local ghost stories. In reality, a small band of deserters has been using old drainage tunnels and quarry cuts to rob isolated travelers. Their leader recently disturbed a sealed underground chamber, releasing a weak but dangerous supernatural presence that is now affecting both victims and bandits.
+
+DM TRUTH — LOCKED
+The supernatural presence is real but is not the original cause of the disappearances. Human predation created the crisis; the supernatural element escalated it.
+
+UNRESOLVED SPACE — MUST REMAIN OPEN
+The exact origin and larger history of the sealed underground chamber are not established in Test 001. If the players investigate beyond what the one-shot requires, answer only with evidence available in the scene. Do not invent a grand ancient prophecy, cult history, or campaign villain on the fly unless later play deliberately establishes one.
+
+KEY NPCS
+Sergeant Elra Tann — Brackenford watch. Competent, sleep-deprived, politically pressured to keep trade moving. Wants the disappearances ended quickly and quietly. Not corrupt. May initially prefer a practical explanation over supernatural claims.
+
+Orren Vale — quarry clerk and covert deserter contact. Publicly helpful, privately moving stolen goods. Wants the bandits to leave the region before the watch finds the tunnels. Will lie, bargain, flee, or betray the bandits depending on pressure.
+
+Hask Renn — deserter leader. Former infantry corporal. Sees robbery as survival and resents officers and institutions. Not mindlessly evil; has ordered violence and is responsible for deaths. The supernatural disturbance has made him increasingly desperate.
+
+Sella Mor — wounded traveler trapped near the old drainage works. Knows enough to confirm that armed people, not a ghost, attacked the missing travelers. Her survival provides one clue path but is not required for solving the situation.
+
+PLAYER-AGENT PRIVATE LINK
+Mira believes Orren may know someone capable of helping her obtain reliable travel papers. This is why she has a personal reason to notice him, but she does NOT know he is connected to the deserters. Her suspicion must arise only from play.
+
+CLUE NETWORK — NO SINGLE POINT OF FAILURE
+Fact: armed people are involved.
+Possible clues: boot prints mixed with wagon tracks; cut harness rather than torn harness; Sella's testimony; stolen trade seals in a cache; Mira noticing practical ambush signs; Dhovir recognizing soldier-style fieldcraft.
+
+Fact: the old drainage/quarry works provide access.
+Possible clues: old road plans in the watch office; wet limestone dust on recovered gear; tracks disappearing near a culvert; Orren's evasive reaction; following a fleeing robber.
+
+Fact: something supernatural has also been disturbed.
+Possible clues: unnatural cold near the sealed chamber; paladin sense/abilities where applicable; bandits describing voices or shadows; physical effects in the chamber; an affected creature behaving unlike an ordinary robber.
+
+FLOW-FIRST EXAMPLES
+No roll: Dhovir, as a Soldier, recognizes a deliberately arranged roadside obstruction as a basic ambush tactic if he examines it carefully and has reasonable time.
+No roll: Mira can identify obvious signs that a harness was cut with a blade.
+Possible roll: determining how many people moved through overlapping muddy tracks before rain worsens them.
+Possible roll: calming the panicked draft animal quickly enough to prevent it injuring itself or destroying evidence.
+Possible roll: reading Orren's evasiveness when he has a plausible cover story.
+Avoid chained checks. One successful approach should usually provide the useful information attached to that approach.
+
+COMBAT / DANGER STRUCTURE
+Encounter A is optional: roadside attackers may return if players linger openly or pursue quickly.
+Encounter B: tunnel/deserter confrontation designed for two Level 4 PCs with space for negotiation, ambush, withdrawal, or combat.
+Supernatural escalation: a contained threat can emerge near the disturbed chamber, but it should not automatically become a boss fight. Player choices determine whether the final danger is combat, containment, escape, or mixed resolution.
+
+DEATH STANDARD
+Death is possible but uncommon. Do not protect players from clearly understood lethal decisions, but do not create surprise instant-death mechanics. Enemies may surrender, flee, stabilize a valuable captive, or change objectives when believable. Use consequences other than death when they fit the fiction.
+
+HORROR STANDARD
+Mild only: cold spots, distant voices, shadows behaving incorrectly, signs of panic, unsettling enclosed spaces. Avoid graphic body horror, torture detail, sexualized threat, or prolonged helplessness.
+
+ROMANCE / SEXUAL CONTENT STANDARD
+Romantic undertones may emerge from character interaction. Do not pre-script romance. No explicit sexual content. If romantic intimacy progresses beyond conversation or affection, fade away from sexual detail.
+
+ENDING STATES
+The adventure does not require one canonical victory condition. Viable endings include exposing the deserters, negotiating surrender, defeating them, rescuing victims and withdrawing, containing the supernatural threat, leaving some mystery unresolved, or combining outcomes. Consequences should follow actual player choices.
+
+INTERNAL STRESS SIMULATION — PRE-PLAY
+1. Unexpected player bypasses watch and pursues immediately — PASS. Clue network and tunnel access still function.
+2. Players refuse quest framing — PASS. Situation exists independently; attack/rescue/evidence can pull organically without forced acceptance.
+3. Dhovir kills or alienates Orren early — PASS. Orren is not a single point of failure.
+4. Mira knows hidden bandit connection because of private motive — FAIL CONDITION if allowed. Guardrail: Mira knows only that Orren may connect to travel papers.
+5. DM calls for repeated Perception/Investigation rolls at wagon — FAIL CONDITION. Flow rule requires obvious evidence and Soldier/rogue competence to produce automatic information where appropriate.
+6. Players fail track-related roll — PASS. Failure costs time or changes position; other clue paths remain.
+7. Players negotiate with Hask — PASS. Hask has motives and can bargain; combat not mandatory.
+8. Players attack immediately — PASS. Encounter supports combat without requiring exposition first.
+9. Supernatural element is never investigated — PASS. Human disappearance plot remains resolvable; unresolved supernatural consequences may persist.
+10. Lore is asked origin of sealed chamber — expected response: 'Not established' beyond evidence already made canonical.
+11. Companion becomes DM hint system — FAIL CONDITION. Player Agent must choose from Mira's knowledge, not runtime secrets.
+12. Session ends mid-scene — PASS if state saves location, HP/resources, conditions, revealed clues, NPC states, relationship changes, unresolved threats, and current objectives.
+
+PRE-PLAY STATUS
+Architecture: READY
+Rules/flow standard: READY
+Campaign state model: READY
+Lore behavior: READY
+Player Agent companion: READY
+Session Zero: COMPLETE
+DM runtime: READY
+Internal stress simulation: PASS WITH ENFORCED GUARDRAILS
+
+NEXT STEP
+Prototype Test 001 can begin after confirming the play interface/runtime logistics. Do not reveal this document's spoilers during setup.
+
+SESSION 003 DM OPERATING PATCH — FAST-FLOW 0.2.2
+- Keep the current scene, present NPCs, revealed clues, PC status, immediate objectives, and unresolved local questions as the active working set.
+- Routine dialogue, exploration, checks, and narration should resolve from that working set without reopening deep files.
+- Consult Lore/deeper campaign state only on continuity, hidden-information, major-consequence, uncertain-authority, or session-transition triggers.
+- Preserve the successful Session 002 clarification behavior: player memory questions should receive concise player-visible reminders without turning into character checks.
+- Preserve end-session state capture and concise resume recap.
+- Adjudicate Mira's independent declarations with the same mechanical standard and response cadence as Dhovir's.
+- Session 003 observation target: reduced response latency/overinspection without increased continuity errors or information leaks.

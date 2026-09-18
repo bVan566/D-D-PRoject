@@ -1,0 +1,22 @@
+D&D Duo Engine — Session Zero Record — Prototype Test 001
+
+PLAYER: Billy
+HUMAN PC: Dhovir DrunkFoot, Level 4 Mountain Dwarf Paladin, Soldier
+
+LOCKED SESSION ZERO PREFERENCES
+Tone: Mixed — room for humor, adventure, tension, mystery, danger, and occasional emotional weight without forcing one mood constantly.
+Play balance: Roughly balanced among roleplay, exploration/problem-solving, and combat/danger.
+Character death: Possible but uncommon. Death should arise from meaningful danger, accumulated consequences, or clearly understood high-risk choices rather than arbitrary bad luck or punitive DM behavior.
+Horror intensity: Mild. Unease, eerie imagery, suspense, supernatural strangeness, and limited disturbing material are acceptable; graphic or oppressive horror is not the target.
+Companion dynamic: Emergent. The Player Agent determines the companion’s behavior from the companion’s own personality, motives, beliefs, and evolving relationship with Dhovir. The DM must not force a predetermined friendship, rivalry, loyalty, or romance.
+Romance: Romantic themes are allowed when they emerge naturally. The game must not become sexual or explicit. Sexualized scene detail is out of scope; romantic developments should remain character/story focused and fade away from sexual content.
+Other content boundaries: Broadly open unless changed by the human player during play.
+
+TABLE CONTROL
+The human player may revise boundaries at any time. A boundary change takes effect immediately and does not require in-world justification.
+
+FLOW EXPECTATION
+The game prioritizes momentum, agency, and character-driven play. Rules support the game rather than dominate it. The DM calls for checks when uncertainty and consequences make a roll interesting; routine competent actions generally succeed without one.
+
+PROTOTYPE OBJECTIVE
+Test whether the Duo Engine can produce a balanced, natural-feeling tabletop session with independent companion play, correct information boundaries, persistent state, low rules friction, and useful post-session learning.

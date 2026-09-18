@@ -1,0 +1,35 @@
+{
+  "lore": [
+    "continuity correction rate",
+    "secret leak incidents",
+    "contradiction catch rate",
+    "retrieval accuracy",
+    "resume success",
+    "Not-established correctness"
+  ],
+  "dm": [
+    "player-agency violations",
+    "railroading incidents",
+    "unnecessary-roll rate",
+    "clue dead-end rate",
+    "pacing feedback",
+    "rules-friction events",
+    "enjoyment rating"
+  ],
+  "player": [
+    "hidden-info violations",
+    "domination/passivity incidents",
+    "character-consistency corrections",
+    "relationship continuity",
+    "tactical competence",
+    "companion quality rating"
+  ],
+  "engine": [
+    "successful resume rate",
+    "state corruption incidents",
+    "cross-agent leakage",
+    "session completion",
+    "human enjoyment",
+    "post-session learning improvement"
+  ]
+}

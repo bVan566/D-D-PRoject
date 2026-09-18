@@ -1,0 +1,18 @@
+{
+  "engine_version": "0.2.3",
+  "governing_standard": "bVan! Product Standard v1.0 \u2014 LOCKED",
+  "agents": {
+    "dm": "0.2.2 (Fast-Flow + companion adjudication interface)",
+    "player_companion": "0.2.1",
+    "lore": "0.2.1 (Active Lore Projection)"
+  },
+  "campaign_schema": "0.2",
+  "rules_baseline": "5e-style; exact edition not locked",
+  "campaign_package": "Campaign 001 / Greymark Road-Brackenford",
+  "compatibility_rule": "Runtime must refuse or escalate incompatible state/schema/agent combinations.",
+  "status": "COMPLIANT / READY FOR BOUNDED PROTOTYPE USE",
+  "compliance_status": "PASS",
+  "compliance_tests_passed": 15,
+  "live_play_test_002_status": "COMPLETE \u2014 Lore/cross-session PASS; Player Agent independence PARTIAL/PATCHED; DM flow PARTIAL/PATCHED",
+  "patch_note": "0.2.3 adds Lore Active Projection 0.2.1 to support DM Fast-Flow without changing canon authority, visibility, or provenance behavior."
+}
