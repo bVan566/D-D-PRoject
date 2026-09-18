@@ -31,5 +31,32 @@
     "accent": "#c9a24b",
     "accentSoft": "#8a6f2e",
     "font": "'Iowan Old Style', 'Palatino Linotype', Georgia, serif"
+  },
+  "game": {
+    "mapLayout": [
+      "################",
+      "#..............#",
+      "#..............#",
+      "#....\"\"\"\"......#",
+      "#....\"\"\"\"...~~.#",
+      "#..............#",
+      "#.......##..~~.#",
+      "#.......##.....#",
+      "#..............#",
+      "#..............#",
+      "#..............#",
+      "################"
+    ],
+    "tileColors": { "#": "#2a2733", ".": "#1f3d24", "\"": "#3a6b2e", "~": "#1c3a52" },
+    "impassableTiles": ["#", "~"],
+    "encounterTile": "\"",
+    "encounterChance": 0.35,
+    "playerStart": { "col": 2, "row": 2 },
+    "partyColors": ["#3f7fb1", "#4f9e6b", "#c9a24b", "#9a6fc9", "#b1543f"],
+    "encounterIntro": "A Deserter patrol blocks the path!",
+    "enemyTemplates": [
+      { "name": "Deserter Skirmisher", "hp": 16, "ac": 13, "attackBonus": 4, "damageDie": 6, "damageBonus": 2, "color": "#b1543f" },
+      { "name": "Deserter Skirmisher", "hp": 16, "ac": 13, "attackBonus": 4, "damageDie": 6, "damageBonus": 2, "color": "#b1543f" }
+    ]
   }
 }

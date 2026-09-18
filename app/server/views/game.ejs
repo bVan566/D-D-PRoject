@@ -21,7 +21,7 @@
     <span class="badge" style="margin-left:8px">BETA</span>
   </div>
   <div id="game-root"></div>
-  <p id="game-help">Arrow keys / WASD to move. Walk onto the tall-grass tiles and you might run into trouble.
+  <p id="game-help">Arrow keys / WASD to move. Walk onto a marked tile and you might run into trouble.
     This is a first playable slice — placeholder art, one map, one enemy type — proving the loop before
     anyone draws a real sprite.</p>
 
@@ -34,6 +34,7 @@
     // scans for it byte-for-byte and does not know it is reading a JS comment.)
     window.CAMPAIGN_ID = <%- JSON.stringify(campaignId).replace(/</g, '\\u003c') %>;
     window.PARTY_DATA = <%- JSON.stringify(party).replace(/</g, '\\u003c') %>;
+    window.GAME_CONTENT = <%- JSON.stringify(gameContent).replace(/</g, '\\u003c') %>;
   </script>
   <script src="/js/vendor/phaser.min.js"></script>
   <script src="/js/game/data.js"></script>

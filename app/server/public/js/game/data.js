@@ -1,45 +1,39 @@
-// Shared constants for the map + battle scenes. Deliberately plain data, no engine
-// code, so tweaking the map or the enemy roster never means touching scene logic.
+// Shared constants for the map + battle scenes, derived from the active campaign's
+// ruleset pack (window.GAME_CONTENT, embedded by game.ejs from server/rulesets/*.json
+// "game" block) rather than hardcoded here. This is what makes a fantasy campaign's
+// map/enemies look and feel different from a cyberpunk one's: mapScene.js and
+// battleScene.js only ever reference the constant names below, never the ruleset pack
+// directly, so a new genre pack's map/tiles/enemies reach the game without touching
+// either scene's logic -- the same "core engine, genre delta" split the AI narration
+// and character sheet already use.
 
 const TILE = 32;
 
-// #=wall .=floor "=tall grass (encounter risk) ~=water (impassable, decorative)
-const MAP_LAYOUT = [
-  "################",
-  "#..............#",
-  "#..............#",
-  "#....\"\"\"\"......#",
-  "#....\"\"\"\"...~~.#",
-  "#..............#",
-  "#.......##..~~.#",
-  "#.......##.....#",
-  "#..............#",
-  "#..............#",
-  "#..............#",
-  "################",
-];
+function hexToPhaserColor(hex) {
+  return parseInt(String(hex).replace("#", ""), 16);
+}
+
+const GC = window.GAME_CONTENT || {};
+
+// #=wall .=floor "=encounter risk ~=impassable/decorative -- meaning of each symbol is
+// fixed by the engine; what each one looks like and where they sit is per-ruleset.
+const MAP_LAYOUT = GC.mapLayout || ["################", "#..............#", "################"];
 const MAP_COLS = MAP_LAYOUT[0].length;
 const MAP_ROWS = MAP_LAYOUT.length;
-const PLAYER_START = { col: 2, row: 2 };
+const PLAYER_START = GC.playerStart || { col: 1, row: 1 };
 
-const TILE_COLORS = {
-  "#": 0x2a2733,
-  ".": 0x1f3d24,
-  '"': 0x3a6b2e,
-  "~": 0x1c3a52,
-};
-const IMPASSABLE = new Set(["#", "~"]);
-const ENCOUNTER_TILE = '"';
-const ENCOUNTER_CHANCE = 0.35;
+const TILE_COLORS = Object.fromEntries(
+  Object.entries(GC.tileColors || {}).map(([k, v]) => [k, hexToPhaserColor(v)])
+);
+const IMPASSABLE = new Set(GC.impassableTiles || ["#"]);
+const ENCOUNTER_TILE = GC.encounterTile || '"';
+const ENCOUNTER_CHANCE = typeof GC.encounterChance === "number" ? GC.encounterChance : 0.35;
+const ENCOUNTER_INTRO = GC.encounterIntro || "Something blocks the path!";
 
 // Distinct placeholder colors per party slot -- no art pipeline yet, so a labeled
 // colored square stands in for a sprite until someone draws a real one.
-const PARTY_COLORS = [0x3f7fb1, 0x4f9e6b, 0xc9a24b, 0x9a6fc9, 0xb1543f];
+const PARTY_COLORS = (GC.partyColors || ["#3f7fb1", "#4f9e6b", "#c9a24b", "#9a6fc9", "#b1543f"]).map(
+  hexToPhaserColor
+);
 
-// Flavor pulled straight from the engine's own combat prep
-// (DnD_Duo_Engine_MVP_0.2/campaign_001/DM_PRIVATE_CONTINUATION_TEST_002.txt) rather
-// than invented fresh -- same world, same stat philosophy.
-const ENEMY_TEMPLATES = [
-  { name: "Deserter Skirmisher", hp: 16, ac: 13, attackBonus: 4, damageDie: 6, damageBonus: 2, color: 0xb1543f },
-  { name: "Deserter Skirmisher", hp: 16, ac: 13, attackBonus: 4, damageDie: 6, damageBonus: 2, color: 0xb1543f },
-];
+const ENEMY_TEMPLATES = (GC.enemyTemplates || []).map((t) => ({ ...t, color: hexToPhaserColor(t.color) }));

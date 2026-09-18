@@ -109,10 +109,22 @@ into two places:
   narrate using that pack's ability names, tone, and vocabulary instead of always
   defaulting to fantasy phrasing, while the actual role rules and dice math underneath
   stay identical.
-- **The character sheet display** (`views/sheet.ejs`) — ability scores are labeled with
-  the active pack's names (e.g. "Body"/"Reflexes"/"Tech" instead of "Strength"/
-  "Dexterity"/"Intelligence"), though the stored keys and battle math stay the same six
-  generic slots.
+- **The character sheet + character-creation forms** (`views/sheet.ejs`,
+  `character-new-*.ejs`) — ability scores and starting currency are labeled with the
+  active pack's names (e.g. "Body"/"Reflexes"/"Tech" instead of "Strength"/
+  "Dexterity"/"Intelligence"), though the stored keys (`str`/`dex`/.../`gp`) and battle
+  math stay the same six generic slots — only the label changes, never the field.
+- **The page itself** (`middleware.js requireCampaign` + `partials/head.ejs`) — each
+  pack's `theme` block (palette + font) is emitted as a small `:root` CSS override
+  computed once per request, so a campaign's chosen genre changes how the page actually
+  looks, not just how the AI writes. Fantasy's theme values match the previous
+  hardcoded defaults exactly, so pre-existing campaigns render unchanged.
+- **The Play (Beta) map/battle screen** (`routes/game.js` + `public/js/game/data.js`) —
+  the tile map, tile palette, party colors, and enemy roster all live in the pack's
+  `game` block now instead of one hardcoded file shared by every campaign. `data.js`
+  derives its constants from `window.GAME_CONTENT` (embedded per-request, same pattern
+  as `window.PARTY_DATA`); `mapScene.js`/`battleScene.js` never changed, since they only
+  ever reference those constant names, not the ruleset pack directly.
 
 Adding a new genre means adding one more JSON file to `server/rulesets/`, never editing
 agents.js, routes, or views. What this does *not* do yet: change the actual mechanical

@@ -17,7 +17,7 @@ class BattleScene extends Phaser.Scene {
 
   create(data) {
     this.playerPos = data.playerPos;
-    this.log = ["A Deserter patrol blocks the path!"];
+    this.log = [ENCOUNTER_INTRO];
     this.awaitingInput = false;
 
     this.cameras.main.setBackgroundColor("#12101a");
@@ -133,7 +133,7 @@ class BattleScene extends Phaser.Scene {
   showMenu(actor) {
     this.menuContainer.removeAll(true);
     const items = ["Attack", "Defend", "Flee"];
-    const bg = this.add.rectangle(0, 0, 220, 100, 0x1d1c24, 0.95).setOrigin(0).setStrokeStyle(1, 0x34313f);
+    const bg = this.add.rectangle(0, 0, 220, 100, 0x1d1c24, 1).setOrigin(0).setStrokeStyle(1, 0x34313f);
     this.menuContainer.add(bg);
     const title = this.add.text(10, 6, `${actor.name}'s turn`, { fontFamily: "monospace", fontSize: "12px", color: "#c9a24b" });
     this.menuContainer.add(title);
@@ -175,7 +175,7 @@ class BattleScene extends Phaser.Scene {
   showTargets(actor) {
     this.menuContainer.removeAll(true);
     const targets = this.alive(this.enemies);
-    const bg = this.add.rectangle(0, 0, 220, 30 + targets.length * 22, 0x1d1c24, 0.95).setOrigin(0).setStrokeStyle(1, 0x34313f);
+    const bg = this.add.rectangle(0, 0, 220, 30 + targets.length * 22, 0x1d1c24, 1).setOrigin(0).setStrokeStyle(1, 0x34313f);
     this.menuContainer.add(bg);
     const title = this.add.text(10, 6, "Target:", { fontFamily: "monospace", fontSize: "12px", color: "#c9a24b" });
     this.menuContainer.add(title);

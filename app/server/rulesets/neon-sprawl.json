@@ -31,5 +31,32 @@
     "accent": "#00e5c7",
     "accentSoft": "#0aa88f",
     "font": "'Courier New', 'Fira Code', ui-monospace, monospace"
+  },
+  "game": {
+    "mapLayout": [
+      "################",
+      "#..............#",
+      "#..####..####..#",
+      "#.#....\"\"....#.#",
+      "#.#....\"\"....#.#",
+      "#..####..####..#",
+      "#..............#",
+      "#..~~......~~..#",
+      "#..............#",
+      "#..####..####..#",
+      "#..............#",
+      "################"
+    ],
+    "tileColors": { "#": "#141b24", ".": "#232f3a", "\"": "#3a1f3a", "~": "#0d3a44" },
+    "impassableTiles": ["#", "~"],
+    "encounterTile": "\"",
+    "encounterChance": 0.35,
+    "playerStart": { "col": 2, "row": 1 },
+    "partyColors": ["#00e5c7", "#ff2fd0", "#f5d90a", "#7a5cff", "#ff5555"],
+    "encounterIntro": "A corp security drone locks onto your position!",
+    "enemyTemplates": [
+      { "name": "Corp Security Drone", "hp": 16, "ac": 13, "attackBonus": 4, "damageDie": 6, "damageBonus": 2, "color": "#c93a3a" },
+      { "name": "Corp Security Drone", "hp": 16, "ac": 13, "attackBonus": 4, "damageDie": 6, "damageBonus": 2, "color": "#c93a3a" }
+    ]
   }
 }

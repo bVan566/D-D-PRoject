@@ -9,6 +9,7 @@ const express = require("express");
 const state = require("../state");
 const { projectState } = require("../visibility");
 const { requireCampaign } = require("../middleware");
+const { getRuleset } = require("../rulesets");
 
 const router = express.Router({ mergeParams: true });
 router.use(requireCampaign);
@@ -20,10 +21,15 @@ router.get("/game", (req, res) => {
   // needs, and nothing DM-private or another companion's private diary leaks into a
   // page that ships party data straight into client-side JS.
   const view = projectState(full, "human");
+  const ruleset = getRuleset(full.campaign.ruleset);
   res.render("game", {
     campaignId: req.campaignId,
     campaignTitle: full.campaign.campaign_title,
     party: view.characters,
+    // The map layout, tile palette, and enemy roster all live in the ruleset pack now
+    // (server/rulesets/*.json "game" block) so a cyberpunk campaign's Play (Beta)
+    // screen looks and plays like a different place, not a reskinned fantasy dungeon.
+    gameContent: ruleset.game || {},
     active: "game",
   });
 });
