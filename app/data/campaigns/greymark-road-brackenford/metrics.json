@@ -1,11 +1,22 @@
 {
-  "player_agent": {
-    "independent_action_declarations": 3,
-    "companion_initiated_checks": 4,
-    "passivity_incidents": 4,
-    "domination_incidents": 0,
-    "disagreements": 0,
-    "hidden_info_violations": 0,
-    "non_optimal_choices": 1
+  "player_agents": {
+    "pc-mira-vey": {
+      "independent_action_declarations": 3,
+      "companion_initiated_checks": 4,
+      "passivity_incidents": 4,
+      "domination_incidents": 0,
+      "disagreements": 0,
+      "hidden_info_violations": 0,
+      "non_optimal_choices": 1
+    },
+    "pc-bram-hollis": {
+      "independent_action_declarations": 1,
+      "companion_initiated_checks": 1,
+      "passivity_incidents": 0,
+      "domination_incidents": 0,
+      "disagreements": 0,
+      "hidden_info_violations": 0,
+      "non_optimal_choices": 0
+    }
   }
 }

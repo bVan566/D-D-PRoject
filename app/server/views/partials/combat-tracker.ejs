@@ -62,8 +62,8 @@
 
   <% if (role === 'dm') { %>
     <div class="btn-row" style="margin-top:8px">
-      <% ['human','companion'].forEach(cid => { const c = view.characters[cid];
-         if (!c || order.some(o => o.name === c.name)) return; %>
+      <% const combatRoster = [view.characters.human, ...view.characters.companions];
+         combatRoster.forEach(c => { if (!c || order.some(o => o.name === c.name)) return; %>
         <form method="post" action="/campaigns/<%= campaignId %>/play/combat/add">
           <input type="hidden" name="name" value="<%= c.name %>" />
           <input type="hidden" name="side" value="party" />

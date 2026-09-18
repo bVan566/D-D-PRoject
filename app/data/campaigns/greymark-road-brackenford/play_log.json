@@ -1,27 +1,39 @@
 [
   {
-    "id": "msg-41066387",
-    "timestamp": "2026-09-18T14:58:11.515Z",
+    "id": "msg-7bfe8d7d",
+    "timestamp": "2026-09-18T15:12:15.266Z",
     "role": "dm",
     "speaker_name": "DM",
     "content": "You're standing outside a narrow old drainage opening downslope from the Pell farm, having followed the trail this far. Loose shale, brush. The opening is dark inside — you haven't gone in yet. What do you do?",
     "visibility": "public"
   },
   {
-    "id": "msg-1197ef5e",
-    "timestamp": "2026-09-18T14:58:11.515Z",
+    "id": "msg-8344378c",
+    "timestamp": "2026-09-18T15:12:15.266Z",
     "role": "companion",
+    "character_id": "pc-mira-vey",
     "speaker_name": "Mira Vey",
     "content": "🎲 1d20+6 → [17] +6 = 23",
     "visibility": "public",
     "is_roll": true
   },
   {
-    "id": "msg-630321e5",
-    "timestamp": "2026-09-18T14:58:11.515Z",
+    "id": "msg-b0221ee7",
+    "timestamp": "2026-09-18T15:12:15.266Z",
     "role": "companion",
+    "character_id": "pc-mira-vey",
     "speaker_name": "Mira Vey",
     "content": "Mira crouches to examine the drainage opening edge for fresh tool marks, without waiting to be asked.",
+    "visibility": "public",
+    "declares_action": true
+  },
+  {
+    "id": "msg-612d8dca",
+    "timestamp": "2026-09-18T15:12:15.266Z",
+    "role": "companion",
+    "character_id": "pc-bram-hollis",
+    "speaker_name": "Bram Hollis",
+    "content": "Bram quietly says a word over his holy symbol before anyone goes near the opening — not asking permission, just doing it.",
     "visibility": "public",
     "declares_action": true
   }

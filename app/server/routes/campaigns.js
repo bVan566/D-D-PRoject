@@ -1,6 +1,7 @@
 const express = require("express");
 const state = require("../state");
-const { requireCampaign } = require("../middleware");
+const { requireCampaign, resolveRole, resolveCompanionId } = require("../middleware");
+const { projectState } = require("../visibility");
 
 const router = express.Router();
 
@@ -46,10 +47,10 @@ router.post("/campaigns/:id/session-zero", requireCampaign, (req, res) => {
   if (!full.characters.human) {
     return res.redirect(`/campaigns/${req.campaignId}/characters/human/new`);
   }
-  if (!full.characters.companion) {
+  if (!full.characters.companions.length) {
     return res.redirect(`/campaigns/${req.campaignId}/characters/companion/new`);
   }
-  res.redirect(`/campaigns/${req.campaignId}/play`);
+  res.redirect(`/campaigns/${req.campaignId}/party`);
 });
 
 router.get("/campaigns/:id/characters/human/new", requireCampaign, (req, res) => {
@@ -106,8 +107,9 @@ router.get("/campaigns/:id/characters/companion/new", requireCampaign, (req, res
 
 router.post("/campaigns/:id/characters/companion/new", requireCampaign, (req, res) => {
   const b = req.body;
+  const isFirstCompanion = state.readSlice(req.campaignId, "characters").companions.length === 0;
   const companion = {
-    character_id: "pc-companion",
+    character_id: state.newId("pc"),
     controller: "player_agent",
     name: b.name || "Unnamed",
     species: b.species || "",
@@ -153,12 +155,18 @@ router.post("/campaigns/:id/characters/companion/new", requireCampaign, (req, re
       tactical_preferences: (b.tactical_preferences || "").split("\n").map((s) => s.trim()).filter(Boolean),
     },
   };
-  state.updateSlice(req.campaignId, "characters", (c) => ({ ...c, companion }));
+  state.updateSlice(req.campaignId, "characters", (c) => ({ ...c, companions: [...c.companions, companion] }));
+
+  state.updateSlice(req.campaignId, "metrics", (m) => ({
+    ...m,
+    player_agents: { ...m.player_agents, [companion.character_id]: state.newPlayerAgentMetrics() },
+  }));
 
   state.updateSlice(req.campaignId, "relationships", (r) => ({
     ...r,
-    companion_to_human: {
+    [`${companion.character_id}__human`]: {
       label: `${companion.name} → ${state.readSlice(req.campaignId, "characters").human?.name || "human PC"}`,
+      owner_companion_id: companion.character_id,
       status_public: "Practical cooperation. Not yet decided.",
       trust: 0,
       affection: 0,
@@ -166,13 +174,22 @@ router.post("/campaigns/:id/characters/companion/new", requireCampaign, (req, re
       respect: 0,
       history: [],
       private_notes: "No private read yet — nothing has happened in play.",
-      private_notes_visibility: ["companion_pc", "lore_only"],
     },
   }));
 
-  state.updateSlice(req.campaignId, "campaign", (c) => ({ ...c, status: "active", session_number: Math.max(c.session_number, 1) }));
-  state.createCheckpoint(req.campaignId, "Session Zero complete — characters created", "session_start");
-  res.redirect(`/campaigns/${req.campaignId}/play`);
+  if (isFirstCompanion) {
+    state.updateSlice(req.campaignId, "campaign", (c) => ({ ...c, status: "active", session_number: Math.max(c.session_number, 1) }));
+    state.createCheckpoint(req.campaignId, "Session Zero complete — characters created", "session_start");
+  }
+  res.redirect(`/campaigns/${req.campaignId}/party`);
+});
+
+router.get("/campaigns/:id/party", requireCampaign, (req, res) => {
+  const role = resolveRole(req);
+  const full = state.loadCampaign(req.campaignId);
+  const companionId = resolveCompanionId(req, full.characters.companions);
+  const view = projectState(full, role, companionId);
+  res.render("party", { role, companionId, view, campaignId: req.campaignId, active: "party" });
 });
 
 module.exports = router;

@@ -16,6 +16,14 @@
 //   companion -> public + companion_pc   (NOT dm_private; NOT automatically human_pc)
 //   lore      -> everything (Lore may inspect the master record; this app's "Lore" role
 //                is the full-record/audit view used when acting as record-keeper)
+//
+// The party can have more than one AI companion. `companion_pc` on a shared record
+// (canon, an NPC, a quest) means "known to the party's AI companions in general" and
+// stays role-scoped like everything else above. But an individual companion's own
+// `private` block (beliefs, fears, suspicions) is inherently that ONE character's --
+// companion A has no more business reading companion B's private thoughts than the DM
+// or the human does. That narrowing needs to know not just "this is a companion role"
+// but "which companion," so projectState takes an optional companionId alongside role.
 
 const ROLE_ACCESS = {
   dm: new Set(["public", "dm_private"]),
@@ -51,20 +59,22 @@ function stripHidden(obj, role) {
   return clone;
 }
 
-function projectCharacters(characters, role) {
-  const project = (c) => {
+function projectCharacters(characters, role, companionId) {
+  // isOwnSeat is only meaningful for companion role; human/dm/lore never get a
+  // companion's private block regardless (lore gets it via the role check itself).
+  const project = (c, isOwnSeat) => {
     if (!c) return c;
     const clone = { ...c };
     if (clone.private) {
-      const privVisibility = clone.private.visibility || ["companion_pc", "lore_only"];
-      if (!canSee(role, privVisibility)) delete clone.private;
+      const canSeePrivate = role === "lore" || (role === "companion" && isOwnSeat);
+      if (!canSeePrivate) delete clone.private;
     }
     if (clone.player_notes && role !== "human" && role !== "lore") delete clone.player_notes;
     return clone;
   };
   return {
-    human: project(characters.human),
-    companion: project(characters.companion),
+    human: project(characters.human, false),
+    companions: (characters.companions || []).map((c) => project(c, c.character_id === companionId)),
   };
 }
 
@@ -81,14 +91,21 @@ function projectScene(scene, role) {
   return clone;
 }
 
-function projectRelationships(relationships, role) {
+function projectRelationships(relationships, role, companionId) {
   // Companion's private opinions (trust/affection/etc rationale) are companion_pc/lore_only.
-  // The *fact* that a relationship exists/has a public status is public.
+  // The *fact* that a relationship exists/has a public status is public. A relationship
+  // record tagged with owner_companion_id belongs to one specific companion's private
+  // read (same "not even other companions" narrowing as projectCharacters); untagged
+  // records fall back to the plain visibility-tag check.
   const clone = {};
   for (const [key, rel] of Object.entries(relationships || {})) {
     const r = { ...rel };
-    if (r.private_notes && !canSee(role, r.private_notes_visibility || ["companion_pc", "lore_only"])) {
-      delete r.private_notes;
+    if (r.private_notes) {
+      const canSeePrivate =
+        r.owner_companion_id !== undefined
+          ? role === "lore" || (role === "companion" && r.owner_companion_id === companionId)
+          : canSee(role, r.private_notes_visibility || ["companion_pc", "lore_only"]);
+      if (!canSeePrivate) delete r.private_notes;
     }
     clone[key] = r;
   }
@@ -108,13 +125,14 @@ function projectMetrics(metrics, role) {
   return null;
 }
 
-function projectState(fullState, role) {
+function projectState(fullState, role, companionId) {
   if (!ROLE_ACCESS[role]) role = "human";
   return {
     campaign_id: fullState.campaign_id,
     campaign: fullState.campaign,
     role,
-    characters: projectCharacters(fullState.characters || {}, role),
+    companionId: role === "companion" ? companionId : undefined,
+    characters: projectCharacters(fullState.characters || {}, role, companionId),
     scene: projectScene(fullState.scene || {}, role),
     npcs: filterList(fullState.npcs, role),
     factions: filterList(fullState.factions, role),
@@ -124,7 +142,7 @@ function projectState(fullState, role) {
     canon: filterList(fullState.canon, role),
     timeline: filterList(fullState.timeline, role),
     rulings: fullState.rulings, // rules rulings are neutral/public by design
-    relationships: projectRelationships(fullState.relationships, role),
+    relationships: projectRelationships(fullState.relationships, role, companionId),
     play_log: projectPlayLog(fullState.play_log, role),
     sessions: fullState.sessions, // session recaps are player-facing summaries by construction
     learning: role === "dm" || role === "lore" ? fullState.learning : [],

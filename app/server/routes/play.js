@@ -1,7 +1,7 @@
 const express = require("express");
 const state = require("../state");
 const { projectState } = require("../visibility");
-const { requireCampaign, resolveRole } = require("../middleware");
+const { requireCampaign, resolveRole, resolveCompanionId } = require("../middleware");
 const { callClaude, isConfigured, ROLE_TO_LEARNING_AGENT } = require("../agents");
 const { recordUsage } = require("../usage");
 
@@ -17,8 +17,9 @@ router.use(requireCampaign);
 router.get("/play", (req, res) => {
   const role = resolveRole(req);
   const full = state.loadCampaign(req.campaignId);
-  const view = projectState(full, role);
-  res.render("play", { view, role, llmConfigured: isConfigured(), campaignId: req.campaignId, active: "play" });
+  const companionId = resolveCompanionId(req, full.characters.companions);
+  const view = projectState(full, role, companionId);
+  res.render("play", { view, role, companionId, llmConfigured: isConfigured(), campaignId: req.campaignId, active: "play" });
 });
 
 router.post("/play/scene", (req, res) => {
@@ -72,11 +73,12 @@ router.post("/play/combat/end", (req, res) => {
     const next = { ...chars };
     for (const c of scene.initiative_order) {
       if (c.side !== "party") continue;
-      for (const key of ["human", "companion"]) {
-        if (next[key] && next[key].name === c.name) {
-          next[key] = { ...next[key], hp: { current: c.hp_current, max: c.hp_max }, conditions: c.conditions };
-        }
+      if (next.human && next.human.name === c.name) {
+        next.human = { ...next.human, hp: { current: c.hp_current, max: c.hp_max }, conditions: c.conditions };
       }
+      next.companions = (next.companions || []).map((comp) =>
+        comp.name === c.name ? { ...comp, hp: { current: c.hp_current, max: c.hp_max }, conditions: c.conditions } : comp
+      );
     }
     return next;
   });
@@ -156,10 +158,12 @@ router.post("/play/combat/next-turn", (req, res) => {
 router.post("/play/message", async (req, res) => {
   const b = req.body;
   const role = b.role || "human";
+  const companionId = role === "companion" ? b.companionId : undefined;
   const message = {
     id: state.newId("msg"),
     timestamp: new Date().toISOString(),
     role,
+    character_id: companionId,
     speaker_name: b.speaker_name || role,
     content: b.content || "",
     visibility: "public",
@@ -168,22 +172,27 @@ router.post("/play/message", async (req, res) => {
   state.updateSlice(req.campaignId, "play_log", (log) => [...log, message]);
 
   // Independent Player Loop instrumentation (see PLAYER_AGENT_v0.2.1.md "Learning /
-  // Evaluation Signals"): count when the companion declares an action on its own,
-  // rather than only reporting it narratively after the session.
-  if (role === "companion" && message.declares_action) {
+  // Evaluation Signals"): count when a companion declares an action on its own, per
+  // companion -- so a multi-companion party's spotlight balance is visible per member.
+  if (role === "companion" && companionId && message.declares_action) {
     state.updateSlice(req.campaignId, "metrics", (m) => ({
       ...m,
-      player_agent: {
-        ...m.player_agent,
-        independent_action_declarations: m.player_agent.independent_action_declarations + 1,
+      player_agents: {
+        ...m.player_agents,
+        [companionId]: {
+          ...m.player_agents[companionId],
+          independent_action_declarations: (m.player_agents[companionId]?.independent_action_declarations || 0) + 1,
+        },
       },
     }));
   }
 
+  // ask_agent is "dm" | "lore" | "companion:<character_id>" -- a specific party member,
+  // since "ask the companion" is ambiguous once there's more than one.
   if (b.ask_agent) {
-    const targetRole = b.ask_agent; // "dm" | "companion" | "lore"
+    const [targetRole, targetCompanionId] = b.ask_agent.split(":");
     const full = state.loadCampaign(req.campaignId);
-    const projected = projectState(full, targetRole);
+    const projected = projectState(full, targetRole, targetCompanionId);
     const history = full.play_log.slice(-20);
     const result = await callClaude({
       role: targetRole,
@@ -193,22 +202,30 @@ router.post("/play/message", async (req, res) => {
       activeLearning: activeLearningFor(full, targetRole),
     });
     recordUsage(req.campaignId, { agentRole: targetRole, usage: result.usage });
+    const speaker =
+      targetRole === "dm"
+        ? "DM"
+        : targetRole === "lore"
+        ? "Lore"
+        : full.characters.companions.find((c) => c.character_id === targetCompanionId)?.name || "Companion";
     const reply = {
       id: state.newId("msg"),
       timestamp: new Date().toISOString(),
       role: targetRole,
-      speaker_name: targetRole === "dm" ? "DM" : targetRole === "lore" ? "Lore" : full.characters.companion?.name || "Companion",
+      character_id: targetRole === "companion" ? targetCompanionId : undefined,
+      speaker_name: speaker,
       content: result.ok ? result.text : `[agent bridge unavailable] ${result.reason}`,
       visibility: "public",
     };
     state.updateSlice(req.campaignId, "play_log", (log) => [...log, reply]);
   }
 
-  res.redirect(`/campaigns/${req.campaignId}/play?role=${role}`);
+  res.redirect(`/campaigns/${req.campaignId}/play?role=${role}${companionId ? `&companionId=${companionId}` : ""}`);
 });
 
 router.post("/play/roll", (req, res) => {
   const b = req.body;
+  const companionId = b.role === "companion" ? b.companionId : undefined;
   const sides = Math.max(2, Number(b.sides) || 20);
   const count = Math.max(1, Math.min(10, Number(b.count) || 1));
   const modifier = Number(b.modifier) || 0;
@@ -232,6 +249,7 @@ router.post("/play/roll", (req, res) => {
     id: state.newId("msg"),
     timestamp: entry.timestamp,
     role: entry.role,
+    character_id: companionId,
     speaker_name: b.character || entry.role,
     content: `🎲 ${entry.label} → [${rolls.join(", ")}]${modifier ? ` ${modifier > 0 ? "+" : ""}${modifier}` : ""} = ${total}${
       entry.dc != null ? ` vs DC ${entry.dc} — ${entry.outcome.toUpperCase()}` : ""
@@ -241,17 +259,20 @@ router.post("/play/roll", (req, res) => {
   };
   state.updateSlice(req.campaignId, "play_log", (log) => [...log, message]);
 
-  if (entry.role === "companion") {
+  if (entry.role === "companion" && companionId) {
     state.updateSlice(req.campaignId, "metrics", (m) => ({
       ...m,
-      player_agent: {
-        ...m.player_agent,
-        companion_initiated_checks: m.player_agent.companion_initiated_checks + 1,
+      player_agents: {
+        ...m.player_agents,
+        [companionId]: {
+          ...m.player_agents[companionId],
+          companion_initiated_checks: (m.player_agents[companionId]?.companion_initiated_checks || 0) + 1,
+        },
       },
     }));
   }
 
-  res.redirect(`/campaigns/${req.campaignId}/play?role=${entry.role}`);
+  res.redirect(`/campaigns/${req.campaignId}/play?role=${entry.role}${companionId ? `&companionId=${companionId}` : ""}`);
 });
 
 module.exports = router;

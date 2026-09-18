@@ -94,6 +94,31 @@ function formatLearning(activeLearning) {
   ].join("\n");
 }
 
+function formatActingAs(role, projectedState) {
+  // A companion-role call's state projection now contains the WHOLE party's public
+  // info (companions can perceive each other), but only one companion's private
+  // thoughts (its own). Without this, nothing tells the model which single character
+  // it is actually supposed to play versus merely perceive -- load-bearing the moment
+  // there's more than one companion.
+  if (role !== "companion" || !projectedState.companionId) return "";
+  const mine = (projectedState.characters.companions || []).find(
+    (c) => c.character_id === projectedState.companionId
+  );
+  if (!mine) return "";
+  const others = (projectedState.characters.companions || [])
+    .filter((c) => c.character_id !== projectedState.companionId)
+    .map((c) => c.name);
+  return [
+    "---",
+    `YOU ARE PLAYING: ${mine.name} (character_id: ${mine.character_id}) and ONLY this character.`,
+    others.length
+      ? `Other AI party members present (${others.join(", ")}) are their own independent players, not` +
+        " yours to control, speak for, or decide for. You may react to them the way one party member" +
+        " reacts to another -- you cannot see their private thoughts and shouldn't assume you know their intent."
+      : "You are currently the only AI-controlled party member in this campaign.",
+  ].join("\n");
+}
+
 function buildSystemPrompt(role, projectedState, activeLearning) {
   const sources = SYSTEM_PROMPT_SOURCES[role] || [];
   const specText = sources.map(readEngineFile).join("\n\n");
@@ -102,12 +127,14 @@ function buildSystemPrompt(role, projectedState, activeLearning) {
     `You are acting as the ${role.toUpperCase()} agent in the D&D Duo Engine.`,
     ROLE_LOCK_MATRIX,
     specText,
+    formatActingAs(role, projectedState),
     formatLearning(activeLearning),
     "---",
     "The JSON below is your ENTIRE view of campaign state. It has already been filtered",
     "to only what this role is permitted to see (see server/visibility.js). Do not",
     "invent information outside it; if something is not established, say so plainly.",
-    "Stay strictly in role. Do not narrate or decide for the human player's character.",
+    "Stay strictly in role. Do not narrate or decide for the human player's character",
+    "or for any other AI party member.",
     "---",
     `CURRENT STATE (role=${role}):`,
     stateText,
@@ -184,7 +211,7 @@ async function reviewSession({ campaignTitle, sessionNumber, playLog, metrics })
       role: "user",
       content: [
         `Campaign: ${campaignTitle}, Session ${sessionNumber}`,
-        `Independence metrics this session: ${JSON.stringify(metrics.player_agent)}`,
+        `Independence metrics this session, per companion: ${JSON.stringify(metrics.player_agents)}`,
         "Transcript:",
         transcript || "(no play-log messages recorded for this session)",
       ].join("\n\n"),

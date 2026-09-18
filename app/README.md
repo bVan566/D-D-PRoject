@@ -9,6 +9,11 @@ tracking, save/resume, and — the main point — **server-side role-filtered vi
 "the Player Agent doesn't see DM-only information" is enforced by the backend rather
 than by the model choosing not to look.
 
+The party isn't fixed at one companion. A campaign can have zero, one, or several
+AI-controlled party members, each with its own seat, its own private beliefs/fears, and
+its own independence metrics — not shared with the others, not even with each other
+(see "Party of more than one" below).
+
 ## Run it
 
 ```bash
@@ -59,6 +64,30 @@ files and copy key beats back into this UI to keep state in sync.
   relationships, recap + the auto-review learning loop, world-building, saves).
 - `server/views/` — server-rendered EJS templates; `server/public/` — CSS/JS.
 
+## Party of more than one
+
+`characters.json` is `{ human, companions: [] }` — a list, not a fixed slot. Add
+companions from the Party page (during setup or anytime after). What that touches:
+
+- **Visibility**: `role=companion` alone is ambiguous once there's more than one, so
+  the viewer identity is `role=companion&companionId=<id>`. A companion's `private`
+  block (beliefs, fears, suspicions) is visible only to *that* companion's own seat and
+  to Lore — not the DM, not the human, and not another companion (verified directly:
+  companion A's sheet omits companion B's private fields entirely from the response
+  body when viewed from A's seat, and vice versa). Shared party knowledge (a canon fact or NPC
+  tagged `companion_pc`) is unaffected — that's still "known to companions in general."
+- **Agent prompts**: a companion-role call to the AI now explicitly states which one
+  character it's playing and names the other party members present as perceivable but
+  not controllable (`agents.js formatActingAs`) — without this, a multi-companion state
+  projection would leave the model guessing which character is "you."
+- **Metrics**: independence tracking (`metrics.player_agents`) is keyed per companion,
+  so spotlight balance is a per-member question, not one blended average.
+- **Learning**: stays shared across the Player Agent archetype rather than per
+  companion, matching the original package's own framing ("reusable Player Agent logic
+  remains separate from any specific companion profile such as Mira").
+- **Relationships**: one companion→human record per companion (`{companionId}__human`),
+  each with its own owner-scoped private read.
+
 ## Beyond the basics
 
 - **Initiative/combat tracker** (Play screen): add party/NPC/enemy combatants, roll or
@@ -84,6 +113,8 @@ files and copy key beats back into this UI to keep state in sync.
 
 `server/seed.js` populates a campaign from the real Greymark Road / Brackenford
 Session 001–002 material in `../DnD_Duo_Engine_MVP_0.2/campaign_001/`, including the
-DM-private truths, Mira's private companion state, and the independence-patch metrics,
-so you can immediately flip between the DM / Human / Companion / Lore role tabs on the
-Play, Sheet, and Lore screens and see the visibility boundary actually hold.
+DM-private truths and the independence-patch metrics, so you can immediately flip
+between role tabs and see the visibility boundary hold. It seeds two AI companions —
+Mira Vey (the original) and Bram Hollis (added to demonstrate the party feature) — with
+deliberately unrelated private fears, so switching between their two seats is a live
+demonstration that neither can see the other's private state.

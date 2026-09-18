@@ -14,7 +14,10 @@ const DATA_DIR = path.join(__dirname, "..", "data", "campaigns");
 
 const SLICE_DEFAULTS = {
   campaign: () => ({}),
-  characters: () => ({ human: null, companion: null }),
+  // Exactly one human PC; zero or more AI-controlled party members. `companions` is a
+  // list (not a fixed slot) so the party can grow -- see server/visibility.js for how
+  // each companion's private state stays scoped to that one companion's own seat.
+  characters: () => ({ human: null, companions: [] }),
   scene: () => ({
     location_name: "",
     description_public: "",
@@ -53,18 +56,23 @@ const SLICE_DEFAULTS = {
   // Per-call AI token usage, so spend during testing is visible instead of invisible.
   // See server/usage.js for how entries get written.
   usage: () => [],
-  metrics: () => ({
-    player_agent: {
-      independent_action_declarations: 0,
-      companion_initiated_checks: 0,
-      passivity_incidents: 0,
-      domination_incidents: 0,
-      disagreements: 0,
-      hidden_info_violations: 0,
-      non_optimal_choices: 0,
-    },
-  }),
+  // Independence/participation metrics per companion, keyed by character_id, so a
+  // multi-companion party's spotlight balance is measurable per member rather than as
+  // one blended average (see routes/play.js where these get incremented).
+  metrics: () => ({ player_agents: {} }),
 };
+
+function newPlayerAgentMetrics() {
+  return {
+    independent_action_declarations: 0,
+    companion_initiated_checks: 0,
+    passivity_incidents: 0,
+    domination_incidents: 0,
+    disagreements: 0,
+    hidden_info_violations: 0,
+    non_optimal_choices: 0,
+  };
+}
 
 const SLICE_NAMES = Object.keys(SLICE_DEFAULTS);
 
@@ -260,4 +268,5 @@ module.exports = {
   listCheckpoints,
   restoreCheckpoint,
   newId,
+  newPlayerAgentMetrics,
 };

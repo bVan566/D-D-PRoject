@@ -1,6 +1,7 @@
 {
-  "companion_to_human": {
+  "pc-mira-vey__human": {
     "label": "Mira Vey → Dhovir DrunkFoot",
+    "owner_companion_id": "pc-mira-vey",
     "status_public": "Mutually acknowledged partners as of Session 002; deeper loyalty/friendship/romance remains emergent.",
     "trust": 3,
     "affection": 2,
@@ -18,10 +19,23 @@
         "delta": {}
       }
     ],
-    "private_notes": "Mira recognizes Dhovir looks capable in a fight but is still deciding whether he's trustworthy long-term.",
-    "private_notes_visibility": [
-      "companion_pc",
-      "lore_only"
-    ]
+    "private_notes": "Mira recognizes Dhovir looks capable in a fight but is still deciding whether he's trustworthy long-term."
+  },
+  "pc-bram-hollis__human": {
+    "label": "Bram Hollis → Dhovir DrunkFoot",
+    "owner_companion_id": "pc-bram-hollis",
+    "status_public": "Professional respect, freshly met this session.",
+    "trust": 2,
+    "affection": 0,
+    "loyalty": 1,
+    "respect": 3,
+    "history": [
+      {
+        "session": 3,
+        "note": "Watched Dhovir hold his oath under pressure; that's enough for Bram to fall in beside him.",
+        "delta": {}
+      }
+    ],
+    "private_notes": "Bram hasn't decided if Dhovir's certainty is faith or just dwarven stubbornness. Watching."
   }
 }

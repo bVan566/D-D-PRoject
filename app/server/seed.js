@@ -66,8 +66,8 @@ function run() {
     player_notes: "",
   };
 
-  const companion = {
-    character_id: "pc-companion",
+  const mira = {
+    character_id: "pc-mira-vey",
     controller: "player_agent",
     name: "Mira Vey",
     species: "Human",
@@ -113,7 +113,52 @@ function run() {
     },
   };
 
-  state.writeSlice(id, "characters", { human, companion });
+  const bram = {
+    character_id: "pc-bram-hollis",
+    controller: "player_agent",
+    name: "Bram Hollis",
+    species: "Human",
+    class_level: "Cleric 4 (War Domain)",
+    background: "Wandering minor-faith chaplain",
+    alignment: "Lawful Good",
+    abilities: { str: 14, dex: 10, con: 15, int: 11, wis: 16, cha: 12 },
+    ac: 16,
+    hp: { current: 29, max: 29 },
+    temp_hp: 0,
+    speed: 30,
+    conditions: [],
+    inventory: [
+      { item: "warhammer", qty: 1 },
+      { item: "shield", qty: 1 },
+      { item: "holy symbol", qty: 1 },
+      { item: "healer's kit", qty: 1 },
+    ],
+    currency: { gp: 15 },
+    personality: {
+      traits: "Steady, plainspoken, quietly watchful; prays before deciding anything that matters.",
+      ideals: "People in trouble get helped first; theology gets argued about later.",
+      bonds: "A minor regional faith most people in Brackenford have never heard of.",
+      flaws: "Slow to trust anyone who treats the disappearances as merely inconvenient.",
+    },
+    goals_public: ["See the missing travelers found or properly laid to rest"],
+    location: "East of Brackenford, outside the drainage opening near the Pell farm/quarry track",
+    status: "active",
+    // Independent of Mira's private state on purpose -- this is the concrete proof
+    // that per-companion privacy actually holds: Bram's fear has nothing to do with
+    // Mira's, and neither companion's role/seat should ever see the other's.
+    private: {
+      visibility: ["companion_pc", "lore_only"],
+      beliefs: ["Suspects the 'voice in the woods' is a sign his faith has quietly lost favor here."],
+      fears: ["That he'll freeze in the one moment his god's favor actually mattered."],
+      personal_goals: ["Find out whether the supernatural element is a test, a punishment, or neither"],
+      suspicions: [],
+      unresolved_questions: ["Why does his usual battle-prayer feel different since arriving in Brackenford?"],
+      relationship_opinions: { dhovir: "A real paladin, not just armor and conviction. Respects that." },
+      tactical_preferences: ["Hold the line for the party, keep Dhovir upright, don't overextend alone"],
+    },
+  };
+
+  state.writeSlice(id, "characters", { human, companions: [mira, bram] });
 
   state.writeSlice(id, "scene", {
     location_name: "Old drainage opening, downslope from the Pell farm/quarry track",
@@ -305,8 +350,9 @@ function run() {
   ]);
 
   state.writeSlice(id, "relationships", {
-    companion_to_human: {
+    [`${mira.character_id}__human`]: {
       label: "Mira Vey → Dhovir DrunkFoot",
+      owner_companion_id: mira.character_id,
       status_public: "Mutually acknowledged partners as of Session 002; deeper loyalty/friendship/romance remains emergent.",
       trust: 3,
       affection: 2,
@@ -318,7 +364,17 @@ function run() {
       ],
       private_notes:
         "Mira recognizes Dhovir looks capable in a fight but is still deciding whether he's trustworthy long-term.",
-      private_notes_visibility: ["companion_pc", "lore_only"],
+    },
+    [`${bram.character_id}__human`]: {
+      label: "Bram Hollis → Dhovir DrunkFoot",
+      owner_companion_id: bram.character_id,
+      status_public: "Professional respect, freshly met this session.",
+      trust: 2,
+      affection: 0,
+      loyalty: 1,
+      respect: 3,
+      history: [{ session: 3, note: "Watched Dhovir hold his oath under pressure; that's enough for Bram to fall in beside him.", delta: {} }],
+      private_notes: "Bram hasn't decided if Dhovir's certainty is faith or just dwarven stubbornness. Watching.",
     },
   });
 
@@ -357,15 +413,22 @@ function run() {
   ]);
 
   state.updateSlice(id, "metrics", (m) => ({
-    player_agent: {
-      ...m.player_agent,
-      independent_action_declarations: 3,
-      companion_initiated_checks: 4,
-      passivity_incidents: 4,
-      domination_incidents: 0,
-      disagreements: 0,
-      hidden_info_violations: 0,
-      non_optimal_choices: 1,
+    player_agents: {
+      ...m.player_agents,
+      [mira.character_id]: {
+        ...state.newPlayerAgentMetrics(),
+        independent_action_declarations: 3,
+        companion_initiated_checks: 4,
+        passivity_incidents: 4,
+        non_optimal_choices: 1,
+      },
+      // Just joined this session -- lower numbers are expected and exactly the point of
+      // tracking this per companion instead of as one blended party average.
+      [bram.character_id]: {
+        ...state.newPlayerAgentMetrics(),
+        independent_action_declarations: 1,
+        companion_initiated_checks: 1,
+      },
     },
   }));
 
@@ -385,6 +448,7 @@ function run() {
       id: state.newId("msg"),
       timestamp: new Date().toISOString(),
       role: "companion",
+      character_id: mira.character_id,
       speaker_name: "Mira Vey",
       content: "🎲 1d20+6 → [17] +6 = 23",
       visibility: "public",
@@ -394,8 +458,19 @@ function run() {
       id: state.newId("msg"),
       timestamp: new Date().toISOString(),
       role: "companion",
+      character_id: mira.character_id,
       speaker_name: "Mira Vey",
       content: "Mira crouches to examine the drainage opening edge for fresh tool marks, without waiting to be asked.",
+      visibility: "public",
+      declares_action: true,
+    },
+    {
+      id: state.newId("msg"),
+      timestamp: new Date().toISOString(),
+      role: "companion",
+      character_id: bram.character_id,
+      speaker_name: "Bram Hollis",
+      content: "Bram quietly says a word over his holy symbol before anyone goes near the opening — not asking permission, just doing it.",
       visibility: "public",
       declares_action: true,
     },

@@ -1,0 +1,43 @@
+<%- include('partials/head', { title: 'Party' }) %>
+<%- include('partials/nav', { campaignId, role, companionId, active: 'party' }) %>
+
+<h1>Party</h1>
+<p class="subtitle">One human PC, plus however many AI-controlled companions you want at the table. Each companion
+  gets its own seat, own private thoughts, and its own DM-called checks -- not shared with the others.</p>
+
+<div class="grid cols-3">
+  <% if (view.characters.human) { const c = view.characters.human; %>
+    <div class="card">
+      <h3><%= c.name %> <span class="badge human">human</span></h3>
+      <p class="hint"><%= c.species %> &middot; <%= c.class_level %></p>
+      <div class="hp-bar <%= c.hp.current <= c.hp.max/3 ? 'low' : '' %>"><span style="width:<%= Math.max(0, Math.round(100*c.hp.current/Math.max(1,c.hp.max))) %>%"></span></div>
+      <p class="hint">HP <%= c.hp.current %>/<%= c.hp.max %> &middot; AC <%= c.ac %></p>
+      <a href="/campaigns/<%= campaignId %>/sheet/human?role=<%= role %>">Open sheet &rarr;</a>
+    </div>
+  <% } %>
+
+  <% view.characters.companions.forEach(c => { %>
+    <div class="card">
+      <h3><%= c.name %> <span class="badge companion">companion</span></h3>
+      <p class="hint"><%= c.species %> &middot; <%= c.class_level %></p>
+      <div class="hp-bar <%= c.hp.current <= c.hp.max/3 ? 'low' : '' %>"><span style="width:<%= Math.max(0, Math.round(100*c.hp.current/Math.max(1,c.hp.max))) %>%"></span></div>
+      <p class="hint">HP <%= c.hp.current %>/<%= c.hp.max %> &middot; AC <%= c.ac %></p>
+      <a href="/campaigns/<%= campaignId %>/sheet/<%= c.character_id %>?role=<%= role %>">Open sheet &rarr;</a>
+      &middot;
+      <a href="/campaigns/<%= campaignId %>/play?role=companion&companionId=<%= c.character_id %>">Play as <%= c.name.split(' ')[0] %> &rarr;</a>
+    </div>
+  <% }) %>
+</div>
+
+<% if (!view.characters.companions.length) { %>
+  <p class="empty">No AI companions yet.</p>
+<% } %>
+
+<div class="btn-row">
+  <a class="btn" href="/campaigns/<%= campaignId %>/characters/companion/new">+ Add Companion</a>
+  <% if (view.characters.human && view.characters.companions.length) { %>
+    <a class="btn secondary" href="/campaigns/<%= campaignId %>/play?role=dm">Continue to Play &rarr;</a>
+  <% } %>
+</div>
+
+<%- include('partials/foot') %>

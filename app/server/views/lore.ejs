@@ -1,5 +1,5 @@
 <%- include('partials/head', { title: 'Lore & Canon' }) %>
-<%- include('partials/nav', { campaignId, role, active: 'lore' }) %>
+<%- include('partials/nav', { campaignId, role, companionId, active: 'lore' }) %>
 
 <h1>Lore &amp; Canon Record</h1>
 <p class="subtitle">Every fact carries a canon status and a visibility tag. What you see below is exactly what the
@@ -140,16 +140,22 @@
 
 <% if (role === 'dm' || role === 'lore') { %>
   <h2>Agent Learning &amp; Independence Metrics <span class="hint">(engine instrumentation, not canon)</span></h2>
-  <div class="card">
-    <div class="grid cols-4">
-      <div class="stat-mini"><div class="val"><%= view.metrics.player_agent.independent_action_declarations %></div><div class="lbl">Independent declarations</div></div>
-      <div class="stat-mini"><div class="val"><%= view.metrics.player_agent.companion_initiated_checks %></div><div class="lbl">Companion-initiated checks</div></div>
-      <div class="stat-mini"><div class="val"><%= view.metrics.player_agent.passivity_incidents %></div><div class="lbl">Passivity incidents</div></div>
-      <div class="stat-mini"><div class="val"><%= view.metrics.player_agent.hidden_info_violations %></div><div class="lbl">Hidden-info violations</div></div>
+  <p class="hint">Per companion &mdash; with more than one AI party member, spotlight balance is a per-member
+    question, not one blended average.</p>
+  <% view.characters.companions.forEach(c => { const pm = view.metrics.player_agents[c.character_id] || {}; %>
+    <div class="card">
+      <h3 style="margin-top:0"><%= c.name %></h3>
+      <div class="grid cols-4">
+        <div class="stat-mini"><div class="val"><%= pm.independent_action_declarations || 0 %></div><div class="lbl">Independent declarations</div></div>
+        <div class="stat-mini"><div class="val"><%= pm.companion_initiated_checks || 0 %></div><div class="lbl">Companion-initiated checks</div></div>
+        <div class="stat-mini"><div class="val"><%= pm.passivity_incidents || 0 %></div><div class="lbl">Passivity incidents</div></div>
+        <div class="stat-mini"><div class="val"><%= pm.hidden_info_violations || 0 %></div><div class="lbl">Hidden-info violations</div></div>
+      </div>
     </div>
-    <p class="hint">These are literal counters (see server/routes/play.js), not narrative self-report, so "did the
-      independence patch actually work this session" is answerable from data instead of impression.</p>
-  </div>
+  <% }) %>
+  <% if (!view.characters.companions.length) { %><p class="empty">No companions yet.</p><% } %>
+  <p class="hint">These are literal counters (see server/routes/play.js), not narrative self-report, so "did the
+    independence patch actually work this session" is answerable from data instead of impression.</p>
 <% } %>
 
 <%- include('partials/foot') %>

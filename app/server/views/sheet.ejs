@@ -1,5 +1,5 @@
 <%- include('partials/head', { title: character.name + ' Sheet' }) %>
-<%- include('partials/nav', { campaignId, role, active: 'sheet-' + charId }) %>
+<%- include('partials/nav', { campaignId, role, companionId, active: 'sheet-' + charId }) %>
 
 <h1><%= character.name %></h1>
 <p class="subtitle"><%= character.species %> &middot; <%= character.class_level %> &middot; <%= character.background %>
@@ -71,9 +71,10 @@
       <label>Unresolved questions (one per line)</label>
       <textarea name="private_questions"><%= (character.private.unresolved_questions||[]).join('\n') %></textarea>
     </div>
-  <% } else if (charId === 'companion') { %>
-    <div class="banner">Private companion state exists but is not visible to the <strong><%= role %></strong> role.
-      Switch to Companion or Lore to view/edit it.</div>
+  <% } else if (character.controller === 'player_agent') { %>
+    <div class="banner">Private state exists for <%= character.name %> but isn't visible to the
+      <strong><%= role %></strong> role<%= role === 'companion' ? ' (this is a different companion\'s sheet)' : '' %>.
+      Switch to <%= character.name %>'s own seat or Lore to view/edit it.</div>
   <% } %>
 
   <% if (charId === 'human' && (role === 'human' || role === 'lore')) { %>

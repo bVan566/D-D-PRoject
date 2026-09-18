@@ -187,3 +187,20 @@ design) or genuinely multiple AI-controlled party members. The schema currently
 hardcodes exactly one (`characters: {human, companion}`). Not a dead end either way —
 `state.js` and `visibility.js` are generic enough that going from one companion to a
 list is additive work, not a rewrite — but worth a real answer before it's assumed.
+
+## 10. Resolved: the party now supports more than one AI companion
+
+Answered directly: "a complete portable tabletop RPG experience" should support a
+genuine AI party, not just a duo. `characters.json` moved from a fixed
+`{human, companion}` pair to `{human, companions: []}`. The change that mattered most
+wasn't the data shape, it was visibility: `role=companion` alone became ambiguous the
+moment a second companion could exist, since two AI party members should no more read
+each other's private thoughts than the DM should read either one's. The viewer identity
+is now `role=companion&companionId=<id>`, and a companion's private state (beliefs,
+fears, suspicions) is scoped to that one companion's own seat plus Lore — verified
+directly by seeding two companions with deliberately unrelated private fears and
+confirming each one's sheet omits the other's private block entirely when viewed cross-
+seat. Independence metrics also moved to per-companion (spotlight balance is a
+per-member question with more than one AI player); learning stays shared across the
+Player Agent archetype, matching the original package's own stated design
+("reusable Player Agent logic remains separate from any specific companion profile").

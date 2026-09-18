@@ -1,8 +1,8 @@
 {
-  "checkpoint_id": "ckpt-074866a0",
+  "checkpoint_id": "ckpt-4f16fca1",
   "label": "Imported from Campaign 001 / Session 002 stop",
   "trigger": "session_end",
-  "created_at": "2026-09-18T14:58:11.516Z",
+  "created_at": "2026-09-18T15:12:15.268Z",
   "session_number": 3,
   "state": {
     "campaign_id": "greymark-road-brackenford",
@@ -25,8 +25,8 @@
         "difficulty": "standard",
         "content_boundaries": "Broadly open unless changed by the human player during play."
       },
-      "created_at": "2026-09-18T14:58:11.511Z",
-      "updated_at": "2026-09-18T14:58:11.515Z"
+      "created_at": "2026-09-18T15:12:15.263Z",
+      "updated_at": "2026-09-18T15:12:15.266Z"
     },
     "characters": {
       "human": {
@@ -96,92 +96,176 @@
         "status": "active",
         "player_notes": ""
       },
-      "companion": {
-        "character_id": "pc-companion",
-        "controller": "player_agent",
-        "name": "Mira Vey",
-        "species": "Human",
-        "class_level": "Rogue 4 (Scout-style)",
-        "background": "Courier / former border runner",
-        "alignment": "Neutral Good",
-        "abilities": {
-          "str": 9,
-          "dex": 18,
-          "con": 14,
-          "int": 13,
-          "wis": 15,
-          "cha": 12
-        },
-        "ac": 15,
-        "hp": {
-          "current": 27,
-          "max": 27
-        },
-        "temp_hp": 0,
-        "speed": 30,
-        "conditions": [],
-        "inventory": [
-          {
-            "item": "shortbow",
-            "qty": 1
+      "companions": [
+        {
+          "character_id": "pc-mira-vey",
+          "controller": "player_agent",
+          "name": "Mira Vey",
+          "species": "Human",
+          "class_level": "Rogue 4 (Scout-style)",
+          "background": "Courier / former border runner",
+          "alignment": "Neutral Good",
+          "abilities": {
+            "str": 9,
+            "dex": 18,
+            "con": 14,
+            "int": 13,
+            "wis": 15,
+            "cha": 12
           },
-          {
-            "item": "shortsword",
-            "qty": 1
+          "ac": 15,
+          "hp": {
+            "current": 27,
+            "max": 27
           },
-          {
-            "item": "daggers",
-            "qty": 2
+          "temp_hp": 0,
+          "speed": 30,
+          "conditions": [],
+          "inventory": [
+            {
+              "item": "shortbow",
+              "qty": 1
+            },
+            {
+              "item": "shortsword",
+              "qty": 1
+            },
+            {
+              "item": "daggers",
+              "qty": 2
+            },
+            {
+              "item": "thieves' tools",
+              "qty": 1
+            }
+          ],
+          "currency": {
+            "gp": 20
           },
-          {
-            "item": "thieves' tools",
-            "qty": 1
+          "personality": {
+            "traits": "Observant, dryly funny, suspicious of institutional authority.",
+            "ideals": "Dislikes watching capable people die for preventable reasons.",
+            "bonds": "Practical partnership with Dhovir, warming through shared danger.",
+            "flaws": "Rarely gives trust quickly; doesn't treat companionship as obedience."
+          },
+          "goals_public": [
+            "Complete the investigation",
+            "Get paid and keep moving"
+          ],
+          "location": "East of Brackenford, outside the drainage opening near the Pell farm/quarry track",
+          "status": "active",
+          "private": {
+            "visibility": [
+              "companion_pc",
+              "lore_only"
+            ],
+            "beliefs": [
+              "Wants reliable travel papers through the region; believes Orren Vale may know someone who can help."
+            ],
+            "fears": [
+              "Being trapped into service or obligation she cannot walk away from."
+            ],
+            "personal_goals": [
+              "Find a route to reliable travel papers"
+            ],
+            "suspicions": [
+              "Does not know Orren is connected to the deserters."
+            ],
+            "unresolved_questions": [
+              "What is actually inside the drainage opening?"
+            ],
+            "relationship_opinions": {
+              "dhovir": "Capable in a fight; trust is still being earned."
+            },
+            "tactical_preferences": [
+              "Maintain mobility, use cover, seek advantage when plausible",
+              "Protect herself, exploit openings, retreat when staying would be foolish"
+            ]
           }
-        ],
-        "currency": {
-          "gp": 20
         },
-        "personality": {
-          "traits": "Observant, dryly funny, suspicious of institutional authority.",
-          "ideals": "Dislikes watching capable people die for preventable reasons.",
-          "bonds": "Practical partnership with Dhovir, warming through shared danger.",
-          "flaws": "Rarely gives trust quickly; doesn't treat companionship as obedience."
-        },
-        "goals_public": [
-          "Complete the investigation",
-          "Get paid and keep moving"
-        ],
-        "location": "East of Brackenford, outside the drainage opening near the Pell farm/quarry track",
-        "status": "active",
-        "private": {
-          "visibility": [
-            "companion_pc",
-            "lore_only"
-          ],
-          "beliefs": [
-            "Wants reliable travel papers through the region; believes Orren Vale may know someone who can help."
-          ],
-          "fears": [
-            "Being trapped into service or obligation she cannot walk away from."
-          ],
-          "personal_goals": [
-            "Find a route to reliable travel papers"
-          ],
-          "suspicions": [
-            "Does not know Orren is connected to the deserters."
-          ],
-          "unresolved_questions": [
-            "What is actually inside the drainage opening?"
-          ],
-          "relationship_opinions": {
-            "dhovir": "Capable in a fight; trust is still being earned."
+        {
+          "character_id": "pc-bram-hollis",
+          "controller": "player_agent",
+          "name": "Bram Hollis",
+          "species": "Human",
+          "class_level": "Cleric 4 (War Domain)",
+          "background": "Wandering minor-faith chaplain",
+          "alignment": "Lawful Good",
+          "abilities": {
+            "str": 14,
+            "dex": 10,
+            "con": 15,
+            "int": 11,
+            "wis": 16,
+            "cha": 12
           },
-          "tactical_preferences": [
-            "Maintain mobility, use cover, seek advantage when plausible",
-            "Protect herself, exploit openings, retreat when staying would be foolish"
-          ]
+          "ac": 16,
+          "hp": {
+            "current": 29,
+            "max": 29
+          },
+          "temp_hp": 0,
+          "speed": 30,
+          "conditions": [],
+          "inventory": [
+            {
+              "item": "warhammer",
+              "qty": 1
+            },
+            {
+              "item": "shield",
+              "qty": 1
+            },
+            {
+              "item": "holy symbol",
+              "qty": 1
+            },
+            {
+              "item": "healer's kit",
+              "qty": 1
+            }
+          ],
+          "currency": {
+            "gp": 15
+          },
+          "personality": {
+            "traits": "Steady, plainspoken, quietly watchful; prays before deciding anything that matters.",
+            "ideals": "People in trouble get helped first; theology gets argued about later.",
+            "bonds": "A minor regional faith most people in Brackenford have never heard of.",
+            "flaws": "Slow to trust anyone who treats the disappearances as merely inconvenient."
+          },
+          "goals_public": [
+            "See the missing travelers found or properly laid to rest"
+          ],
+          "location": "East of Brackenford, outside the drainage opening near the Pell farm/quarry track",
+          "status": "active",
+          "private": {
+            "visibility": [
+              "companion_pc",
+              "lore_only"
+            ],
+            "beliefs": [
+              "Suspects the 'voice in the woods' is a sign his faith has quietly lost favor here."
+            ],
+            "fears": [
+              "That he'll freeze in the one moment his god's favor actually mattered."
+            ],
+            "personal_goals": [
+              "Find out whether the supernatural element is a test, a punishment, or neither"
+            ],
+            "suspicions": [],
+            "unresolved_questions": [
+              "Why does his usual battle-prayer feel different since arriving in Brackenford?"
+            ],
+            "relationship_opinions": {
+              "dhovir": "A real paladin, not just armor and conviction. Respects that."
+            },
+            "tactical_preferences": [
+              "Hold the line for the party, keep Dhovir upright, don't overextend alone"
+            ]
+          }
         }
-      }
+      ]
     },
     "scene": {
       "location_name": "Old drainage opening, downslope from the Pell farm/quarry track",
@@ -390,8 +474,9 @@
     ],
     "rulings": [],
     "relationships": {
-      "companion_to_human": {
+      "pc-mira-vey__human": {
         "label": "Mira Vey → Dhovir DrunkFoot",
+        "owner_companion_id": "pc-mira-vey",
         "status_public": "Mutually acknowledged partners as of Session 002; deeper loyalty/friendship/romance remains emergent.",
         "trust": 3,
         "affection": 2,
@@ -409,37 +494,62 @@
             "delta": {}
           }
         ],
-        "private_notes": "Mira recognizes Dhovir looks capable in a fight but is still deciding whether he's trustworthy long-term.",
-        "private_notes_visibility": [
-          "companion_pc",
-          "lore_only"
-        ]
+        "private_notes": "Mira recognizes Dhovir looks capable in a fight but is still deciding whether he's trustworthy long-term."
+      },
+      "pc-bram-hollis__human": {
+        "label": "Bram Hollis → Dhovir DrunkFoot",
+        "owner_companion_id": "pc-bram-hollis",
+        "status_public": "Professional respect, freshly met this session.",
+        "trust": 2,
+        "affection": 0,
+        "loyalty": 1,
+        "respect": 3,
+        "history": [
+          {
+            "session": 3,
+            "note": "Watched Dhovir hold his oath under pressure; that's enough for Bram to fall in beside him.",
+            "delta": {}
+          }
+        ],
+        "private_notes": "Bram hasn't decided if Dhovir's certainty is faith or just dwarven stubbornness. Watching."
       }
     },
     "play_log": [
       {
-        "id": "msg-41066387",
-        "timestamp": "2026-09-18T14:58:11.515Z",
+        "id": "msg-7bfe8d7d",
+        "timestamp": "2026-09-18T15:12:15.266Z",
         "role": "dm",
         "speaker_name": "DM",
         "content": "You're standing outside a narrow old drainage opening downslope from the Pell farm, having followed the trail this far. Loose shale, brush. The opening is dark inside — you haven't gone in yet. What do you do?",
         "visibility": "public"
       },
       {
-        "id": "msg-1197ef5e",
-        "timestamp": "2026-09-18T14:58:11.515Z",
+        "id": "msg-8344378c",
+        "timestamp": "2026-09-18T15:12:15.266Z",
         "role": "companion",
+        "character_id": "pc-mira-vey",
         "speaker_name": "Mira Vey",
         "content": "🎲 1d20+6 → [17] +6 = 23",
         "visibility": "public",
         "is_roll": true
       },
       {
-        "id": "msg-630321e5",
-        "timestamp": "2026-09-18T14:58:11.515Z",
+        "id": "msg-b0221ee7",
+        "timestamp": "2026-09-18T15:12:15.266Z",
         "role": "companion",
+        "character_id": "pc-mira-vey",
         "speaker_name": "Mira Vey",
         "content": "Mira crouches to examine the drainage opening edge for fresh tool marks, without waiting to be asked.",
+        "visibility": "public",
+        "declares_action": true
+      },
+      {
+        "id": "msg-612d8dca",
+        "timestamp": "2026-09-18T15:12:15.266Z",
+        "role": "companion",
+        "character_id": "pc-bram-hollis",
+        "speaker_name": "Bram Hollis",
+        "content": "Bram quietly says a word over his holy symbol before anyone goes near the opening — not asking permission, just doing it.",
         "visibility": "public",
         "declares_action": true
       }
@@ -493,32 +603,32 @@
     ],
     "learning": [
       {
-        "id": "lesson-73c42ee7",
+        "id": "lesson-0ea558bf",
         "agent": "dm",
         "observation": "DM re-read full campaign file before two routine narration beats where active-session state was sufficient.",
         "classification": "single_session",
         "evidence_session": 2,
         "recommended_change": "Reinforce the Fast-Flow anti-overinspection guardrail.",
         "status": "active",
-        "created_at": "2026-09-18T14:58:11.515Z",
-        "decided_at": "2026-09-18T14:58:11.515Z"
+        "created_at": "2026-09-18T15:12:15.266Z",
+        "decided_at": "2026-09-18T15:12:15.266Z"
       },
       {
-        "id": "lesson-ce1a2d93",
+        "id": "lesson-b7dfe0b1",
         "agent": "player_agent",
         "observation": "Mira initiated 3 of 4 investigation beats this session without being prompted.",
         "classification": "recurring_pattern",
         "evidence_session": 3,
         "recommended_change": "Independence patch 0.2.1 is holding — keep current independent-loop instructions as-is.",
         "status": "proposed",
-        "created_at": "2026-09-18T14:58:11.515Z",
+        "created_at": "2026-09-18T15:12:15.266Z",
         "decided_at": null
       }
     ],
     "worldbuilding_log": [
       {
-        "id": "wbmsg-2c148d1f",
-        "timestamp": "2026-09-18T14:58:11.515Z",
+        "id": "wbmsg-de75ac25",
+        "timestamp": "2026-09-18T15:12:15.266Z",
         "role": "dm",
         "speaker_name": "DM (prep)",
         "content": "What if the region's dwarves have a folk memory of the chamber being sealed after a war, not built as a shrine?"
@@ -526,14 +636,25 @@
     ],
     "usage": [],
     "metrics": {
-      "player_agent": {
-        "independent_action_declarations": 3,
-        "companion_initiated_checks": 4,
-        "passivity_incidents": 4,
-        "domination_incidents": 0,
-        "disagreements": 0,
-        "hidden_info_violations": 0,
-        "non_optimal_choices": 1
+      "player_agents": {
+        "pc-mira-vey": {
+          "independent_action_declarations": 3,
+          "companion_initiated_checks": 4,
+          "passivity_incidents": 4,
+          "domination_incidents": 0,
+          "disagreements": 0,
+          "hidden_info_violations": 0,
+          "non_optimal_choices": 1
+        },
+        "pc-bram-hollis": {
+          "independent_action_declarations": 1,
+          "companion_initiated_checks": 1,
+          "passivity_incidents": 0,
+          "domination_incidents": 0,
+          "disagreements": 0,
+          "hidden_info_violations": 0,
+          "non_optimal_choices": 0
+        }
       }
     }
   }

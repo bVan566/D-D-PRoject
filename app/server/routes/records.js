@@ -1,7 +1,7 @@
 const express = require("express");
 const state = require("../state");
 const { projectState, canSee } = require("../visibility");
-const { requireCampaign, resolveRole } = require("../middleware");
+const { requireCampaign, resolveRole, resolveCompanionId } = require("../middleware");
 const { isConfigured, reviewSession, askWorldbuilder } = require("../agents");
 const { recordUsage, summarize } = require("../usage");
 
@@ -14,21 +14,29 @@ function linesToArray(s) {
 
 // ---------- Character sheets ----------
 
+// charId is "human" or a companion's character_id (there's no fixed "companion" slot
+// anymore -- the party can have any number of them).
+function findCharacter(characters, charId) {
+  if (charId === "human") return characters.human;
+  return (characters.companions || []).find((c) => c.character_id === charId) || null;
+}
+
 router.get("/sheet/:charId", (req, res) => {
   const role = resolveRole(req);
   const full = state.loadCampaign(req.campaignId);
-  const view = projectState(full, role);
-  const charId = req.params.charId; // "human" | "companion"
-  const character = view.characters[charId];
+  const companionId = resolveCompanionId(req, full.characters.companions);
+  const view = projectState(full, role, companionId);
+  const charId = req.params.charId;
+  const character = findCharacter(view.characters, charId);
   if (!character) return res.status(404).render("not-found", { path: req.originalUrl });
-  res.render("sheet", { role, charId, character, campaignId: req.campaignId, active: "sheet-" + charId });
+  res.render("sheet", { role, companionId, charId, character, campaignId: req.campaignId, active: "sheet-" + charId });
 });
 
 router.post("/sheet/:charId", (req, res) => {
   const b = req.body;
   const charId = req.params.charId;
   state.updateSlice(req.campaignId, "characters", (chars) => {
-    const c = chars[charId];
+    const c = findCharacter(chars, charId);
     if (!c) return chars;
     const updated = {
       ...c,
@@ -50,10 +58,11 @@ router.post("/sheet/:charId", (req, res) => {
         unresolved_questions: linesToArray(b.private_questions),
       };
     }
-    if (charId === "human" && b.player_notes !== undefined) {
-      updated.player_notes = b.player_notes;
+    if (charId === "human") {
+      if (b.player_notes !== undefined) updated.player_notes = b.player_notes;
+      return { ...chars, human: updated };
     }
-    return { ...chars, [charId]: updated };
+    return { ...chars, companions: chars.companions.map((comp) => (comp.character_id === charId ? updated : comp)) };
   });
   res.redirect(`/campaigns/${req.campaignId}/sheet/${charId}?role=${req.body.role || "dm"}`);
 });
@@ -63,8 +72,9 @@ router.post("/sheet/:charId", (req, res) => {
 router.get("/quests", (req, res) => {
   const role = resolveRole(req);
   const full = state.loadCampaign(req.campaignId);
-  const view = projectState(full, role);
-  res.render("quests", { role, quests: view.quests, campaignId: req.campaignId, active: "quests" });
+  const companionId = resolveCompanionId(req, full.characters.companions);
+  const view = projectState(full, role, companionId);
+  res.render("quests", { role, companionId, quests: view.quests, campaignId: req.campaignId, active: "quests" });
 });
 
 router.post("/quests", (req, res) => {
@@ -110,8 +120,9 @@ router.post("/quests/:qid", (req, res) => {
 router.get("/lore", (req, res) => {
   const role = resolveRole(req);
   const full = state.loadCampaign(req.campaignId);
-  const view = projectState(full, role);
-  res.render("lore", { role, view, campaignId: req.campaignId, active: "lore" });
+  const companionId = resolveCompanionId(req, full.characters.companions);
+  const view = projectState(full, role, companionId);
+  res.render("lore", { role, companionId, view, campaignId: req.campaignId, active: "lore" });
 });
 
 router.post("/lore/canon", (req, res) => {
@@ -177,8 +188,9 @@ router.post("/lore/timeline", (req, res) => {
 router.get("/relationships", (req, res) => {
   const role = resolveRole(req);
   const full = state.loadCampaign(req.campaignId);
-  const view = projectState(full, role);
-  res.render("relationships", { role, relationships: view.relationships, campaignId: req.campaignId, active: "relationships" });
+  const companionId = resolveCompanionId(req, full.characters.companions);
+  const view = projectState(full, role, companionId);
+  res.render("relationships", { role, companionId, relationships: view.relationships, campaignId: req.campaignId, active: "relationships" });
 });
 
 router.post("/relationships/:key", (req, res) => {
@@ -221,9 +233,11 @@ router.post("/relationships/:key", (req, res) => {
 router.get("/recap", (req, res) => {
   const role = resolveRole(req);
   const full = state.loadCampaign(req.campaignId);
-  const view = projectState(full, role);
+  const companionId = resolveCompanionId(req, full.characters.companions);
+  const view = projectState(full, role, companionId);
   res.render("recap", {
     role,
+    companionId,
     sessions: view.sessions,
     campaign: view.campaign,
     metrics: view.metrics,
