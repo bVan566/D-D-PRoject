@@ -41,6 +41,12 @@ const SLICE_DEFAULTS = {
   play_log: () => [],
   sessions: () => [],
   learning: () => [],
+  // Out-of-character setting/IP development. Deliberately separate from `canon`:
+  // nothing here is true until a human explicitly commits it (see routes/records.js
+  // POST /worldbuilding/commit). Keeps Lore's "does not author story direction" rule
+  // intact for actual play while still giving the human a place to co-create with an
+  // AI collaborator.
+  worldbuilding_log: () => [],
   metrics: () => ({
     player_agent: {
       independent_action_declarations: 0,

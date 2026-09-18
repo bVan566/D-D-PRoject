@@ -270,6 +270,17 @@ function run() {
       contradiction_flag: false,
       related_entities: [],
     },
+    {
+      id: "fact-chamber-warprison",
+      statement: "Dwarven folk memory holds the chamber was sealed after a war, not built as a shrine.",
+      canon_status: "open_lore",
+      visibility: "dm_private",
+      claim_type: "objective_fact",
+      source: "World-building session",
+      session: 1,
+      contradiction_flag: false,
+      related_entities: [],
+    },
   ]);
 
   state.writeSlice(id, "timeline", [
@@ -348,8 +359,8 @@ function run() {
   state.updateSlice(id, "metrics", (m) => ({
     player_agent: {
       ...m.player_agent,
-      independent_action_declarations: 2,
-      companion_initiated_checks: 3,
+      independent_action_declarations: 3,
+      companion_initiated_checks: 4,
       passivity_incidents: 4,
       domination_incidents: 0,
       disagreements: 0,
@@ -369,6 +380,66 @@ function run() {
         "You're standing outside a narrow old drainage opening downslope from the Pell farm, having followed the " +
         "trail this far. Loose shale, brush. The opening is dark inside — you haven't gone in yet. What do you do?",
       visibility: "public",
+    },
+    {
+      id: state.newId("msg"),
+      timestamp: new Date().toISOString(),
+      role: "companion",
+      speaker_name: "Mira Vey",
+      content: "🎲 1d20+6 → [17] +6 = 23",
+      visibility: "public",
+      is_roll: true,
+    },
+    {
+      id: state.newId("msg"),
+      timestamp: new Date().toISOString(),
+      role: "companion",
+      speaker_name: "Mira Vey",
+      content: "Mira crouches to examine the drainage opening edge for fresh tool marks, without waiting to be asked.",
+      visibility: "public",
+      declares_action: true,
+    },
+  ]);
+
+  // Sample learning-loop output, so a fresh reseed shows what the loop looks like
+  // populated instead of empty. In real use these come from POST /recap/auto-review.
+  state.updateSlice(id, "learning", (list) => [
+    ...list,
+    {
+      id: state.newId("lesson"),
+      agent: "dm",
+      observation: "DM re-read full campaign file before two routine narration beats where active-session state was sufficient.",
+      classification: "single_session",
+      evidence_session: 2,
+      recommended_change: "Reinforce the Fast-Flow anti-overinspection guardrail.",
+      status: "active",
+      created_at: new Date().toISOString(),
+      decided_at: new Date().toISOString(),
+    },
+    {
+      id: state.newId("lesson"),
+      agent: "player_agent",
+      observation: "Mira initiated 3 of 4 investigation beats this session without being prompted.",
+      classification: "recurring_pattern",
+      evidence_session: 3,
+      recommended_change: "Independence patch 0.2.1 is holding — keep current independent-loop instructions as-is.",
+      status: "proposed",
+      created_at: new Date().toISOString(),
+      decided_at: null,
+    },
+  ]);
+
+  // Sample world-building brainstorm, showing the DM-prep workspace populated and one
+  // idea already committed to canon (fact-chamber-warprison above) via that flow.
+  state.updateSlice(id, "worldbuilding_log", (log) => [
+    ...log,
+    {
+      id: state.newId("wbmsg"),
+      timestamp: new Date().toISOString(),
+      role: "dm",
+      speaker_name: "DM (prep)",
+      content:
+        "What if the region's dwarves have a folk memory of the chamber being sealed after a war, not built as a shrine?",
     },
   ]);
 

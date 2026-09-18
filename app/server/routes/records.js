@@ -2,6 +2,7 @@ const express = require("express");
 const state = require("../state");
 const { projectState, canSee } = require("../visibility");
 const { requireCampaign, resolveRole } = require("../middleware");
+const { isConfigured, reviewSession, askWorldbuilder } = require("../agents");
 
 const router = express.Router({ mergeParams: true });
 router.use(requireCampaign);
@@ -220,7 +221,79 @@ router.get("/recap", (req, res) => {
   const role = resolveRole(req);
   const full = state.loadCampaign(req.campaignId);
   const view = projectState(full, role);
-  res.render("recap", { role, sessions: view.sessions, campaign: view.campaign, metrics: view.metrics, campaignId: req.campaignId, active: "recap" });
+  res.render("recap", {
+    role,
+    sessions: view.sessions,
+    campaign: view.campaign,
+    metrics: view.metrics,
+    learning: view.learning,
+    llmConfigured: isConfigured(),
+    reviewError: null,
+    campaignId: req.campaignId,
+    active: "recap",
+  });
+});
+
+// Automatic post-session learning: reads the current play log + metrics, asks the
+// model to propose lessons against the engine's own acceptance criteria, and stores
+// them as status "proposed". Nothing here is durable until a human approves it below
+// -- see agents.js reviewSession() header for why.
+router.post("/recap/auto-review", async (req, res) => {
+  const full = state.loadCampaign(req.campaignId);
+  const result = await reviewSession({
+    campaignTitle: full.campaign.campaign_title,
+    sessionNumber: full.campaign.session_number,
+    playLog: full.play_log,
+    metrics: full.metrics,
+  });
+
+  if (!result.ok) {
+    const view = projectState(full, "dm");
+    return res.render("recap", {
+      role: "dm",
+      sessions: view.sessions,
+      campaign: view.campaign,
+      metrics: view.metrics,
+      learning: view.learning,
+      llmConfigured: isConfigured(),
+      reviewError: result.reason,
+      campaignId: req.campaignId,
+      active: "recap",
+    });
+  }
+
+  const now = new Date().toISOString();
+  const proposed = result.lessons.map((l) => ({
+    id: state.newId("lesson"),
+    agent: l.agent,
+    observation: l.observation,
+    classification: l.classification || "single_session",
+    evidence_session: full.campaign.session_number,
+    recommended_change: l.recommended_change,
+    status: "proposed",
+    created_at: now,
+    decided_at: null,
+  }));
+  state.updateSlice(req.campaignId, "learning", (list) => [...list, ...proposed]);
+  res.redirect(`/campaigns/${req.campaignId}/recap?role=dm`);
+});
+
+router.post("/learning/:lessonId/approve", (req, res) => {
+  state.updateSlice(req.campaignId, "learning", (list) =>
+    list.map((l) =>
+      l.id === req.params.lessonId ? { ...l, status: "active", decided_at: new Date().toISOString() } : l
+    )
+  );
+  res.redirect(`/campaigns/${req.campaignId}/recap?role=dm`);
+});
+
+router.post("/learning/:lessonId/reject", (req, res) => {
+  state.updateSlice(req.campaignId, "learning", (list) =>
+    list.map((l) =>
+      l.id === req.params.lessonId ? { ...l, status: "rejected", decided_at: new Date().toISOString() } : l
+    )
+  );
+  res.redirect(`/campaigns/${req.campaignId}/recap?role=dm`);
 });
 
 router.post("/recap/end-session", (req, res) => {
@@ -261,6 +334,88 @@ router.post("/saves", (req, res) => {
 router.post("/saves/:checkpointId/restore", (req, res) => {
   state.restoreCheckpoint(req.campaignId, req.params.checkpointId);
   res.redirect(`/campaigns/${req.campaignId}/play?role=${req.body.role || "dm"}`);
+});
+
+// ---------- World-building (out-of-character setting/IP development) ----------
+//
+// Deliberately not reachable from the Companion role: this is pre-canon possibility
+// space, and letting the Player Agent see it would leak information its character
+// hasn't legitimately learned -- the exact failure mode the engine's Player Agent spec
+// exists to prevent. The DM, human, and Lore roles all have a legitimate reason to be
+// here (prep, co-creation, and continuity respectively).
+
+router.get("/worldbuilding", (req, res) => {
+  const role = resolveRole(req);
+  if (role === "companion") {
+    return res.render("worldbuilding-blocked", { role, campaignId: req.campaignId, active: "worldbuilding" });
+  }
+  const full = state.loadCampaign(req.campaignId);
+  const view = projectState(full, role);
+  res.render("worldbuilding", {
+    role,
+    log: full.worldbuilding_log,
+    canon: view.canon,
+    llmConfigured: isConfigured(),
+    campaignId: req.campaignId,
+    active: "worldbuilding",
+  });
+});
+
+router.post("/worldbuilding/message", async (req, res) => {
+  const b = req.body;
+  const role = b.role || "human";
+  const message = {
+    id: state.newId("wbmsg"),
+    timestamp: new Date().toISOString(),
+    role,
+    speaker_name: b.speaker_name || role,
+    content: b.content || "",
+  };
+  state.updateSlice(req.campaignId, "worldbuilding_log", (log) => [...log, message]);
+
+  if (b.ask_worldbuilder) {
+    const full = state.loadCampaign(req.campaignId);
+    const canonSummary = full.canon
+      .filter((f) => f.canon_status === "locked_canon" || f.canon_status === "dm_truth" || f.canon_status === "open_lore")
+      .map((f) => `- (${f.canon_status}) ${f.statement}`)
+      .join("\n");
+    const result = await askWorldbuilder({
+      campaignTitle: full.campaign.campaign_title,
+      canonSummary,
+      history: full.worldbuilding_log.slice(-20),
+      userMessage: `[${message.speaker_name}] ${message.content}`,
+    });
+    const reply = {
+      id: state.newId("wbmsg"),
+      timestamp: new Date().toISOString(),
+      role: "worldbuilder",
+      speaker_name: "Worldbuilder",
+      content: result.ok ? result.text : `[agent bridge unavailable] ${result.reason}`,
+    };
+    state.updateSlice(req.campaignId, "worldbuilding_log", (log) => [...log, reply]);
+  }
+
+  res.redirect(`/campaigns/${req.campaignId}/worldbuilding?role=${role}`);
+});
+
+// The only way anything from world-building becomes real: an explicit human action
+// that writes a normal canon record (same shape as /lore/canon), so it's governed by
+// the exact same visibility/provenance rules as any other fact from here on.
+router.post("/worldbuilding/commit", (req, res) => {
+  const b = req.body;
+  const fact = {
+    id: state.newId("fact"),
+    statement: b.statement || "",
+    canon_status: b.canon_status || "open_lore",
+    visibility: b.visibility || "public",
+    claim_type: "objective_fact",
+    source: "World-building session",
+    session: state.readSlice(req.campaignId, "campaign").session_number,
+    contradiction_flag: false,
+    related_entities: [],
+  };
+  state.updateSlice(req.campaignId, "canon", (list) => [...list, fact]);
+  res.redirect(`/campaigns/${req.campaignId}/worldbuilding?role=${b.role || "dm"}`);
 });
 
 module.exports = router;

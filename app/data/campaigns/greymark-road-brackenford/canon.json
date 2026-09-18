@@ -61,5 +61,16 @@
     "session": 1,
     "contradiction_flag": false,
     "related_entities": []
+  },
+  {
+    "id": "fact-chamber-warprison",
+    "statement": "Dwarven folk memory holds the chamber was sealed after a war, not built as a shrine.",
+    "canon_status": "open_lore",
+    "visibility": "dm_private",
+    "claim_type": "objective_fact",
+    "source": "World-building session",
+    "session": 1,
+    "contradiction_flag": false,
+    "related_entities": []
   }
 ]

@@ -2,7 +2,12 @@ const express = require("express");
 const state = require("../state");
 const { projectState } = require("../visibility");
 const { requireCampaign, resolveRole } = require("../middleware");
-const { callClaude, isConfigured } = require("../agents");
+const { callClaude, isConfigured, ROLE_TO_LEARNING_AGENT } = require("../agents");
+
+function activeLearningFor(full, role) {
+  const agent = ROLE_TO_LEARNING_AGENT[role];
+  return (full.learning || []).filter((l) => l.agent === agent && l.status === "active");
+}
 
 const router = express.Router({ mergeParams: true });
 
@@ -73,6 +78,7 @@ router.post("/play/message", async (req, res) => {
       projectedState: projected,
       history,
       userMessage: `[${message.speaker_name}] ${message.content}`,
+      activeLearning: activeLearningFor(full, targetRole),
     });
     const reply = {
       id: state.newId("msg"),

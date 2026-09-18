@@ -49,6 +49,48 @@
       <button type="submit">Close Session &amp; Checkpoint</button>
     </form>
   </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Automatic Learning Loop</h2>
+    <p class="hint">Reads the play log + independence metrics against the engine's own acceptance criteria and
+      proposes lessons — the automatic version of what a human did by hand after Sessions 001/002. Nothing below
+      becomes durable guidance until you approve it, matching the project's Controlled Learning Policy.</p>
+
+    <% if (reviewError) { %><div class="banner warn">Review failed: <%= reviewError %></div><% } %>
+
+    <form method="post" action="/campaigns/<%= campaignId %>/recap/auto-review">
+      <button type="submit" <%= llmConfigured ? '' : 'disabled' %>>Auto-Review This Session</button>
+      <% if (!llmConfigured) { %><span class="hint"> (needs ANTHROPIC_API_KEY)</span><% } %>
+    </form>
+
+    <% const proposed = (learning||[]).filter(l => l.status === 'proposed'); %>
+    <% if (proposed.length) { %>
+      <h3 style="margin-top:16px">Proposed — awaiting your decision</h3>
+      <% proposed.forEach(l => { %>
+        <div class="card" style="background:var(--bg-raised)">
+          <span class="badge <%= l.agent === 'dm' ? 'dm' : l.agent === 'player_agent' ? 'companion' : 'lore' %>"><%= l.agent %></span>
+          <span class="badge">s<%= l.evidence_session %></span>
+          <span class="badge"><%= l.classification %></span>
+          <p><strong>Observed:</strong> <%= l.observation %></p>
+          <p><strong>Recommended:</strong> <%= l.recommended_change %></p>
+          <div class="btn-row">
+            <form method="post" action="/campaigns/<%= campaignId %>/learning/<%= l.id %>/approve"><button type="submit">Approve</button></form>
+            <form method="post" action="/campaigns/<%= campaignId %>/learning/<%= l.id %>/reject"><button type="submit" class="secondary">Reject</button></form>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+
+    <% const active = (learning||[]).filter(l => l.status === 'active'); %>
+    <h3 style="margin-top:16px">Active — currently shaping DM/Companion/Lore behavior</h3>
+    <% if (!active.length) { %><p class="empty">None approved yet.</p><% } %>
+    <ul class="clean">
+      <% active.forEach(l => { %>
+        <li><span class="badge <%= l.agent === 'dm' ? 'dm' : l.agent === 'player_agent' ? 'companion' : 'lore' %>"><%= l.agent %></span>
+          <%= l.recommended_change %> <span class="hint">(from Session <%= l.evidence_session %>)</span></li>
+      <% }) %>
+    </ul>
+  </div>
 <% } %>
 
 <%- include('partials/foot') %>

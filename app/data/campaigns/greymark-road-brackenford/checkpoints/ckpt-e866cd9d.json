@@ -1,8 +1,8 @@
 {
-  "checkpoint_id": "ckpt-9c7b3c8b",
+  "checkpoint_id": "ckpt-e866cd9d",
   "label": "Imported from Campaign 001 / Session 002 stop",
   "trigger": "session_end",
-  "created_at": "2026-09-18T13:37:53.114Z",
+  "created_at": "2026-09-18T14:04:24.021Z",
   "session_number": 3,
   "state": {
     "campaign_id": "greymark-road-brackenford",
@@ -25,8 +25,8 @@
         "difficulty": "standard",
         "content_boundaries": "Broadly open unless changed by the human player during play."
       },
-      "created_at": "2026-09-18T13:37:53.108Z",
-      "updated_at": "2026-09-18T13:37:53.114Z"
+      "created_at": "2026-09-18T14:04:24.016Z",
+      "updated_at": "2026-09-18T14:04:24.021Z"
     },
     "characters": {
       "human": {
@@ -346,6 +346,17 @@
         "session": 1,
         "contradiction_flag": false,
         "related_entities": []
+      },
+      {
+        "id": "fact-chamber-warprison",
+        "statement": "Dwarven folk memory holds the chamber was sealed after a war, not built as a shrine.",
+        "canon_status": "open_lore",
+        "visibility": "dm_private",
+        "claim_type": "objective_fact",
+        "source": "World-building session",
+        "session": 1,
+        "contradiction_flag": false,
+        "related_entities": []
       }
     ],
     "timeline": [
@@ -407,12 +418,30 @@
     },
     "play_log": [
       {
-        "id": "msg-4ae317fb",
-        "timestamp": "2026-09-18T13:37:53.114Z",
+        "id": "msg-06f782ed",
+        "timestamp": "2026-09-18T14:04:24.020Z",
         "role": "dm",
         "speaker_name": "DM",
         "content": "You're standing outside a narrow old drainage opening downslope from the Pell farm, having followed the trail this far. Loose shale, brush. The opening is dark inside — you haven't gone in yet. What do you do?",
         "visibility": "public"
+      },
+      {
+        "id": "msg-c40d6ab7",
+        "timestamp": "2026-09-18T14:04:24.020Z",
+        "role": "companion",
+        "speaker_name": "Mira Vey",
+        "content": "🎲 1d20+6 → [17] +6 = 23",
+        "visibility": "public",
+        "is_roll": true
+      },
+      {
+        "id": "msg-e201fd38",
+        "timestamp": "2026-09-18T14:04:24.020Z",
+        "role": "companion",
+        "speaker_name": "Mira Vey",
+        "content": "Mira crouches to examine the drainage opening edge for fresh tool marks, without waiting to be asked.",
+        "visibility": "public",
+        "declares_action": true
       }
     ],
     "sessions": [
@@ -462,11 +491,43 @@
         "human_feedback": "Companion felt like a DM-controlled NPC rather than a second player."
       }
     ],
-    "learning": [],
+    "learning": [
+      {
+        "id": "lesson-5969db50",
+        "agent": "dm",
+        "observation": "DM re-read full campaign file before two routine narration beats where active-session state was sufficient.",
+        "classification": "single_session",
+        "evidence_session": 2,
+        "recommended_change": "Reinforce the Fast-Flow anti-overinspection guardrail.",
+        "status": "active",
+        "created_at": "2026-09-18T14:04:24.020Z",
+        "decided_at": "2026-09-18T14:04:24.020Z"
+      },
+      {
+        "id": "lesson-bdd8a374",
+        "agent": "player_agent",
+        "observation": "Mira initiated 3 of 4 investigation beats this session without being prompted.",
+        "classification": "recurring_pattern",
+        "evidence_session": 3,
+        "recommended_change": "Independence patch 0.2.1 is holding — keep current independent-loop instructions as-is.",
+        "status": "proposed",
+        "created_at": "2026-09-18T14:04:24.020Z",
+        "decided_at": null
+      }
+    ],
+    "worldbuilding_log": [
+      {
+        "id": "wbmsg-99601744",
+        "timestamp": "2026-09-18T14:04:24.021Z",
+        "role": "dm",
+        "speaker_name": "DM (prep)",
+        "content": "What if the region's dwarves have a folk memory of the chamber being sealed after a war, not built as a shrine?"
+      }
+    ],
     "metrics": {
       "player_agent": {
-        "independent_action_declarations": 2,
-        "companion_initiated_checks": 3,
+        "independent_action_declarations": 3,
+        "companion_initiated_checks": 4,
         "passivity_incidents": 4,
         "domination_incidents": 0,
         "disagreements": 0,
