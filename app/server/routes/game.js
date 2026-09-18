@@ -14,6 +14,19 @@ const { getRuleset } = require("../rulesets");
 const router = express.Router({ mergeParams: true });
 router.use(requireCampaign);
 
+// Picks the map "area" that best fits where the DM has actually put the party, from a
+// small fixed set of archetypes (outdoor vs. underground/interior, etc.) rather than
+// one fixed generic map regardless of story context. This is deliberately an
+// approximation, not literal reproduction: the DM narrates arbitrary, unbounded
+// locations, so there's no way to hand-author a bespoke tile layout for every place it
+// might improvise. Matching against a handful of archetypes by keyword is the bounded
+// version of "the map reflects where you are" that's actually buildable.
+function pickArea(areas, sceneText) {
+  const haystack = sceneText.toLowerCase();
+  const match = areas.find((a) => a.keywords && a.keywords.some((k) => haystack.includes(k)));
+  return match || areas.find((a) => a.default) || areas[0];
+}
+
 router.get("/game", (req, res) => {
   const full = state.loadCampaign(req.campaignId);
   // The "human" projection is the right lens here: public party stats (name, HP, AC,
@@ -29,15 +42,25 @@ router.get("/game", (req, res) => {
   ((ruleset.characterOptions && ruleset.characterOptions.classes) || []).forEach((c) => {
     if (c.combatKit) classKits[c.id] = c.combatKit;
   });
+
+  const scene = full.scene || {};
+  const sceneText = `${scene.location_name || ""} ${scene.description_public || ""}`;
+  const areas = (ruleset.game && ruleset.game.areas) || [];
+  const area = areas.length ? pickArea(areas, sceneText) : null;
+
   res.render("game", {
     campaignId: req.campaignId,
     campaignTitle: full.campaign.campaign_title,
     party: view.characters,
     // The map layout, tile palette, and enemy roster all live in the ruleset pack now
     // (server/rulesets/*.json "game" block) so a cyberpunk campaign's Play (Beta)
-    // screen looks and plays like a different place, not a reskinned fantasy dungeon.
-    gameContent: ruleset.game || {},
+    // screen looks and plays like a different place, not a reskinned fantasy dungeon --
+    // and now which *area* of that pack's content, chosen by the campaign's actual
+    // current scene rather than always the same one map.
+    gameContent: area ? { partyColors: ruleset.game.partyColors, ...area } : {},
     classKits,
+    sceneLocationName: scene.location_name || "",
+    sceneDescription: scene.description_public || "",
     active: "game",
   });
 });

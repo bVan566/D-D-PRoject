@@ -12,6 +12,9 @@
     #game-header a { margin-right: 14px; }
     #game-root { image-rendering: pixelated; border: 2px solid var(--border); border-radius: 8px; overflow: hidden; margin: 10px; }
     #game-help { color: var(--text-dim); font-size: 0.8rem; max-width: 960px; text-align: center; margin-bottom: 20px; }
+    #scene-context { max-width: 960px; text-align: center; margin: 0 10px 6px; }
+    #scene-context .loc { color: var(--accent); font-weight: 600; }
+    #scene-context .desc { color: var(--text-dim); font-size: 0.82rem; }
   </style>
 </head>
 <body>
@@ -20,6 +23,12 @@
     <a href="/campaigns/<%= campaignId %>/party">Party</a>
     <span class="badge" style="margin-left:8px">BETA</span>
   </div>
+  <% if (sceneLocationName || sceneDescription) { %>
+    <div id="scene-context">
+      <% if (sceneLocationName) { %><div class="loc"><%= sceneLocationName %></div><% } %>
+      <% if (sceneDescription) { %><div class="desc"><%= sceneDescription %></div><% } %>
+    </div>
+  <% } %>
   <div id="game-root"></div>
   <p id="game-help">Arrow keys / WASD to move. Walk onto a marked tile and you might run into trouble.
     This is a first playable slice — placeholder art, one map, one enemy type — proving the loop before

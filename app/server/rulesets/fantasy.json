@@ -40,36 +40,6 @@
     "font": "'Iowan Old Style', 'Palatino Linotype', Georgia, serif"
   },
   "game": {
-    "mapLayout": [
-      "################",
-      "#..............#",
-      "#..............#",
-      "#....\"\"\"\"......#",
-      "#....\"\"\"\"...~~.#",
-      "#..............#",
-      "#.......##..~~.#",
-      "#.......##.....#",
-      "#..............#",
-      "#..............#",
-      "#..............#",
-      "################"
-    ],
-    "tileColors": {
-      "#": "#2a2733",
-      ".": "#1f3d24",
-      "\"": "#3a6b2e",
-      "~": "#1c3a52"
-    },
-    "impassableTiles": [
-      "#",
-      "~"
-    ],
-    "encounterTile": "\"",
-    "encounterChance": 0.35,
-    "playerStart": {
-      "col": 2,
-      "row": 2
-    },
     "partyColors": [
       "#3f7fb1",
       "#4f9e6b",
@@ -77,25 +47,130 @@
       "#9a6fc9",
       "#b1543f"
     ],
-    "encounterIntro": "A Deserter patrol blocks the path!",
-    "enemyTemplates": [
+    "areas": [
       {
-        "name": "Deserter Skirmisher",
-        "hp": 16,
-        "ac": 13,
-        "attackBonus": 4,
-        "damageDie": 6,
-        "damageBonus": 2,
-        "color": "#b1543f"
+        "id": "wilderness",
+        "default": true,
+        "keywords": [],
+        "mapLayout": [
+          "################",
+          "#..............#",
+          "#..............#",
+          "#....\"\"\"\"......#",
+          "#....\"\"\"\"...~~.#",
+          "#..............#",
+          "#.......##..~~.#",
+          "#.......##.....#",
+          "#..............#",
+          "#..............#",
+          "#..............#",
+          "################"
+        ],
+        "tileColors": {
+          "#": "#2a2733",
+          ".": "#1f3d24",
+          "\"": "#3a6b2e",
+          "~": "#1c3a52"
+        },
+        "impassableTiles": [
+          "#",
+          "~"
+        ],
+        "encounterTile": "\"",
+        "encounterChance": 0.35,
+        "playerStart": {
+          "col": 2,
+          "row": 2
+        },
+        "encounterIntro": "A Deserter patrol blocks the path!",
+        "enemyTemplates": [
+          {
+            "name": "Deserter Skirmisher",
+            "hp": 16,
+            "ac": 13,
+            "attackBonus": 4,
+            "damageDie": 6,
+            "damageBonus": 2,
+            "color": "#b1543f"
+          },
+          {
+            "name": "Deserter Skirmisher",
+            "hp": 16,
+            "ac": 13,
+            "attackBonus": 4,
+            "damageDie": 6,
+            "damageBonus": 2,
+            "color": "#b1543f"
+          }
+        ]
       },
       {
-        "name": "Deserter Skirmisher",
-        "hp": 16,
-        "ac": 13,
-        "attackBonus": 4,
-        "damageDie": 6,
-        "damageBonus": 2,
-        "color": "#b1543f"
+        "id": "dungeon",
+        "default": false,
+        "keywords": [
+          "tunnel",
+          "cave",
+          "cavern",
+          "dungeon",
+          "underground",
+          "mine",
+          "crypt",
+          "tomb",
+          "cellar",
+          "sewer",
+          "passage"
+        ],
+        "mapLayout": [
+          "################",
+          "#..............#",
+          "#.############.#",
+          "#.#..........#.#",
+          "#.#.\"\"\"\"\"\"...#.#",
+          "#.#..........#.#",
+          "#.############.#",
+          "#..............#",
+          "#.############.#",
+          "#.#..........#.#",
+          "#.#..........#.#",
+          "################"
+        ],
+        "tileColors": {
+          "#": "#2b2620",
+          ".": "#3a3229",
+          "\"": "#4a2f24",
+          "~": "#1a2a30"
+        },
+        "impassableTiles": [
+          "#",
+          "~"
+        ],
+        "encounterTile": "\"",
+        "encounterChance": 0.35,
+        "playerStart": {
+          "col": 2,
+          "row": 1
+        },
+        "encounterIntro": "A Deserter patrol blocks the tunnel ahead!",
+        "enemyTemplates": [
+          {
+            "name": "Deserter Skirmisher",
+            "hp": 16,
+            "ac": 13,
+            "attackBonus": 4,
+            "damageDie": 6,
+            "damageBonus": 2,
+            "color": "#b1543f"
+          },
+          {
+            "name": "Deserter Skirmisher",
+            "hp": 16,
+            "ac": 13,
+            "attackBonus": 4,
+            "damageDie": 6,
+            "damageBonus": 2,
+            "color": "#b1543f"
+          }
+        ]
       }
     ]
   },

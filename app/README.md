@@ -204,10 +204,28 @@ proving the loop is fun before anyone draws anything. Built with
   reference, so asking about it afterward would draw a blank. Verified live: after a
   graphical win, asking the DM "is everyone alright?" produced a reply correctly
   grounded in that specific fight (enemy count, no invented details).
+- **The map reflects where the story actually says you are** (`routes/game.js
+  pickArea`): each ruleset pack's `game.areas` is a small fixed set of location
+  archetypes (fantasy: `wilderness` / `dungeon`; Neon Sprawl: `street` / `interior`),
+  each with its own layout, palette, and enemy roster. On loading Play (Beta), the
+  campaign's current `scene.location_name` + `scene.description_public` are checked
+  against each area's keywords (e.g. "tunnel"/"cave"/"underground" → `dungeon`) and the
+  best match is used; the scene's actual name and description are also shown on screen
+  above the map, so it never reads as a disconnected arcade level. This is deliberately
+  an *approximation*, not literal reproduction — the DM narrates arbitrary, unbounded
+  locations, so there's no way to hand-author a bespoke tile layout for every place it
+  might improvise; matching against a handful of archetypes is the bounded version of
+  "the map matches your location" that's actually buildable. It also depends on the
+  `scene` slice being kept current — the DM's live chat replies don't automatically
+  update `scene.location_name`/`description_public` today, only the manual "Edit scene"
+  form does, so the graphical map can lag behind the conversation until that's updated.
+  Verified live: the demo campaign's starting scene ("...have not entered it yet")
+  correctly stays on the `wilderness` map; editing the scene to describe being inside
+  the tunnel correctly switches to the `dungeon` map, with area-specific enemy intro
+  text, and the same for Neon Sprawl's `street` → `interior` switch.
 - **Deliberately not here yet**: items in battle, advantage/disadvantage, conditions,
-  more than one map, real sprite art, sound, and tying the map itself to the campaign's
-  actual current scene/location (right now it's one fixed generic map regardless of
-  where the story says you are). This is a proof of the loop, not the finished game —
+  more than one map per area, real sprite art, sound, and auto-syncing `scene` from the
+  DM's live narration (see above). This is a proof of the loop, not the finished game —
   expand it only once the core "walk, fight, come back" cycle is confirmed to actually
   be fun.
 
