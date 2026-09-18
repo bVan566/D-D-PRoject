@@ -19,6 +19,9 @@
   const kitOptionsEl = document.getElementById("kit-options");
   const skillBoxEl = document.getElementById("skill-checkboxes");
   const skillHintEl = document.getElementById("skill-count-hint");
+  const spellSectionEl = document.getElementById("spell-section");
+  const spellBoxEl = document.getElementById("spell-checkboxes");
+  const spellHintEl = document.getElementById("spell-count-hint");
   const rollBtn = document.getElementById("roll-btn");
   const rollPoolEl = document.getElementById("roll-pool");
   const acInput = document.querySelector('input[name="ac"]');
@@ -147,6 +150,46 @@
     });
   }
 
+  function enforceSpellLimit(count) {
+    const boxes = spellBoxEl.querySelectorAll('input[type="checkbox"]');
+    const checked = Array.from(boxes).filter((b) => b.checked);
+    boxes.forEach((b) => {
+      b.disabled = !b.checked && checked.length >= count;
+    });
+  }
+
+  function renderSpellCheckboxes(cls) {
+    if (!spellBoxEl || !spellSectionEl) return;
+    spellBoxEl.innerHTML = "";
+    const kit = cls.combatKit;
+    if (!kit || kit.type !== "spells") {
+      spellSectionEl.style.display = "none";
+      return;
+    }
+    spellSectionEl.style.display = "";
+    const count = kit.spellChoices.count;
+    if (spellHintEl) spellHintEl.textContent = `(choose ${count})`;
+    kit.spellChoices.from.forEach((spell) => {
+      const label = document.createElement("label");
+      label.style.cssText = "display:block;font-weight:normal;margin-bottom:4px";
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.name = "spells";
+      cb.value = spell.id;
+      cb.style.cssText = "width:auto;display:inline-block;margin-right:6px";
+      cb.addEventListener("change", () => enforceSpellLimit(count));
+      const desc =
+        spell.effect === "heal"
+          ? `heals ${spell.dieCount}d${spell.die}${spell.useMod ? " + casting modifier" : ""}`
+          : `${spell.dieCount}d${spell.die}${spell.useMod ? " + casting modifier" : ""} damage${
+              spell.effect === "damage_auto_hit" ? ", auto-hits" : ""
+            }`;
+      label.appendChild(cb);
+      label.appendChild(document.createTextNode(`${spell.name} — ${desc}`));
+      spellBoxEl.appendChild(label);
+    });
+  }
+
   function updateClassInfo() {
     const cls = currentClass();
     if (!cls) return;
@@ -159,6 +202,7 @@
     }
     renderKitOptions(cls);
     renderSkillCheckboxes(cls);
+    renderSpellCheckboxes(cls);
     updateHpSuggestion();
   }
 

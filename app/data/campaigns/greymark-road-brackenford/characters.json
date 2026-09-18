@@ -5,6 +5,13 @@
     "name": "Dhovir DrunkFoot",
     "species": "Mountain Dwarf",
     "class_level": "Paladin (Oath of Devotion) 4",
+    "race_id": "dwarf-mountain",
+    "class_id": "paladin",
+    "skills": [
+      "Athletics",
+      "Religion"
+    ],
+    "spells": [],
     "background": "Soldier",
     "alignment": "Chaotic Good",
     "abilities": {
@@ -73,6 +80,15 @@
       "name": "Mira Vey",
       "species": "Human",
       "class_level": "Rogue 4 (Scout-style)",
+      "race_id": "human",
+      "class_id": "rogue",
+      "skills": [
+        "Stealth",
+        "Acrobatics",
+        "Sleight of Hand",
+        "Investigation"
+      ],
+      "spells": [],
       "background": "Courier / former border runner",
       "alignment": "Neutral Good",
       "abilities": {
@@ -159,6 +175,16 @@
       "name": "Bram Hollis",
       "species": "Human",
       "class_level": "Cleric 4 (War Domain)",
+      "race_id": "human",
+      "class_id": "cleric",
+      "skills": [
+        "Religion",
+        "Medicine"
+      ],
+      "spells": [
+        "sacred_flame",
+        "cure_wounds"
+      ],
       "background": "Wandering minor-faith chaplain",
       "alignment": "Lawful Good",
       "abilities": {

@@ -22,6 +22,13 @@ router.get("/game", (req, res) => {
   // page that ships party data straight into client-side JS.
   const view = projectState(full, "human");
   const ruleset = getRuleset(full.campaign.ruleset);
+  // Class id -> combatKit (the class's chosen-at-creation spells, or its one signature
+  // martial feature) -- battleScene.js looks a party member's kit up by their class_id
+  // to know what extra battle actions to offer beyond Attack/Defend/Flee.
+  const classKits = {};
+  ((ruleset.characterOptions && ruleset.characterOptions.classes) || []).forEach((c) => {
+    if (c.combatKit) classKits[c.id] = c.combatKit;
+  });
   res.render("game", {
     campaignId: req.campaignId,
     campaignTitle: full.campaign.campaign_title,
@@ -30,6 +37,7 @@ router.get("/game", (req, res) => {
     // (server/rulesets/*.json "game" block) so a cyberpunk campaign's Play (Beta)
     // screen looks and plays like a different place, not a reskinned fantasy dungeon.
     gameContent: ruleset.game || {},
+    classKits,
     active: "game",
   });
 });

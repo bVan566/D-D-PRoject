@@ -1,8 +1,8 @@
 {
-  "checkpoint_id": "ckpt-584b63ac",
+  "checkpoint_id": "ckpt-c67e1222",
   "label": "Imported from Campaign 001 / Session 002 stop",
   "trigger": "session_end",
-  "created_at": "2026-09-18T17:43:27.605Z",
+  "created_at": "2026-09-18T21:37:27.686Z",
   "session_number": 3,
   "state": {
     "campaign_id": "greymark-road-brackenford",
@@ -11,6 +11,7 @@
       "campaign_package_id": "greymark-road-brackenford",
       "campaign_title": "Greymark Road / Brackenford",
       "rules_baseline": "5e-style; exact edition not locked",
+      "ruleset": "fantasy",
       "active_house_rulings": [],
       "session_number": 3,
       "in_world_date": "Daylight, morning after the first night in Brackenford",
@@ -25,8 +26,8 @@
         "difficulty": "standard",
         "content_boundaries": "Broadly open unless changed by the human player during play."
       },
-      "created_at": "2026-09-18T17:43:27.598Z",
-      "updated_at": "2026-09-18T17:43:27.604Z"
+      "created_at": "2026-09-18T21:37:27.665Z",
+      "updated_at": "2026-09-18T21:37:27.684Z"
     },
     "characters": {
       "human": {
@@ -35,6 +36,13 @@
         "name": "Dhovir DrunkFoot",
         "species": "Mountain Dwarf",
         "class_level": "Paladin (Oath of Devotion) 4",
+        "race_id": "dwarf-mountain",
+        "class_id": "paladin",
+        "skills": [
+          "Athletics",
+          "Religion"
+        ],
+        "spells": [],
         "background": "Soldier",
         "alignment": "Chaotic Good",
         "abilities": {
@@ -103,6 +111,15 @@
           "name": "Mira Vey",
           "species": "Human",
           "class_level": "Rogue 4 (Scout-style)",
+          "race_id": "human",
+          "class_id": "rogue",
+          "skills": [
+            "Stealth",
+            "Acrobatics",
+            "Sleight of Hand",
+            "Investigation"
+          ],
+          "spells": [],
           "background": "Courier / former border runner",
           "alignment": "Neutral Good",
           "abilities": {
@@ -189,6 +206,16 @@
           "name": "Bram Hollis",
           "species": "Human",
           "class_level": "Cleric 4 (War Domain)",
+          "race_id": "human",
+          "class_id": "cleric",
+          "skills": [
+            "Religion",
+            "Medicine"
+          ],
+          "spells": [
+            "sacred_flame",
+            "cure_wounds"
+          ],
           "background": "Wandering minor-faith chaplain",
           "alignment": "Lawful Good",
           "abilities": {
@@ -516,16 +543,16 @@
     },
     "play_log": [
       {
-        "id": "msg-879f2b40",
-        "timestamp": "2026-09-18T17:43:27.603Z",
+        "id": "msg-201d7bf4",
+        "timestamp": "2026-09-18T21:37:27.683Z",
         "role": "dm",
         "speaker_name": "DM",
         "content": "You're standing outside a narrow old drainage opening downslope from the Pell farm, having followed the trail this far. Loose shale, brush. The opening is dark inside — you haven't gone in yet. What do you do?",
         "visibility": "public"
       },
       {
-        "id": "msg-e252dd91",
-        "timestamp": "2026-09-18T17:43:27.603Z",
+        "id": "msg-870243c9",
+        "timestamp": "2026-09-18T21:37:27.683Z",
         "role": "companion",
         "character_id": "pc-mira-vey",
         "speaker_name": "Mira Vey",
@@ -534,8 +561,8 @@
         "is_roll": true
       },
       {
-        "id": "msg-de11b8c7",
-        "timestamp": "2026-09-18T17:43:27.603Z",
+        "id": "msg-fbb76176",
+        "timestamp": "2026-09-18T21:37:27.683Z",
         "role": "companion",
         "character_id": "pc-mira-vey",
         "speaker_name": "Mira Vey",
@@ -544,8 +571,8 @@
         "declares_action": true
       },
       {
-        "id": "msg-59d42b22",
-        "timestamp": "2026-09-18T17:43:27.603Z",
+        "id": "msg-97ebdda4",
+        "timestamp": "2026-09-18T21:37:27.683Z",
         "role": "companion",
         "character_id": "pc-bram-hollis",
         "speaker_name": "Bram Hollis",
@@ -603,32 +630,32 @@
     ],
     "learning": [
       {
-        "id": "lesson-c67c8f4d",
+        "id": "lesson-e1a05231",
         "agent": "dm",
         "observation": "DM re-read full campaign file before two routine narration beats where active-session state was sufficient.",
         "classification": "single_session",
         "evidence_session": 2,
         "recommended_change": "Reinforce the Fast-Flow anti-overinspection guardrail.",
         "status": "active",
-        "created_at": "2026-09-18T17:43:27.603Z",
-        "decided_at": "2026-09-18T17:43:27.603Z"
+        "created_at": "2026-09-18T21:37:27.683Z",
+        "decided_at": "2026-09-18T21:37:27.683Z"
       },
       {
-        "id": "lesson-e5b00ad8",
+        "id": "lesson-e7d7d1de",
         "agent": "player_agent",
         "observation": "Mira initiated 3 of 4 investigation beats this session without being prompted.",
         "classification": "recurring_pattern",
         "evidence_session": 3,
         "recommended_change": "Independence patch 0.2.1 is holding — keep current independent-loop instructions as-is.",
         "status": "proposed",
-        "created_at": "2026-09-18T17:43:27.603Z",
+        "created_at": "2026-09-18T21:37:27.683Z",
         "decided_at": null
       }
     ],
     "worldbuilding_log": [
       {
-        "id": "wbmsg-96245b0e",
-        "timestamp": "2026-09-18T17:43:27.604Z",
+        "id": "wbmsg-97a6ce0b",
+        "timestamp": "2026-09-18T21:37:27.683Z",
         "role": "dm",
         "speaker_name": "DM (prep)",
         "content": "What if the region's dwarves have a folk memory of the chamber being sealed after a war, not built as a shrine?"

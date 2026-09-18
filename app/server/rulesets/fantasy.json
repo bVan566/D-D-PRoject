@@ -427,7 +427,20 @@
             ],
             "ac": 13
           }
-        ]
+        ],
+        "combatKit": {
+          "type": "feature",
+          "feature": {
+            "id": "second_wind",
+            "name": "Second Wind",
+            "effect": "heal_self",
+            "die": 10,
+            "dieCount": 1,
+            "bonus": 2,
+            "usesPerBattle": 1,
+            "description": "Once per battle, catch your breath and recover 1d10+2 HP."
+          }
+        }
       },
       {
         "id": "rogue",
@@ -476,7 +489,19 @@
             ],
             "ac": 13
           }
-        ]
+        ],
+        "combatKit": {
+          "type": "feature",
+          "feature": {
+            "id": "sneak_attack",
+            "name": "Sneak Attack",
+            "effect": "passive_attack_bonus_damage",
+            "die": 6,
+            "dieCount": 1,
+            "usesPerBattle": null,
+            "description": "Every successful Attack deals an extra 1d6 damage automatically."
+          }
+        }
       },
       {
         "id": "wizard",
@@ -521,7 +546,44 @@
             ],
             "ac": 11
           }
-        ]
+        ],
+        "combatKit": {
+          "type": "spells",
+          "castingAbility": "int",
+          "usesPerSpellPerBattle": 3,
+          "spellChoices": {
+            "count": 2,
+            "from": [
+              {
+                "id": "fire_bolt",
+                "name": "Fire Bolt",
+                "effect": "damage",
+                "die": 10,
+                "dieCount": 1,
+                "useMod": false,
+                "targetType": "enemy"
+              },
+              {
+                "id": "magic_missile",
+                "name": "Magic Missile",
+                "effect": "damage_auto_hit",
+                "die": 4,
+                "dieCount": 2,
+                "useMod": true,
+                "targetType": "enemy"
+              },
+              {
+                "id": "chill_touch",
+                "name": "Chill Touch",
+                "effect": "damage",
+                "die": 8,
+                "dieCount": 1,
+                "useMod": false,
+                "targetType": "enemy"
+              }
+            ]
+          }
+        }
       },
       {
         "id": "cleric",
@@ -568,7 +630,44 @@
             ],
             "ac": 15
           }
-        ]
+        ],
+        "combatKit": {
+          "type": "spells",
+          "castingAbility": "wis",
+          "usesPerSpellPerBattle": 3,
+          "spellChoices": {
+            "count": 2,
+            "from": [
+              {
+                "id": "sacred_flame",
+                "name": "Sacred Flame",
+                "effect": "damage",
+                "die": 8,
+                "dieCount": 1,
+                "useMod": false,
+                "targetType": "enemy"
+              },
+              {
+                "id": "guiding_bolt",
+                "name": "Guiding Bolt",
+                "effect": "damage",
+                "die": 6,
+                "dieCount": 2,
+                "useMod": false,
+                "targetType": "enemy"
+              },
+              {
+                "id": "cure_wounds",
+                "name": "Cure Wounds",
+                "effect": "heal",
+                "die": 8,
+                "dieCount": 1,
+                "useMod": true,
+                "targetType": "ally"
+              }
+            ]
+          }
+        }
       },
       {
         "id": "ranger",
@@ -616,7 +715,19 @@
             ],
             "ac": 14
           }
-        ]
+        ],
+        "combatKit": {
+          "type": "feature",
+          "feature": {
+            "id": "favored_quarry",
+            "name": "Favored Quarry",
+            "effect": "mark_target",
+            "die": 6,
+            "dieCount": 1,
+            "usesPerBattle": 1,
+            "description": "Once per battle, mark an enemy. Your Attacks deal an extra 1d6 damage against that target for the rest of the fight."
+          }
+        }
       },
       {
         "id": "barbarian",
@@ -659,7 +770,17 @@
             ],
             "ac": 12
           }
-        ]
+        ],
+        "combatKit": {
+          "type": "feature",
+          "feature": {
+            "id": "rage",
+            "name": "Rage",
+            "effect": "self_buff_rage",
+            "usesPerBattle": 1,
+            "description": "Once per battle: your Attacks deal +2 damage and physical damage you take is halved for the rest of the fight."
+          }
+        }
       },
       {
         "id": "bard",
@@ -705,7 +826,44 @@
             ],
             "ac": 12
           }
-        ]
+        ],
+        "combatKit": {
+          "type": "spells",
+          "castingAbility": "cha",
+          "usesPerSpellPerBattle": 3,
+          "spellChoices": {
+            "count": 2,
+            "from": [
+              {
+                "id": "vicious_mockery",
+                "name": "Vicious Mockery",
+                "effect": "damage",
+                "die": 4,
+                "dieCount": 1,
+                "useMod": false,
+                "targetType": "enemy"
+              },
+              {
+                "id": "sound_burst",
+                "name": "Sound Burst",
+                "effect": "damage",
+                "die": 8,
+                "dieCount": 1,
+                "useMod": false,
+                "targetType": "enemy"
+              },
+              {
+                "id": "healing_word",
+                "name": "Healing Word",
+                "effect": "heal",
+                "die": 4,
+                "dieCount": 1,
+                "useMod": true,
+                "targetType": "ally"
+              }
+            ]
+          }
+        }
       },
       {
         "id": "druid",
@@ -750,7 +908,44 @@
             ],
             "ac": 12
           }
-        ]
+        ],
+        "combatKit": {
+          "type": "spells",
+          "castingAbility": "wis",
+          "usesPerSpellPerBattle": 3,
+          "spellChoices": {
+            "count": 2,
+            "from": [
+              {
+                "id": "produce_flame",
+                "name": "Produce Flame",
+                "effect": "damage",
+                "die": 8,
+                "dieCount": 1,
+                "useMod": false,
+                "targetType": "enemy"
+              },
+              {
+                "id": "thorn_whip",
+                "name": "Thorn Whip",
+                "effect": "damage",
+                "die": 6,
+                "dieCount": 1,
+                "useMod": false,
+                "targetType": "enemy"
+              },
+              {
+                "id": "cure_wounds",
+                "name": "Cure Wounds",
+                "effect": "heal",
+                "die": 8,
+                "dieCount": 1,
+                "useMod": true,
+                "targetType": "ally"
+              }
+            ]
+          }
+        }
       },
       {
         "id": "monk",
@@ -793,7 +988,19 @@
             ],
             "ac": 14
           }
-        ]
+        ],
+        "combatKit": {
+          "type": "feature",
+          "feature": {
+            "id": "flurry_of_blows",
+            "name": "Flurry of Blows",
+            "effect": "bonus_attack",
+            "die": 4,
+            "dieCount": 1,
+            "usesPerBattle": 2,
+            "description": "Up to twice per battle, follow up with an extra unarmed strike (1d4 damage on a hit)."
+          }
+        }
       },
       {
         "id": "paladin",
@@ -839,7 +1046,18 @@
             ],
             "ac": 16
           }
-        ]
+        ],
+        "combatKit": {
+          "type": "feature",
+          "feature": {
+            "id": "lay_on_hands",
+            "name": "Lay on Hands",
+            "effect": "heal_ally_flat",
+            "amount": 5,
+            "usesPerBattle": 1,
+            "description": "Once per battle, touch an ally to heal 5 HP."
+          }
+        }
       },
       {
         "id": "sorcerer",
@@ -882,7 +1100,44 @@
             ],
             "ac": 12
           }
-        ]
+        ],
+        "combatKit": {
+          "type": "spells",
+          "castingAbility": "cha",
+          "usesPerSpellPerBattle": 3,
+          "spellChoices": {
+            "count": 2,
+            "from": [
+              {
+                "id": "fire_bolt",
+                "name": "Fire Bolt",
+                "effect": "damage",
+                "die": 10,
+                "dieCount": 1,
+                "useMod": false,
+                "targetType": "enemy"
+              },
+              {
+                "id": "chaos_bolt",
+                "name": "Chaos Bolt",
+                "effect": "damage",
+                "die": 8,
+                "dieCount": 2,
+                "useMod": false,
+                "targetType": "enemy"
+              },
+              {
+                "id": "ray_of_frost",
+                "name": "Ray of Frost",
+                "effect": "damage",
+                "die": 8,
+                "dieCount": 1,
+                "useMod": false,
+                "targetType": "enemy"
+              }
+            ]
+          }
+        }
       },
       {
         "id": "warlock",
@@ -927,7 +1182,44 @@
             ],
             "ac": 12
           }
-        ]
+        ],
+        "combatKit": {
+          "type": "spells",
+          "castingAbility": "cha",
+          "usesPerSpellPerBattle": 3,
+          "spellChoices": {
+            "count": 2,
+            "from": [
+              {
+                "id": "eldritch_blast",
+                "name": "Eldritch Blast",
+                "effect": "damage",
+                "die": 10,
+                "dieCount": 1,
+                "useMod": false,
+                "targetType": "enemy"
+              },
+              {
+                "id": "chill_touch",
+                "name": "Chill Touch",
+                "effect": "damage",
+                "die": 8,
+                "dieCount": 1,
+                "useMod": false,
+                "targetType": "enemy"
+              },
+              {
+                "id": "poison_spray",
+                "name": "Poison Spray",
+                "effect": "damage",
+                "die": 12,
+                "dieCount": 1,
+                "useMod": false,
+                "targetType": "enemy"
+              }
+            ]
+          }
+        }
       }
     ]
   }

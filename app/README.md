@@ -172,10 +172,22 @@ proving the loop is fun before anyone draws anything. Built with
   Trigger/FF technique — each follower moves to where the member ahead of it just was).
   Walking onto a tall-grass tile has a chance to trigger a battle.
 - **Battle** (`public/js/game/battleScene.js`): party on the right, enemies on the left
-  (classic FF orientation), a menu when it's your turn (Attack/Defend/Flee), simple
-  enemy AI. Built directly from real party data — names, HP, AC, STR modifier — fetched
-  via the same `human`-role visibility projection every other screen uses, so nothing
-  DM-private or another companion's private diary ends up in client-side JS.
+  (classic FF orientation), simple enemy AI. Built directly from real party data —
+  names, HP, AC, abilities — fetched via the same `human`-role visibility projection
+  every other screen uses, so nothing DM-private or another companion's private diary
+  ends up in client-side JS.
+  - **Initiative**: real 5e-style turn order — d20 + Dexterity modifier per combatant,
+    rolled once at the start of the fight and held for every round (not re-rolled
+    turn to turn), shown at the top of the battle screen.
+  - **Class-driven actions**: every character's menu is Attack/Defend/Flee plus
+    whatever their class (`race_id`/`class_id`/`spells` from character creation) grants
+    — a caster's chosen spells (from `characterOptions.classes[].combatKit`, fantasy
+    pack only for now), or a martial class's one signature feature (Second Wind, Rage,
+    Sneak Attack, Favored Quarry, Flurry of Blows, Lay on Hands). Deliberately compact:
+    each spell/feature has a flat per-battle use count rather than a full spell-slot/
+    rest economy, to match this screen's arcade pace. A character with no `class_id`
+    (older data, or a ruleset pack without `characterOptions` yet) just gets the
+    original three options — nothing breaks.
 - **Persistence** (`routes/game.js`): a battle's outcome POSTs final HP back to the real
   character sheets (`POST /campaigns/:id/game/battle-result`) — the same pattern as the
   text-based combat tracker's end-of-fight sync — so the map/battle game and the rest of
@@ -183,9 +195,10 @@ proving the loop is fun before anyone draws anything. Built with
   permanent: the party wakes up battered at 1 HP rather than hitting a dead end, which
   keeps this an arcade-y first slice rather than trying to replicate the main engine's
   own (more careful) death rules.
-- **Deliberately not here yet**: items/spells in battle, more than one map, real sprite
-  art, sound. This is a proof of the loop, not the finished game — expand it only once
-  the core "walk, fight, come back" cycle is confirmed to actually be fun.
+- **Deliberately not here yet**: items in battle, advantage/disadvantage, conditions,
+  more than one map, real sprite art, sound. This is a proof of the loop, not the
+  finished game — expand it only once the core "walk, fight, come back" cycle is
+  confirmed to actually be fun.
 
 ## Beyond the basics
 
