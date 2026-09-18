@@ -22,7 +22,7 @@ function isConfigured() {
   return Boolean(process.env.ANTHROPIC_API_KEY);
 }
 
-async function chat({ system, messages, maxTokens = 700 }) {
+async function chat({ system, messages, maxTokens = 4096, effort = "low" }) {
   if (!isConfigured()) {
     return {
       ok: false,
@@ -32,6 +32,10 @@ async function chat({ system, messages, maxTokens = 700 }) {
     };
   }
   const model = process.env.DUO_ENGINE_MODEL || DEFAULT_MODEL;
+  // Sonnet 5 runs internal "adaptive thinking" on every call by default, and those
+  // reasoning tokens are billed against the same max_tokens cap as the visible reply --
+  // so max_tokens has to leave room for both, and output_config.effort is what actually
+  // controls how much the model spends thinking rather than max_tokens alone.
   const resp = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -39,7 +43,14 @@ async function chat({ system, messages, maxTokens = 700 }) {
       "x-api-key": process.env.ANTHROPIC_API_KEY,
       "anthropic-version": "2023-06-01",
     },
-    body: JSON.stringify({ model, max_tokens: maxTokens, system, messages }),
+    body: JSON.stringify({
+      model,
+      max_tokens: maxTokens,
+      system,
+      messages,
+      thinking: { type: "adaptive" },
+      output_config: { effort },
+    }),
   });
   if (!resp.ok) {
     const text = await resp.text().catch(() => "");

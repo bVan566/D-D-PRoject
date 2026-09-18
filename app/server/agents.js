@@ -218,7 +218,7 @@ async function reviewSession({ campaignTitle, sessionNumber, playLog, metrics })
     },
   ];
 
-  const result = await provider.chat({ system, messages, maxTokens: 1000 });
+  const result = await provider.chat({ system, messages, maxTokens: 4096, effort: "medium" });
   if (!result.ok) return result;
   try {
     const jsonText = result.text.replace(/^```json\s*|\s*```$/g, "");
