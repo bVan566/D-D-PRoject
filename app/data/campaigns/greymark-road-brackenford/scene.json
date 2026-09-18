@@ -1,0 +1,23 @@
+{
+  "location_name": "Old drainage opening, downslope from the Pell farm/quarry track",
+  "description_public": "A narrow old drainage opening in a rock face, reached by following an intermittent trail of overlapping impressions through loose shale and brush. Dhovir and Mira have not entered it yet.",
+  "present_npcs": [],
+  "environment": "Rough loose shale, brush, old quarry terrain; interior not yet assessed.",
+  "hazards": [
+    "Loose shale footing",
+    "Interior of the drainage opening is unassessed"
+  ],
+  "objectives_public": [
+    "Decide whether and how to enter the drainage opening",
+    "Find out what happened to the missing travelers"
+  ],
+  "unresolved_questions_public": [
+    "What caused the voice/scream phenomenon?",
+    "Who is using the abandoned workings, and why?"
+  ],
+  "combat_active": false,
+  "initiative_order": [],
+  "round": 0,
+  "dm_notes": "DM truth (dm_private): a small band of deserters led by Hask Renn has been using the drainage tunnels to rob travelers; Hask disturbed a sealed chamber and released a weak supernatural presence. Orren Vale is a covert deserter contact. None of this is established to the players yet.",
+  "visibility_note": "dm_notes is dm_private/lore_only"
+}

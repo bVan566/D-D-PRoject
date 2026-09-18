@@ -1,0 +1,61 @@
+<%- include('partials/head', { title: 'Create Human PC' }) %>
+<%- include('partials/nav', { campaignId: campaign.campaign_id, role: 'human', active: null }) %>
+
+<h1>Create Your Character &mdash; <%= campaign.campaign_title %></h1>
+<p class="subtitle">Step 3 of 3 (part 1). This is the human-controlled PC. Full agency over action, dialogue, goals,
+  and tactics stays with you &mdash; the DM never controls this character.</p>
+
+<form method="post" action="/campaigns/<%= campaign.campaign_id %>/characters/human/new">
+  <div class="card">
+    <h2 style="margin-top:0">Identity</h2>
+    <div class="grid cols-2">
+      <label>Name<input name="name" required /></label>
+      <label>Species / ancestry<input name="species" placeholder="Mountain Dwarf" /></label>
+      <label>Class &amp; level<input name="class_level" placeholder="Paladin (Oath of Devotion) 4" /></label>
+      <label>Background<input name="background" placeholder="Soldier" /></label>
+      <label>Alignment<input name="alignment" placeholder="Chaotic Good" /></label>
+      <label>Starting gold<input name="gp" type="number" value="100" /></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Abilities</h2>
+    <div class="grid cols-3">
+      <label>STR<input name="str" type="number" value="10" /></label>
+      <label>DEX<input name="dex" type="number" value="10" /></label>
+      <label>CON<input name="con" type="number" value="10" /></label>
+      <label>INT<input name="int" type="number" value="10" /></label>
+      <label>WIS<input name="wis" type="number" value="10" /></label>
+      <label>CHA<input name="cha" type="number" value="10" /></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Combat basics</h2>
+    <div class="grid cols-3">
+      <label>Armor Class<input name="ac" type="number" value="10" /></label>
+      <label>Max HP<input name="hp_max" type="number" value="10" /></label>
+      <label>Speed<input name="speed" type="number" value="30" /></label>
+    </div>
+    <label>Inventory (one item per line)</label>
+    <textarea name="inventory" placeholder="chain mail&#10;shield&#10;battleaxe"></textarea>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Personality &amp; goals <span class="hint">(public &mdash; visible to DM, companion, and Lore)</span></h2>
+    <div class="grid cols-2">
+      <label>Traits<textarea name="traits"></textarea></label>
+      <label>Ideals<textarea name="ideals"></textarea></label>
+      <label>Bonds<textarea name="bonds"></textarea></label>
+      <label>Flaws<textarea name="flaws"></textarea></label>
+    </div>
+    <label>Goals (one per line)</label>
+    <textarea name="goals"></textarea>
+  </div>
+
+  <div class="btn-row">
+    <button type="submit">Save &amp; Create Companion &rarr;</button>
+  </div>
+</form>
+
+<%- include('partials/foot') %>

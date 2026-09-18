@@ -1,0 +1,100 @@
+<%- include('partials/head', { title: 'New Campaign' }) %>
+<%- include('partials/nav', { campaignId: null, role: null, active: null }) %>
+
+<h1>New Campaign</h1>
+<p class="subtitle">Step 1 of 3 &mdash; campaign identity, tone, and rules preferences. Session Zero boundaries come next.</p>
+
+<% if (error) { %><div class="banner warn"><%= error %></div><% } %>
+
+<form method="post" action="/campaigns">
+  <div class="card">
+    <h2 style="margin-top:0">Identity</h2>
+    <div class="grid cols-2">
+      <div>
+        <label>Campaign title</label>
+        <input name="campaign_title" value="<%= form.campaign_title || '' %>" placeholder="Greymark Road / Brackenford" required />
+      </div>
+      <div>
+        <label>Rules baseline</label>
+        <input name="rules_baseline" value="<%= form.rules_baseline || '5e-style; exact edition not locked' %>" />
+      </div>
+    </div>
+    <label>Starting in-world date / time marker (optional)</label>
+    <input name="in_world_date" value="<%= form.in_world_date || '' %>" placeholder="Early autumn, frontier road season" />
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Tone &amp; style</h2>
+    <div class="grid cols-2">
+      <div>
+        <label>Overall tone</label>
+        <select name="tone">
+          <option>Mixed &mdash; humor, tension, mystery, occasional weight</option>
+          <option>Lighthearted &amp; adventurous</option>
+          <option>Grim &amp; high-stakes</option>
+          <option>Mystery-forward, investigative</option>
+          <option>Heroic, mythic</option>
+        </select>
+      </div>
+      <div>
+        <label>Play balance</label>
+        <select name="play_balance">
+          <option>Balanced roleplay / exploration / combat</option>
+          <option>Roleplay &amp; social-forward</option>
+          <option>Exploration &amp; mystery-forward</option>
+          <option>Combat &amp; tactics-forward</option>
+        </select>
+      </div>
+      <div>
+        <label>Horror intensity</label>
+        <select name="horror_intensity">
+          <option value="none">None</option>
+          <option value="mild" selected>Mild &mdash; unease, eerie imagery</option>
+          <option value="moderate">Moderate</option>
+        </select>
+      </div>
+      <div>
+        <label>Romance</label>
+        <select name="romance">
+          <option value="off">Off</option>
+          <option value="emergent_fade_to_black" selected>Emergent, fades from explicit content</option>
+        </select>
+      </div>
+      <div>
+        <label>Companion dynamic</label>
+        <select name="companion_dynamic">
+          <option value="emergent" selected>Emergent &mdash; companion decides from its own personality</option>
+          <option value="loyal_ally">Starts as a loyal ally</option>
+          <option value="wary_professional">Starts wary / strictly professional</option>
+        </select>
+      </div>
+      <div>
+        <label>Character death policy</label>
+        <select name="death_policy">
+          <option value="possible_uncommon" selected>Possible but uncommon</option>
+          <option value="off">Off (danger without permadeath)</option>
+          <option value="gritty">Gritty &mdash; real and frequent risk</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Difficulty / rules preference</h2>
+    <label>Difficulty</label>
+    <select name="difficulty">
+      <option value="standard" selected>Standard &mdash; flow-first, roll only on meaningful uncertainty</option>
+      <option value="cinematic">Cinematic &mdash; favor momentum over strict mechanics</option>
+      <option value="tactical">Tactical &mdash; more frequent checks, stricter resource tracking</option>
+    </select>
+    <label>Content boundaries (anything off-limits, table rulings, etc.)</label>
+    <textarea name="content_boundaries" placeholder="Broadly open unless changed during play."></textarea>
+  </div>
+
+  <div class="btn-row">
+    <button type="submit">Create Campaign &rarr;</button>
+    <a class="btn secondary" href="/">Cancel</a>
+  </div>
+</form>
+
+<%- include('partials/foot') %>

@@ -1,0 +1,54 @@
+<%- include('partials/head', { title: 'Session Recap' }) %>
+<%- include('partials/nav', { campaignId, role, active: 'recap' }) %>
+
+<h1>Session Recap</h1>
+<p class="subtitle">Ending a session writes a compressed canonical summary and takes an automatic save checkpoint,
+  matching the engine's persistence-checkpoint rule.</p>
+
+<% sessions.slice().reverse().forEach(s => { %>
+  <div class="card">
+    <h3>Session <%= s.session_number %> <span class="hint"><%= s.date %></span></h3>
+    <p><%= s.compressed_summary %></p>
+    <div class="grid cols-2">
+      <div><strong class="hint">Major choices</strong><ul class="clean"><% (s.major_choices||[]).forEach(x=>{ %><li><%= x %></li><% }) %></ul></div>
+      <div><strong class="hint">Discoveries</strong><ul class="clean"><% (s.discoveries||[]).forEach(x=>{ %><li><%= x %></li><% }) %></ul></div>
+      <div><strong class="hint">Resource changes</strong><ul class="clean"><% (s.resource_changes||[]).forEach(x=>{ %><li><%= x %></li><% }) %></ul></div>
+      <div><strong class="hint">Unresolved threads</strong><ul class="clean"><% (s.unresolved_threads||[]).forEach(x=>{ %><li><%= x %></li><% }) %></ul></div>
+    </div>
+    <% if (role === 'dm' || role === 'lore') { %>
+      <div class="grid cols-2" style="margin-top:8px">
+        <div><strong class="hint">DM self-review</strong><p><%= s.dm_self_review || '—' %></p></div>
+        <div><strong class="hint">Player Agent self-review</strong><p><%= s.player_agent_self_review || '—' %></p></div>
+      </div>
+      <strong class="hint">Human feedback</strong><p><%= s.human_feedback || '—' %></p>
+    <% } %>
+  </div>
+<% }) %>
+<% if (!sessions.length) { %><p class="empty">No sessions closed yet.</p><% } %>
+
+<% if (role === 'dm' || role === 'lore') { %>
+  <div class="card">
+    <h2 style="margin-top:0">End Session <%= campaign.session_number %></h2>
+    <form method="post" action="/campaigns/<%= campaignId %>/recap/end-session">
+      <label>Compressed canonical summary</label>
+      <textarea name="compressed_summary" required></textarea>
+      <div class="grid cols-2">
+        <label>Major choices (one per line)<textarea name="major_choices"></textarea></label>
+        <label>Discoveries (one per line)<textarea name="discoveries"></textarea></label>
+        <label>Resource changes (one per line)<textarea name="resource_changes"></textarea></label>
+        <label>Relationship changes (one per line)<textarea name="relationship_changes"></textarea></label>
+      </div>
+      <label>Unresolved threads (one per line)</label>
+      <textarea name="unresolved_threads"></textarea>
+      <div class="grid cols-2">
+        <label>DM self-review (pacing, fairness, agency, engagement)<textarea name="dm_self_review"></textarea></label>
+        <label>Player Agent self-review (independence, balance, consistency)<textarea name="player_agent_self_review"></textarea></label>
+      </div>
+      <label>Human feedback</label>
+      <textarea name="human_feedback" placeholder="Best part, weakest part, pacing, companion quality, more/less of anything"></textarea>
+      <button type="submit">Close Session &amp; Checkpoint</button>
+    </form>
+  </div>
+<% } %>
+
+<%- include('partials/foot') %>

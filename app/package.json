@@ -1,0 +1,16 @@
+{
+  "name": "dnd-duo-engine-ui",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Visual UI prototype for the D&D Duo Engine (DM / Player / Lore agent separation, role-filtered campaign state).",
+  "main": "server/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2"
+  }
+}

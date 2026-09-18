@@ -1,0 +1,155 @@
+<%- include('partials/head', { title: 'Lore & Canon' }) %>
+<%- include('partials/nav', { campaignId, role, active: 'lore' }) %>
+
+<h1>Lore &amp; Canon Record</h1>
+<p class="subtitle">Every fact carries a canon status and a visibility tag. What you see below is exactly what the
+  server projected for the <span class="badge <%= role %>"><%= role %></span> role &mdash; nothing was hidden with CSS.</p>
+
+<h2>Canon Facts</h2>
+<% if (!view.canon.length) { %><p class="empty">Not established yet.</p><% } %>
+<table>
+  <thead><tr><th>Statement</th><th>Status</th><th>Visibility</th><th>Claim type</th><th>Source</th><th></th></tr></thead>
+  <tbody>
+    <% view.canon.forEach(f => { %>
+      <tr>
+        <td><%= f.statement %><% if (f.contradiction_flag) { %><br/><span class="badge contradiction">contradiction: <%= f.contradiction_note || 'flagged' %></span><% } %></td>
+        <td><span class="badge <%= f.canon_status %>"><%= f.canon_status %></span></td>
+        <td><span class="badge <%= f.visibility %>"><%= f.visibility %></span></td>
+        <td><%= f.claim_type %></td>
+        <td class="hint"><%= f.source %> (s<%= f.session %>)</td>
+        <td>
+          <% if ((role === 'dm' || role === 'lore') && !f.contradiction_flag) { %>
+            <form method="post" action="/campaigns/<%= campaignId %>/lore/canon/<%= f.id %>/flag">
+              <button type="submit" class="secondary" style="font-size:0.7rem;padding:4px 8px">Flag conflict</button>
+            </form>
+          <% } %>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<% if (role === 'dm' || role === 'lore') { %>
+  <details>
+    <summary class="hint" style="cursor:pointer">Record a new fact</summary>
+    <form method="post" action="/campaigns/<%= campaignId %>/lore/canon" style="margin-top:8px">
+      <input type="hidden" name="role" value="<%= role %>" />
+      <label>Statement<textarea name="statement" required></textarea></label>
+      <div class="grid cols-3">
+        <label>Canon status
+          <select name="canon_status">
+            <option value="locked_canon">locked_canon</option>
+            <option value="dm_truth">dm_truth</option>
+            <option value="open_lore" selected>open_lore</option>
+            <option value="unresolved_space">unresolved_space</option>
+            <option value="possibility">possibility</option>
+          </select>
+        </label>
+        <label>Visibility
+          <select name="visibility">
+            <option value="public" selected>public</option>
+            <option value="human_pc">human_pc</option>
+            <option value="companion_pc">companion_pc</option>
+            <option value="dm_private">dm_private</option>
+            <option value="lore_only">lore_only</option>
+          </select>
+        </label>
+        <label>Claim type
+          <select name="claim_type">
+            <option>objective_fact</option>
+            <option>observed</option>
+            <option selected>reported_claim</option>
+            <option>inference</option>
+            <option>belief</option>
+            <option>disputed</option>
+          </select>
+        </label>
+      </div>
+      <label>Source / provenance<input name="source" placeholder="Sergeant Tann, Session 002" /></label>
+      <label>Related entities (one per line)<textarea name="related_entities"></textarea></label>
+      <button type="submit">Add Fact</button>
+    </form>
+  </details>
+<% } %>
+
+<h2>NPCs</h2>
+<% view.npcs.forEach(n => { %>
+  <div class="card">
+    <h3><%= n.name %> <span class="hint"><%= n.role %> &middot; <%= n.location %> &middot; <%= n.status %></span></h3>
+    <p><%= n.public_description %></p>
+    <ul class="clean"><% (n.known_information_public||[]).forEach(k=>{ %><li><%= k %></li><% }) %></ul>
+    <% if ((role==='dm'||role==='lore') && n.hidden_motive) { %>
+      <div class="banner warn"><strong>Hidden motive (DM-private):</strong> <%= n.hidden_motive %></div>
+    <% } %>
+  </div>
+<% }) %>
+<% if (role === 'dm' || role === 'lore') { %>
+  <details>
+    <summary class="hint" style="cursor:pointer">Add NPC</summary>
+    <form method="post" action="/campaigns/<%= campaignId %>/lore/npc" style="margin-top:8px">
+      <input type="hidden" name="role" value="<%= role %>" />
+      <div class="grid cols-2">
+        <label>Name<input name="name" required /></label>
+        <label>Role<input name="role_desc" /></label>
+        <label>Location<input name="location" /></label>
+        <label>Status<input name="status" value="alive" /></label>
+      </div>
+      <label>Public description<textarea name="public_description"></textarea></label>
+      <label>Known information (public, one per line)<textarea name="known_information_public"></textarea></label>
+      <label>Hidden motive <span class="badge dm_private">dm_private</span><textarea name="hidden_motive"></textarea></label>
+      <label>Provenance<input name="provenance" /></label>
+      <button type="submit">Add NPC</button>
+    </form>
+  </details>
+<% } %>
+
+<h2>Timeline</h2>
+<table>
+  <thead><tr><th>When</th><th>Summary</th><th>Type</th><th>Visibility</th></tr></thead>
+  <tbody>
+    <% view.timeline.forEach(e => { %>
+      <tr><td class="hint"><%= e.time_marker %></td><td><%= e.summary %></td><td><%= e.claim_type %></td>
+        <td><span class="badge <%= e.visibility %>"><%= e.visibility %></span></td></tr>
+    <% }) %>
+    <% if (!view.timeline.length) { %><tr><td colspan="4" class="empty">Nothing recorded yet.</td></tr><% } %>
+  </tbody>
+</table>
+<% if (role === 'dm' || role === 'lore') { %>
+  <details>
+    <summary class="hint" style="cursor:pointer">Add timeline event</summary>
+    <form method="post" action="/campaigns/<%= campaignId %>/lore/timeline" style="margin-top:8px">
+      <input type="hidden" name="role" value="<%= role %>" />
+      <div class="grid cols-2">
+        <label>Time marker<input name="time_marker" /></label>
+        <label>Visibility
+          <select name="visibility"><option value="public" selected>public</option><option value="dm_private">dm_private</option></select>
+        </label>
+      </div>
+      <label>Summary<textarea name="summary" required></textarea></label>
+      <label>Participants (one per line)<textarea name="participants"></textarea></label>
+      <button type="submit">Add Event</button>
+    </form>
+  </details>
+<% } %>
+
+<h2>Rules &amp; Rulings <span class="hint">(neutral, public by design)</span></h2>
+<ul class="clean">
+  <% (view.rulings||[]).forEach(r => { %><li><strong><%= r.question %></strong> &mdash; <%= r.ruling %> <span class="hint">(<%= r.type %>)</span></li><% }) %>
+  <% if (!(view.rulings||[]).length) { %><li class="empty">None recorded.</li><% } %>
+</ul>
+
+<% if (role === 'dm' || role === 'lore') { %>
+  <h2>Agent Learning &amp; Independence Metrics <span class="hint">(engine instrumentation, not canon)</span></h2>
+  <div class="card">
+    <div class="grid cols-4">
+      <div class="stat-mini"><div class="val"><%= view.metrics.player_agent.independent_action_declarations %></div><div class="lbl">Independent declarations</div></div>
+      <div class="stat-mini"><div class="val"><%= view.metrics.player_agent.companion_initiated_checks %></div><div class="lbl">Companion-initiated checks</div></div>
+      <div class="stat-mini"><div class="val"><%= view.metrics.player_agent.passivity_incidents %></div><div class="lbl">Passivity incidents</div></div>
+      <div class="stat-mini"><div class="val"><%= view.metrics.player_agent.hidden_info_violations %></div><div class="lbl">Hidden-info violations</div></div>
+    </div>
+    <p class="hint">These are literal counters (see server/routes/play.js), not narrative self-report, so "did the
+      independence patch actually work this session" is answerable from data instead of impression.</p>
+  </div>
+<% } %>
+
+<%- include('partials/foot') %>

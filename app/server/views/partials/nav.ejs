@@ -1,0 +1,31 @@
+<header class="top">
+  <div class="bar">
+    <div>
+      <a class="brand" href="/">D&amp;D Duo Engine<small>Visual UI prototype</small></a>
+    </div>
+    <% if (typeof campaignId !== 'undefined' && campaignId) { %>
+      <nav class="tabs">
+        <a href="/campaigns/<%= campaignId %>/play?role=<%= role %>" class="<%= active === 'play' ? 'active' : '' %>">Play</a>
+        <a href="/campaigns/<%= campaignId %>/sheet/human?role=<%= role %>" class="<%= active === 'sheet-human' ? 'active' : '' %>">Dhovir Sheet</a>
+        <a href="/campaigns/<%= campaignId %>/sheet/companion?role=<%= role %>" class="<%= active === 'sheet-companion' ? 'active' : '' %>">Companion Sheet</a>
+        <a href="/campaigns/<%= campaignId %>/quests?role=<%= role %>" class="<%= active === 'quests' ? 'active' : '' %>">Quests</a>
+        <a href="/campaigns/<%= campaignId %>/lore?role=<%= role %>" class="<%= active === 'lore' ? 'active' : '' %>">Lore &amp; Canon</a>
+        <a href="/campaigns/<%= campaignId %>/relationships?role=<%= role %>" class="<%= active === 'relationships' ? 'active' : '' %>">Relationships</a>
+        <a href="/campaigns/<%= campaignId %>/recap?role=<%= role %>" class="<%= active === 'recap' ? 'active' : '' %>">Recap</a>
+        <a href="/campaigns/<%= campaignId %>/saves?role=<%= role %>" class="<%= active === 'saves' ? 'active' : '' %>">Save / Resume</a>
+      </nav>
+    <% } %>
+  </div>
+  <% if (typeof campaignId !== 'undefined' && campaignId) { %>
+    <div class="bar" style="padding-top:0;">
+      <div class="hint">Viewing as — each seat only receives what the server projects for that role.</div>
+      <div class="role-switch">
+        <a class="role-dm <%= role === 'dm' ? 'active' : '' %>" href="?role=dm">DM</a>
+        <a class="role-human <%= role === 'human' ? 'active' : '' %>" href="?role=human">Human Player</a>
+        <a class="role-companion <%= role === 'companion' ? 'active' : '' %>" href="?role=companion">Companion (Player Agent)</a>
+        <a class="role-lore <%= role === 'lore' ? 'active' : '' %>" href="?role=lore">Lore (record-keeper)</a>
+      </div>
+    </div>
+  <% } %>
+</header>
+<div class="wrap">

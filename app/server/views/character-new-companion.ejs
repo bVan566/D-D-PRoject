@@ -1,0 +1,77 @@
+<%- include('partials/head', { title: 'Create Companion' }) %>
+<%- include('partials/nav', { campaignId: campaign.campaign_id, role: 'companion', active: null }) %>
+
+<h1>Create the Companion (Player Agent) &mdash; <%= campaign.campaign_title %></h1>
+<p class="subtitle">Step 3 of 3 (part 2). This character is played by the Player Agent as an independent second
+  player, not an NPC or DM helper. Give it real motives and a private fear &mdash; those fields are structurally
+  withheld from the DM view and never sent to the human player's screen; only the Companion and Lore roles can see
+  them.</p>
+
+<form method="post" action="/campaigns/<%= campaign.campaign_id %>/characters/companion/new">
+  <div class="card">
+    <h2 style="margin-top:0">Identity</h2>
+    <div class="grid cols-2">
+      <label>Name<input name="name" required value="Mira Vey" /></label>
+      <label>Species<input name="species" value="Human" /></label>
+      <label>Class &amp; level<input name="class_level" value="Rogue 4 (Scout-style)" /></label>
+      <label>Background<input name="background" value="Courier / former border runner" /></label>
+      <label>Alignment<input name="alignment" placeholder="Neutral Good" /></label>
+      <label>Starting gold<input name="gp" type="number" value="20" /></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Abilities</h2>
+    <div class="grid cols-3">
+      <label>STR<input name="str" type="number" value="9" /></label>
+      <label>DEX<input name="dex" type="number" value="18" /></label>
+      <label>CON<input name="con" type="number" value="14" /></label>
+      <label>INT<input name="int" type="number" value="13" /></label>
+      <label>WIS<input name="wis" type="number" value="15" /></label>
+      <label>CHA<input name="cha" type="number" value="12" /></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Combat basics</h2>
+    <div class="grid cols-3">
+      <label>Armor Class<input name="ac" type="number" value="15" /></label>
+      <label>Max HP<input name="hp_max" type="number" value="27" /></label>
+      <label>Speed<input name="speed" type="number" value="30" /></label>
+    </div>
+    <label>Inventory (one item per line)</label>
+    <textarea name="inventory" placeholder="shortbow&#10;shortsword&#10;daggers&#10;thieves' tools"></textarea>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Personality &amp; public goals <span class="badge public">public</span></h2>
+    <div class="grid cols-2">
+      <label>Traits<textarea name="traits" placeholder="Observant, dryly funny, suspicious of institutional authority"></textarea></label>
+      <label>Ideals<textarea name="ideals"></textarea></label>
+      <label>Bonds<textarea name="bonds"></textarea></label>
+      <label>Flaws<textarea name="flaws"></textarea></label>
+    </div>
+    <label>Stated public goals (one per line)</label>
+    <textarea name="goals_public" placeholder="Complete the escort contract and get paid"></textarea>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Private character state <span class="badge companion_pc">companion_pc</span> <span class="badge lore_only">lore_only</span></h2>
+    <p class="hint">These drive independent decisions without becoming world truth or being revealed to the DM/human
+      until the companion legitimately chooses to share them in play.</p>
+    <label>Private beliefs / motives (one per line)</label>
+    <textarea name="private_beliefs" placeholder="Wants reliable travel papers through the region"></textarea>
+    <label>Private fears (one per line)</label>
+    <textarea name="private_fears" placeholder="Being trapped into service she cannot walk away from"></textarea>
+    <label>Private personal goals (one per line)</label>
+    <textarea name="private_goals"></textarea>
+    <label>Tactical / behavioral preferences (one per line)</label>
+    <textarea name="tactical_preferences" placeholder="Use cover, avoid melee when possible, protect escape routes"></textarea>
+  </div>
+
+  <div class="btn-row">
+    <button type="submit">Create Campaign &amp; Start Playing &rarr;</button>
+  </div>
+</form>
+
+<%- include('partials/foot') %>

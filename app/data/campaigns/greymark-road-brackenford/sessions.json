@@ -1,0 +1,47 @@
+[
+  {
+    "session_number": 1,
+    "date": "2026-09-09",
+    "compressed_summary": "Wagon ambush, rescue of Torris, delivery of the medicine chest, and Dhovir's pursuit of Orren Vale led to the first leads on the quarry-road disappearances.",
+    "major_choices": [
+      "Dhovir pursued and confronted Orren instead of reporting him to Tann immediately"
+    ],
+    "discoveries": [
+      "Old drainage cuts/abandoned quarry passages exist near the road"
+    ],
+    "resource_changes": [
+      "Both PCs received 20 gp for the escort contract"
+    ],
+    "relationship_changes": [
+      "Practical cooperation between Dhovir and Mira began warming"
+    ],
+    "unresolved_threads": [
+      "What happened to the missing travelers?",
+      "What caused the voice/scream phenomenon?"
+    ],
+    "dm_self_review": "Strong start; flow-first rules worked well. Watch: avoid narrating Dhovir's internal conclusions.",
+    "player_agent_self_review": "Mira participated without becoming a quest compass; independence untested under tactical pressure.",
+    "human_feedback": ""
+  },
+  {
+    "session_number": 2,
+    "date": "2026-09-10",
+    "compressed_summary": "Formal cooperation with Sergeant Tann, investigation of the Pell farm disappearance site, and a followed trail leading to the drainage opening where the session stopped.",
+    "major_choices": [
+      "Temporary cooperation agreement with Sergeant Tann instead of deputization"
+    ],
+    "discoveries": [
+      "Disturbed ground and overlapping impressions leading to the drainage opening"
+    ],
+    "resource_changes": [],
+    "relationship_changes": [
+      "Partnership openly acknowledged between Dhovir and Mira"
+    ],
+    "unresolved_threads": [
+      "What lies inside the drainage opening?"
+    ],
+    "dm_self_review": "Flow was slower without deep-lookup discipline; Fast-Flow patch 0.2.2 applied for Session 003.",
+    "player_agent_self_review": "PARTIAL — Mira remained too reactive; rarely generated her own DM-called checks. Independent Player Patch 0.2.1 applied.",
+    "human_feedback": "Companion felt like a DM-controlled NPC rather than a second player."
+  }
+]

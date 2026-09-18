@@ -1,0 +1,51 @@
+<%- include('partials/head', { title: 'Relationships' }) %>
+<%- include('partials/nav', { campaignId, role, active: 'relationships' }) %>
+
+<h1>Relationships</h1>
+<p class="subtitle">The public relationship status is visible to everyone. The companion's private read on the
+  relationship (why it changed, what it's not saying) is companion_pc/lore_only.</p>
+
+<% const keys = Object.keys(relationships || {}); %>
+<% if (!keys.length) { %><p class="empty">No relationships tracked yet.</p><% } %>
+<% keys.forEach(key => { const r = relationships[key]; %>
+  <div class="card">
+    <h3><%= r.label %></h3>
+    <p><%= r.status_public %></p>
+    <div class="grid cols-4">
+      <div class="stat-mini"><div class="val"><%= r.trust %></div><div class="lbl">Trust</div></div>
+      <div class="stat-mini"><div class="val"><%= r.affection %></div><div class="lbl">Affection</div></div>
+      <div class="stat-mini"><div class="val"><%= r.loyalty %></div><div class="lbl">Loyalty</div></div>
+      <div class="stat-mini"><div class="val"><%= r.respect %></div><div class="lbl">Respect</div></div>
+    </div>
+    <% if (r.history && r.history.length) { %>
+      <strong class="hint">History</strong>
+      <ul class="clean"><% r.history.forEach(h => { %><li>s<%= h.session %>: <%= h.note %></li><% }) %></ul>
+    <% } %>
+    <% if (r.private_notes !== undefined) { %>
+      <div class="banner"><span class="badge companion_pc">companion_pc</span> <span class="badge lore_only">lore_only</span><br/><%= r.private_notes %></div>
+    <% } %>
+    <% if (role === 'dm' || role === 'lore') { %>
+      <details>
+        <summary class="hint" style="cursor:pointer">Update (post-scene)</summary>
+        <form method="post" action="/campaigns/<%= campaignId %>/relationships/<%= key %>" style="margin-top:8px">
+          <input type="hidden" name="role" value="<%= role %>" />
+          <div class="grid cols-4">
+            <label>&Delta;Trust<input name="trust_delta" type="number" value="0" /></label>
+            <label>&Delta;Affection<input name="affection_delta" type="number" value="0" /></label>
+            <label>&Delta;Loyalty<input name="loyalty_delta" type="number" value="0" /></label>
+            <label>&Delta;Respect<input name="respect_delta" type="number" value="0" /></label>
+          </div>
+          <label>Public status update</label>
+          <input name="status_public" value="<%= r.status_public %>" />
+          <label>Private note (companion_pc/lore_only)</label>
+          <textarea name="private_notes"><%= r.private_notes || '' %></textarea>
+          <label>History note (what happened, tied to this change)</label>
+          <input name="note" placeholder="Dhovir backed her call without question during the chase" />
+          <button type="submit">Save</button>
+        </form>
+      </details>
+    <% } %>
+  </div>
+<% }) %>
+
+<%- include('partials/foot') %>

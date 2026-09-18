@@ -1,0 +1,29 @@
+[
+  {
+    "id": "evt-001",
+    "time_marker": "Session 001",
+    "summary": "Overturned wagon ambush on the Greymark Road; Torris rescued; medicine delivered to Brackenford.",
+    "participants": [
+      "Dhovir",
+      "Mira",
+      "Torris"
+    ],
+    "visibility": "public",
+    "claim_type": "observed",
+    "provenance": "Session 001"
+  },
+  {
+    "id": "evt-002",
+    "time_marker": "Session 002",
+    "summary": "Dhovir and Mira met Sergeant Tann and Harlan Pell, followed a physical trail to the drainage opening.",
+    "participants": [
+      "Dhovir",
+      "Mira",
+      "Sergeant Tann",
+      "Harlan Pell"
+    ],
+    "visibility": "public",
+    "claim_type": "observed",
+    "provenance": "Session 002"
+  }
+]

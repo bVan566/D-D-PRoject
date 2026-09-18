@@ -1,0 +1,22 @@
+{
+  "campaign_id": "greymark-road-brackenford",
+  "campaign_package_id": "greymark-road-brackenford",
+  "campaign_title": "Greymark Road / Brackenford",
+  "rules_baseline": "5e-style; exact edition not locked",
+  "active_house_rulings": [],
+  "session_number": 3,
+  "in_world_date": "Daylight, morning after the first night in Brackenford",
+  "status": "active",
+  "tone": {
+    "tone": "Mixed — humor, adventure, tension, mystery, occasional weight",
+    "play_balance": "Balanced roleplay / exploration / combat",
+    "death_policy": "possible_uncommon",
+    "horror_intensity": "mild",
+    "romance": "emergent_fade_to_black",
+    "companion_dynamic": "emergent",
+    "difficulty": "standard",
+    "content_boundaries": "Broadly open unless changed by the human player during play."
+  },
+  "created_at": "2026-09-18T13:37:53.108Z",
+  "updated_at": "2026-09-18T13:39:11.385Z"
+}

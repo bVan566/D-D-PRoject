@@ -1,0 +1,39 @@
+<%- include('partials/head', { title: 'Save / Resume' }) %>
+<%- include('partials/nav', { campaignId, role, active: 'saves' }) %>
+
+<h1>Save / Resume</h1>
+<p class="subtitle">Checkpoints are automatic at session start/end; you can also save manually. Restoring replaces
+  all current state with the checkpoint's snapshot (rollback/recovery model).</p>
+
+<div class="card">
+  <form method="post" action="/campaigns/<%= campaignId %>/saves">
+    <input type="hidden" name="role" value="<%= role %>" />
+    <label>Label</label>
+    <input name="label" placeholder="Before entering the drainage opening" />
+    <button type="submit" style="margin-top:8px">Save Checkpoint Now</button>
+  </form>
+</div>
+
+<table>
+  <thead><tr><th>Label</th><th>Trigger</th><th>Session</th><th>Saved</th><th></th></tr></thead>
+  <tbody>
+    <% checkpoints.forEach(c => { %>
+      <tr>
+        <td><%= c.label %></td>
+        <td class="hint"><%= c.trigger %></td>
+        <td><%= c.session_number %></td>
+        <td class="hint"><%= new Date(c.created_at).toLocaleString() %></td>
+        <td>
+          <form method="post" action="/campaigns/<%= campaignId %>/saves/<%= c.checkpoint_id %>/restore"
+                data-confirm="Restore this checkpoint? Current state will be replaced.">
+            <input type="hidden" name="role" value="<%= role %>" />
+            <button type="submit" class="secondary">Restore</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+    <% if (!checkpoints.length) { %><tr><td colspan="5" class="empty">No checkpoints yet.</td></tr><% } %>
+  </tbody>
+</table>
+
+<%- include('partials/foot') %>

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "npc-tann",
+    "name": "Sergeant Elra Tann",
+    "public_description": "Brackenford watch sergeant. Competent, sleep-deprived, politically pressured.",
+    "role": "Watch sergeant / temporary information-sharing ally",
+    "location": "Brackenford",
+    "status": "alive",
+    "known_information_public": [
+      "Identified the three missing people: an unnamed quarry hand, peddler Caldus Marr, and farm boy Jory Pell.",
+      "Agreed to temporary cooperation: Dhovir and Mira investigate independently, not as deputies."
+    ],
+    "hidden_motive": "Not corrupt; genuinely overwhelmed and prefers a practical explanation over supernatural claims.",
+    "provenance": "Session 001–002",
+    "visibility": "public"
+  },
+  {
+    "id": "npc-orren",
+    "name": "Orren Vale",
+    "public_description": "Quarry clerk/bookkeeper. Thin, roughly forties, brown coat, pale limestone dust on boots, slight hitch in right leg.",
+    "role": "Quarry clerk",
+    "location": "Brackenford quarry records office",
+    "status": "alive",
+    "known_information_public": [
+      "Reported old drainage cuts/abandoned quarry passages and believes someone has been using them.",
+      "Admitted to unrecorded business moving goods without proper tolls."
+    ],
+    "hidden_motive": "Covert deserter contact; wants the bandits gone before the watch finds the tunnels. Will lie, bargain, flee, or betray depending on pressure.",
+    "provenance": "Session 001",
+    "visibility": "public"
+  },
+  {
+    "id": "npc-harlan",
+    "name": "Harlan Pell",
+    "public_description": "Jory Pell's father; farms east of Brackenford.",
+    "role": "Missing boy's father",
+    "location": "Pell farm",
+    "status": "alive",
+    "known_information_public": [
+      "Jory seemed normal but quieter the week before vanishing; said he'd seen something near the old quarry road.",
+      "Reported quarry-side dog barking, heavy brush movement, and one indistinct calling voice."
+    ],
+    "hidden_motive": "",
+    "provenance": "Session 002",
+    "visibility": "public"
+  }
+]

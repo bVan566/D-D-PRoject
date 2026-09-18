@@ -1,0 +1,155 @@
+{
+  "human": {
+    "character_id": "pc-human",
+    "controller": "human",
+    "name": "Dhovir DrunkFoot",
+    "species": "Mountain Dwarf",
+    "class_level": "Paladin (Oath of Devotion) 4",
+    "background": "Soldier",
+    "alignment": "Chaotic Good",
+    "abilities": {
+      "str": 19,
+      "dex": 13,
+      "con": 18,
+      "int": 11,
+      "wis": 13,
+      "cha": 9
+    },
+    "ac": 18,
+    "hp": {
+      "current": 32,
+      "max": 32
+    },
+    "temp_hp": 0,
+    "speed": 25,
+    "conditions": [],
+    "inventory": [
+      {
+        "item": "chain mail",
+        "qty": 1
+      },
+      {
+        "item": "shield",
+        "qty": 1
+      },
+      {
+        "item": "battleaxe",
+        "qty": 1
+      },
+      {
+        "item": "dagger",
+        "qty": 1
+      },
+      {
+        "item": "light hammer",
+        "qty": 1
+      },
+      {
+        "item": "backpack, common clothes, dice set, amulet, priest-related supplies",
+        "qty": 1
+      }
+    ],
+    "currency": {
+      "gp": 179
+    },
+    "personality": {
+      "traits": "Conflicted between walking away and honoring his vows.",
+      "ideals": "Devotion — something harmful or evil happening nearby is worth looking into.",
+      "bonds": "Partnership with Mira, openly acknowledged in Session 002.",
+      "flaws": ""
+    },
+    "goals_public": [
+      "Investigate the Brackenford disappearances",
+      "Uphold his paladin oath"
+    ],
+    "location": "East of Brackenford, outside the drainage opening near the Pell farm/quarry track",
+    "status": "active",
+    "player_notes": ""
+  },
+  "companion": {
+    "character_id": "pc-companion",
+    "controller": "player_agent",
+    "name": "Mira Vey",
+    "species": "Human",
+    "class_level": "Rogue 4 (Scout-style)",
+    "background": "Courier / former border runner",
+    "alignment": "Neutral Good",
+    "abilities": {
+      "str": 9,
+      "dex": 18,
+      "con": 14,
+      "int": 13,
+      "wis": 15,
+      "cha": 12
+    },
+    "ac": 15,
+    "hp": {
+      "current": 27,
+      "max": 27
+    },
+    "temp_hp": 0,
+    "speed": 30,
+    "conditions": [],
+    "inventory": [
+      {
+        "item": "shortbow",
+        "qty": 1
+      },
+      {
+        "item": "shortsword",
+        "qty": 1
+      },
+      {
+        "item": "daggers",
+        "qty": 2
+      },
+      {
+        "item": "thieves' tools",
+        "qty": 1
+      }
+    ],
+    "currency": {
+      "gp": 20
+    },
+    "personality": {
+      "traits": "Observant, dryly funny, suspicious of institutional authority.",
+      "ideals": "Dislikes watching capable people die for preventable reasons.",
+      "bonds": "Practical partnership with Dhovir, warming through shared danger.",
+      "flaws": "Rarely gives trust quickly; doesn't treat companionship as obedience."
+    },
+    "goals_public": [
+      "Complete the investigation",
+      "Get paid and keep moving"
+    ],
+    "location": "East of Brackenford, outside the drainage opening near the Pell farm/quarry track",
+    "status": "active",
+    "private": {
+      "visibility": [
+        "companion_pc",
+        "lore_only"
+      ],
+      "beliefs": [
+        "Wants reliable travel papers through the region; believes Orren Vale may know someone who can help."
+      ],
+      "fears": [
+        "Being trapped into service or obligation she cannot walk away from."
+      ],
+      "personal_goals": [
+        "Find a route to reliable travel papers"
+      ],
+      "suspicions": [
+        "Does not know Orren is connected to the deserters."
+      ],
+      "unresolved_questions": [
+        "What is actually inside the drainage opening?"
+      ],
+      "relationship_opinions": {
+        "dhovir": "Capable in a fight; trust is still being earned."
+      },
+      "tactical_preferences": [
+        "Maintain mobility, use cover, seek advantage when plausible",
+        "Protect herself, exploit openings, retreat when staying would be foolish"
+      ]
+    }
+  }
+}
