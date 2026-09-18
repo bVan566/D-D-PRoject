@@ -3,6 +3,7 @@ const state = require("../state");
 const { projectState, canSee } = require("../visibility");
 const { requireCampaign, resolveRole } = require("../middleware");
 const { isConfigured, reviewSession, askWorldbuilder } = require("../agents");
+const { recordUsage, summarize } = require("../usage");
 
 const router = express.Router({ mergeParams: true });
 router.use(requireCampaign);
@@ -227,6 +228,7 @@ router.get("/recap", (req, res) => {
     campaign: view.campaign,
     metrics: view.metrics,
     learning: view.learning,
+    usage: role === "dm" || role === "lore" ? summarize(full.usage) : null,
     llmConfigured: isConfigured(),
     reviewError: null,
     campaignId: req.campaignId,
@@ -255,12 +257,15 @@ router.post("/recap/auto-review", async (req, res) => {
       campaign: view.campaign,
       metrics: view.metrics,
       learning: view.learning,
+      usage: summarize(full.usage),
       llmConfigured: isConfigured(),
       reviewError: result.reason,
       campaignId: req.campaignId,
       active: "recap",
     });
   }
+
+  recordUsage(req.campaignId, { agentRole: "reviewer", usage: result.usage });
 
   const now = new Date().toISOString();
   const proposed = result.lessons.map((l) => ({
@@ -385,6 +390,7 @@ router.post("/worldbuilding/message", async (req, res) => {
       history: full.worldbuilding_log.slice(-20),
       userMessage: `[${message.speaker_name}] ${message.content}`,
     });
+    recordUsage(req.campaignId, { agentRole: "worldbuilder", usage: result.usage });
     const reply = {
       id: state.newId("wbmsg"),
       timestamp: new Date().toISOString(),

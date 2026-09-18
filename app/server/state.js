@@ -50,6 +50,9 @@ const SLICE_DEFAULTS = {
   // intact for actual play while still giving the human a place to co-create with an
   // AI collaborator.
   worldbuilding_log: () => [],
+  // Per-call AI token usage, so spend during testing is visible instead of invisible.
+  // See server/usage.js for how entries get written.
+  usage: () => [],
   metrics: () => ({
     player_agent: {
       independent_action_declarations: 0,

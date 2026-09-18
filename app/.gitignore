@@ -1,2 +1,8 @@
 node_modules/
 *.log
+
+# Secrets. Never commit a real key. .env.example (no real value) is the only env file
+# that should ever be tracked.
+.env
+.env.*
+!.env.example

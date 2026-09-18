@@ -143,3 +143,47 @@ one the project's own docs already call for: move from single-context logical is
 to real server-side filtered projections, so "the Player Agent doesn't have DM-only
 information" is something the system enforces rather than something the model promises.
 That's the core of the UI/backend prototype built alongside this assessment.
+
+## 9. Review against a possible future direction (packaged, portable, single-purchase product)
+
+Written before connecting a real API key for the first time, against a stated
+possible future: a portable single-player product (one human + an independent AI
+party + a separate AI GM + a Lore Master), sold standalone rather than as a
+subscription. Not a redesign — a check that nothing built so far creates a dead end,
+and the smallest changes to keep that door open.
+
+**Already satisfied:** runs locally with no cloud dependency (`npm install && npm
+start`); no key is ever hardcoded, logged, or persisted into campaign data (verified by
+re-reading every `process.env` reference in the codebase, not assumed); DM/Player
+Agent/Lore stay distinct with server-enforced separated knowledge; the human controls
+only their own character while the companion declares and rolls independently;
+character sheets/dice/combat/saves are real product features with zero AI dependency,
+not prompt-dependent workarounds; campaign state is already portable at the file level
+(plain JSON per campaign, trivially copyable).
+
+**Gaps closed in this pass:** `.gitignore` didn't actually exclude `.env` (fixed
+immediately — this was a live risk, not a hypothetical one); no `.env`-file support
+existed, only raw OS environment variables (added via `dotenv` + `.env.example`, no
+real key ever committed); the Anthropic-calling code lived directly inside `agents.js`
+rather than behind a swappable seam (extracted into `server/providers/`, with
+`agents.js` and every route depending only on the generic `{isConfigured, chat,
+estimateCostUsd}` shape — a future BYOK flow, hosted backend, or local model becomes a
+new file in that folder, not a rewrite); AI token usage/cost was discarded rather than
+measured (now recorded per call via `server/usage.js` and shown on the Recap screen).
+
+**Deliberately deferred, not blocking:** export/import as a polished feature (the data's
+already just files — a download button is UI sugar addable anytime); actual
+multi-provider/local-model/hosted-backend support (the seam is what prevents these from
+becoming rewrites later; building them now would be exactly the speculative work this
+review was asked to avoid); moving off "D&D"/"Dungeons & Dragons" naming (a real
+pre-sale requirement — those are Wizards of the Coast trademarks — but purely cosmetic:
+page titles, nav text, a folder name, no game logic depends on the strings, so
+deferring costs nothing structurally); packaging/one-time-purchase/usage-credit
+mechanics (explicitly commercial, explicitly out of scope for now).
+
+**Open question, not yet decided either way:** whether "AI party" in the future
+direction means one companion (as today, matching the original engine's own "Duo"
+design) or genuinely multiple AI-controlled party members. The schema currently
+hardcodes exactly one (`characters: {human, companion}`). Not a dead end either way —
+`state.js` and `visibility.js` are generic enough that going from one companion to a
+list is additive work, not a rewrite — but worth a real answer before it's assumed.

@@ -1,8 +1,8 @@
 {
-  "checkpoint_id": "ckpt-44df3340",
+  "checkpoint_id": "ckpt-074866a0",
   "label": "Imported from Campaign 001 / Session 002 stop",
   "trigger": "session_end",
-  "created_at": "2026-09-18T14:11:24.027Z",
+  "created_at": "2026-09-18T14:58:11.516Z",
   "session_number": 3,
   "state": {
     "campaign_id": "greymark-road-brackenford",
@@ -25,8 +25,8 @@
         "difficulty": "standard",
         "content_boundaries": "Broadly open unless changed by the human player during play."
       },
-      "created_at": "2026-09-18T14:11:24.023Z",
-      "updated_at": "2026-09-18T14:11:24.027Z"
+      "created_at": "2026-09-18T14:58:11.511Z",
+      "updated_at": "2026-09-18T14:58:11.515Z"
     },
     "characters": {
       "human": {
@@ -418,16 +418,16 @@
     },
     "play_log": [
       {
-        "id": "msg-a501871b",
-        "timestamp": "2026-09-18T14:11:24.026Z",
+        "id": "msg-41066387",
+        "timestamp": "2026-09-18T14:58:11.515Z",
         "role": "dm",
         "speaker_name": "DM",
         "content": "You're standing outside a narrow old drainage opening downslope from the Pell farm, having followed the trail this far. Loose shale, brush. The opening is dark inside — you haven't gone in yet. What do you do?",
         "visibility": "public"
       },
       {
-        "id": "msg-2ab89569",
-        "timestamp": "2026-09-18T14:11:24.026Z",
+        "id": "msg-1197ef5e",
+        "timestamp": "2026-09-18T14:58:11.515Z",
         "role": "companion",
         "speaker_name": "Mira Vey",
         "content": "🎲 1d20+6 → [17] +6 = 23",
@@ -435,8 +435,8 @@
         "is_roll": true
       },
       {
-        "id": "msg-9817aaf3",
-        "timestamp": "2026-09-18T14:11:24.026Z",
+        "id": "msg-630321e5",
+        "timestamp": "2026-09-18T14:58:11.515Z",
         "role": "companion",
         "speaker_name": "Mira Vey",
         "content": "Mira crouches to examine the drainage opening edge for fresh tool marks, without waiting to be asked.",
@@ -493,37 +493,38 @@
     ],
     "learning": [
       {
-        "id": "lesson-f51d38cd",
+        "id": "lesson-73c42ee7",
         "agent": "dm",
         "observation": "DM re-read full campaign file before two routine narration beats where active-session state was sufficient.",
         "classification": "single_session",
         "evidence_session": 2,
         "recommended_change": "Reinforce the Fast-Flow anti-overinspection guardrail.",
         "status": "active",
-        "created_at": "2026-09-18T14:11:24.026Z",
-        "decided_at": "2026-09-18T14:11:24.026Z"
+        "created_at": "2026-09-18T14:58:11.515Z",
+        "decided_at": "2026-09-18T14:58:11.515Z"
       },
       {
-        "id": "lesson-24e8c5f1",
+        "id": "lesson-ce1a2d93",
         "agent": "player_agent",
         "observation": "Mira initiated 3 of 4 investigation beats this session without being prompted.",
         "classification": "recurring_pattern",
         "evidence_session": 3,
         "recommended_change": "Independence patch 0.2.1 is holding — keep current independent-loop instructions as-is.",
         "status": "proposed",
-        "created_at": "2026-09-18T14:11:24.026Z",
+        "created_at": "2026-09-18T14:58:11.515Z",
         "decided_at": null
       }
     ],
     "worldbuilding_log": [
       {
-        "id": "wbmsg-7238c737",
-        "timestamp": "2026-09-18T14:11:24.027Z",
+        "id": "wbmsg-2c148d1f",
+        "timestamp": "2026-09-18T14:58:11.515Z",
         "role": "dm",
         "speaker_name": "DM (prep)",
         "content": "What if the region's dwarves have a folk memory of the chamber being sealed after a war, not built as a shrine?"
       }
     ],
+    "usage": [],
     "metrics": {
       "player_agent": {
         "independent_action_declarations": 3,

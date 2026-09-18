@@ -1,15 +1,15 @@
 [
   {
-    "id": "msg-a501871b",
-    "timestamp": "2026-09-18T14:11:24.026Z",
+    "id": "msg-41066387",
+    "timestamp": "2026-09-18T14:58:11.515Z",
     "role": "dm",
     "speaker_name": "DM",
     "content": "You're standing outside a narrow old drainage opening downslope from the Pell farm, having followed the trail this far. Loose shale, brush. The opening is dark inside — you haven't gone in yet. What do you do?",
     "visibility": "public"
   },
   {
-    "id": "msg-2ab89569",
-    "timestamp": "2026-09-18T14:11:24.026Z",
+    "id": "msg-1197ef5e",
+    "timestamp": "2026-09-18T14:58:11.515Z",
     "role": "companion",
     "speaker_name": "Mira Vey",
     "content": "🎲 1d20+6 → [17] +6 = 23",
@@ -17,8 +17,8 @@
     "is_roll": true
   },
   {
-    "id": "msg-9817aaf3",
-    "timestamp": "2026-09-18T14:11:24.026Z",
+    "id": "msg-630321e5",
+    "timestamp": "2026-09-18T14:58:11.515Z",
     "role": "companion",
     "speaker_name": "Mira Vey",
     "content": "Mira crouches to examine the drainage opening edge for fresh tool marks, without waiting to be asked.",

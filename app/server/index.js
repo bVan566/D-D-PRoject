@@ -1,3 +1,9 @@
+// Loads .env into process.env if present. Must run before anything below reads
+// process.env.ANTHROPIC_API_KEY (agents.js / providers/anthropic.js). A real OS-level
+// environment variable, if already set, still takes precedence -- dotenv never
+// overwrites an existing value.
+require("dotenv").config();
+
 const express = require("express");
 const path = require("path");
 

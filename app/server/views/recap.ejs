@@ -5,6 +5,20 @@
 <p class="subtitle">Ending a session writes a compressed canonical summary and takes an automatic save checkpoint,
   matching the engine's persistence-checkpoint rule.</p>
 
+<% if (usage) { %>
+  <div class="card">
+    <h3 style="margin-top:0">Usage This Campaign</h3>
+    <div class="grid cols-4">
+      <div class="stat-mini"><div class="val"><%= usage.calls %></div><div class="lbl">AI calls</div></div>
+      <div class="stat-mini"><div class="val"><%= usage.input_tokens.toLocaleString() %></div><div class="lbl">Input tokens</div></div>
+      <div class="stat-mini"><div class="val"><%= usage.output_tokens.toLocaleString() %></div><div class="lbl">Output tokens</div></div>
+      <div class="stat-mini"><div class="val">$<%= usage.estimated_cost_usd.toFixed(4) %></div><div class="lbl">Est. cost</div></div>
+    </div>
+    <p class="hint">Estimate only, from local per-token rates in .env.example — check console.anthropic.com for
+      actual billing. Zero calls means either nothing's been asked yet, or ANTHROPIC_API_KEY isn't set.</p>
+  </div>
+<% } %>
+
 <% sessions.slice().reverse().forEach(s => { %>
   <div class="card">
     <h3>Session <%= s.session_number %> <span class="hint"><%= s.date %></span></h3>

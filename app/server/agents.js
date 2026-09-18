@@ -30,6 +30,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const provider = require("./providers");
 
 const ENGINE_DIR = path.join(__dirname, "..", "..", "DnD_Duo_Engine_MVP_0.2");
 
@@ -71,9 +72,12 @@ asked, and don't act as if a brainstormed idea is already established. Keep sugg
 clearly framed as suggestions.
 `.trim();
 
-function isConfigured() {
-  return Boolean(process.env.ANTHROPIC_API_KEY);
-}
+// Everything below talks to `provider` (server/providers/index.js), never to a
+// specific vendor's API directly -- that isolation is what lets a future backend swap
+// skip this file's callers entirely. isConfigured/estimateCostUsd are thin pass-
+// throughs so routes only ever need to import from agents.js, never from providers/.
+const isConfigured = provider.isConfigured;
+const estimateCostUsd = provider.estimateCostUsd;
 
 function formatLearning(activeLearning) {
   if (!activeLearning || !activeLearning.length) return "";
@@ -112,39 +116,6 @@ function buildSystemPrompt(role, projectedState, activeLearning) {
     .join("\n\n");
 }
 
-async function chat({ system, messages, maxTokens = 700 }) {
-  if (!isConfigured()) {
-    return {
-      ok: false,
-      reason:
-        "No ANTHROPIC_API_KEY configured in this environment. Live agent replies are " +
-        "disabled; use the play log to record moves manually (e.g. while narrating via " +
-        "a separate Claude conversation) or set ANTHROPIC_API_KEY and restart the server.",
-    };
-  }
-  const resp = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      "x-api-key": process.env.ANTHROPIC_API_KEY,
-      "anthropic-version": "2023-06-01",
-    },
-    body: JSON.stringify({
-      model: process.env.DUO_ENGINE_MODEL || "claude-sonnet-5",
-      max_tokens: maxTokens,
-      system,
-      messages,
-    }),
-  });
-  if (!resp.ok) {
-    const text = await resp.text().catch(() => "");
-    return { ok: false, reason: `Anthropic API error ${resp.status}: ${text.slice(0, 300)}` };
-  }
-  const data = await resp.json();
-  const text = (data.content || []).map((b) => b.text || "").join("\n").trim();
-  return { ok: true, text };
-}
-
 async function callClaude({ role, projectedState, history, userMessage, activeLearning }) {
   const system = buildSystemPrompt(role, projectedState, activeLearning);
   const messages = [
@@ -154,7 +125,7 @@ async function callClaude({ role, projectedState, history, userMessage, activeLe
     })),
     { role: "user", content: userMessage },
   ];
-  return chat({ system, messages });
+  return provider.chat({ system, messages });
 }
 
 async function askWorldbuilder({ campaignTitle, canonSummary, history, userMessage }) {
@@ -172,7 +143,7 @@ async function askWorldbuilder({ campaignTitle, canonSummary, history, userMessa
     })),
     { role: "user", content: userMessage },
   ];
-  return chat({ system, messages });
+  return provider.chat({ system, messages });
 }
 
 const REVIEW_RUBRIC = `
@@ -220,13 +191,13 @@ async function reviewSession({ campaignTitle, sessionNumber, playLog, metrics })
     },
   ];
 
-  const result = await chat({ system, messages, maxTokens: 1000 });
+  const result = await provider.chat({ system, messages, maxTokens: 1000 });
   if (!result.ok) return result;
   try {
     const jsonText = result.text.replace(/^```json\s*|\s*```$/g, "");
     const parsed = JSON.parse(jsonText);
     if (!Array.isArray(parsed)) throw new Error("not an array");
-    return { ok: true, lessons: parsed };
+    return { ok: true, lessons: parsed, usage: result.usage };
   } catch (e) {
     return { ok: false, reason: `Could not parse reviewer output as JSON: ${e.message}`, raw: result.text };
   }
@@ -234,6 +205,7 @@ async function reviewSession({ campaignTitle, sessionNumber, playLog, metrics })
 
 module.exports = {
   isConfigured,
+  estimateCostUsd,
   buildSystemPrompt,
   callClaude,
   askWorldbuilder,

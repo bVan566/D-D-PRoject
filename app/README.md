@@ -17,11 +17,19 @@ node server/seed.js   # populates a demo campaign from the real Campaign 001 dat
 npm start              # http://localhost:4173
 ```
 
-State/visibility/tracking work fully with no further setup. The play screen's "ask an
-agent to respond" option is optional and only appears if `ANTHROPIC_API_KEY` is set in
-the environment; without it you narrate manually in the same log (or run the DM /
-Companion / Lore conversation in a separate Claude session using the existing spec
-files, and copy key beats back into this UI to keep state in sync).
+Runs entirely locally -- no account, no cloud dependency, nothing phones home. Every
+screen (character sheets, dice, the initiative tracker, quests, the lore/canon log,
+relationships, save/resume, world-building) works fully with no further setup.
+
+**To turn on live DM / Companion / Lore replies and the auto-review learning loop:**
+copy `.env.example` to `.env` and fill in an Anthropic API key
+(console.anthropic.com -- a separate, usage-billed developer account, not a claude.ai
+subscription). `.env` is git-ignored; the key is never logged, persisted into campaign
+data, or written anywhere but read from the environment at request time
+(`server/providers/anthropic.js`). Without a key, the "ask an agent to respond" option
+just doesn't do anything live -- narrate manually in the same log instead, or run the
+DM/Companion/Lore conversation in a separate Claude session using the existing spec
+files and copy key beats back into this UI to keep state in sync.
 
 ## How it's organized
 
@@ -35,8 +43,17 @@ files, and copy key beats back into this UI to keep state in sync).
   the companion's own private beliefs/fears are `companion_pc`/`lore_only` — not even
   the DM role receives them, matching the original spec precisely).
 - `server/agents.js` — optional bridge that builds a system prompt from the existing
-  `agents/*.md` files plus a role-filtered state projection and calls the Anthropic API,
-  if configured. Nothing else in the app depends on this working.
+  `agents/*.md` files plus a role-filtered state projection and hands it to
+  `server/providers/`. Nothing else in the app depends on this working.
+- `server/providers/` — the only place that knows how to physically reach an AI
+  backend. `anthropic.js` is the sole implementation today (one `fetch()` call, one
+  request/response shape); `index.js` is the seam a future provider (a different
+  vendor, a self-hosted backend, a local model) plugs into. Routes and views never
+  import from here directly, only from `agents.js` — a provider swap later touches
+  this folder alone.
+- `server/usage.js` — records token usage (and an estimated $ cost) for every AI call
+  against the campaign, so spend during testing is visible on the Recap screen instead
+  of invisible.
 - `server/routes/` — campaign setup & character creation, the play screen (scene, chat
   log, dice, initiative tracker), and records (sheets, quests, lore/canon,
   relationships, recap + the auto-review learning loop, world-building, saves).
