@@ -1,4 +1,5 @@
-// Data model for the new cyberpunk roguelike loop -- Session / Floor / Node / Clock.
+// Data model for "Under the Slate" (working title), the cyberpunk roguelike loop --
+// Session / Floor / Node / Clock / PC. The PC's secondary resource is "the Meter".
 //
 // This is a separate system beside the existing campaign/chat engine (state.js,
 // agents.js, visibility.js), not a replacement or a wrapper around it. Nothing here
@@ -88,8 +89,8 @@ function newPC({
   abilities = { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10 },
   hp = 20,
   max_hp = 20,
-  neural = 0,
-  max_neural = 0,
+  meter = 0,
+  max_meter = 0,
   defense = 10,
   cash = 0,
   humanity = 10,
@@ -103,8 +104,8 @@ function newPC({
     abilities,
     hp,
     max_hp,
-    neural,
-    max_neural,
+    meter,
+    max_meter,
     defense,
     cash,
     humanity,
