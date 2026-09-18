@@ -8,11 +8,22 @@
 
 <form method="post" action="/campaigns">
   <div class="card">
+    <h2 style="margin-top:0">Run type</h2>
+    <label><input type="radio" name="mode" value="procedural" style="width:auto;display:inline-block" <%= (form.mode || 'procedural') === 'procedural' ? 'checked' : '' %> />
+      Procedurally generated run (recommended) &mdash; after you create your character(s), the DM invents an
+      original premise and a fresh dungeon layout on the spot. Delete it and start another for a completely
+      different story and map.</label>
+    <label style="margin-top:6px"><input type="radio" name="mode" value="manual" style="width:auto;display:inline-block" <%= form.mode === 'manual' ? 'checked' : '' %> />
+      Custom / hand-built campaign &mdash; you write the scene and story yourself (the original way this
+      prototype worked).</label>
+  </div>
+
+  <div class="card">
     <h2 style="margin-top:0">Identity</h2>
     <div class="grid cols-2">
       <div>
-        <label>Campaign title</label>
-        <input name="campaign_title" value="<%= form.campaign_title || '' %>" placeholder="Greymark Road / Brackenford" required />
+        <label>Campaign title <span class="hint">(leave blank for a procedural run &mdash; the DM will name it)</span></label>
+        <input name="campaign_title" value="<%= form.campaign_title || '' %>" placeholder="Greymark Road / Brackenford" />
       </div>
       <div>
         <label>Rules baseline</label>

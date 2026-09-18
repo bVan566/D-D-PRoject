@@ -60,6 +60,14 @@ const SLICE_DEFAULTS = {
   // multi-companion party's spotlight balance is measurable per member rather than as
   // one blended average (see routes/play.js where these get incremented).
   metrics: () => ({ player_agents: {} }),
+  // The current procedurally-generated dungeon layout for the Play (Beta) map, if this
+  // campaign uses one (see server/mapgen.js + routes/game.js). Generated once (at
+  // campaign start, or when a new area is entered) and persisted here rather than
+  // regenerated on every page load, so leaving and returning to the map shows the same
+  // place. null means "no generated dungeon yet" -- routes/game.js falls back to the
+  // ruleset's hand-authored areas in that case, so older/manually-built campaigns are
+  // unaffected.
+  dungeon: () => ({ mapLayout: null, playerStart: null, areaId: null, generatedAt: null }),
 };
 
 function newPlayerAgentMetrics() {
@@ -82,6 +90,15 @@ function ensureDataDir() {
 
 function campaignDir(id) {
   return path.join(DATA_DIR, id);
+}
+
+// A roguelike run is meant to be disposable -- start one, play it, delete it, start a
+// completely different one. This is the one genuinely destructive operation in the
+// whole app (irreversibly removes the campaign's folder), so it's a deliberate,
+// separate function rather than something reachable via a generic update path.
+function deleteCampaign(id) {
+  const dir = campaignDir(id);
+  if (fs.existsSync(dir)) fs.rmSync(dir, { recursive: true, force: true });
 }
 
 function slicePath(id, slice) {
@@ -176,6 +193,10 @@ function createCampaign(fields) {
     campaign_id: id,
     campaign_package_id: fields.campaign_package_id || base,
     campaign_title: fields.campaign_title || "Untitled Campaign",
+    // "procedural" (default): after Session Zero characters exist, the DM generates an
+    // original premise + a fresh dungeon layout (see routes/campaigns.js, server/mapgen.js).
+    // "manual": the original hand-authored flow -- write the scene/story yourself.
+    mode: fields.mode === "manual" ? "manual" : "procedural",
     rules_baseline: fields.rules_baseline || "5e-style; exact edition not locked",
     ruleset: fields.ruleset || "fantasy",
     active_house_rulings: [],
@@ -265,6 +286,7 @@ module.exports = {
   writeSlice,
   updateSlice,
   createCampaign,
+  deleteCampaign,
   createCheckpoint,
   listCheckpoints,
   restoreCheckpoint,

@@ -31,9 +31,15 @@
       <div class="btn-row">
         <% if (c.status === 'setup') { %>
           <a class="btn" href="/campaigns/<%= c.campaign_id %>/session-zero">Continue setup</a>
-        <% } else { %>
+        <% } else if (c.mode === 'manual') { %>
           <a class="btn" href="/campaigns/<%= c.campaign_id %>/play?role=dm">Open</a>
+        <% } else { %>
+          <a class="btn" href="/campaigns/<%= c.campaign_id %>/game">Open</a>
         <% } %>
+        <form method="post" action="/campaigns/<%= c.campaign_id %>/delete"
+              onsubmit="return confirm('Delete &quot;<%= c.campaign_title %>&quot; permanently? This cannot be undone.');" style="display:inline">
+          <button type="submit" class="danger">Delete</button>
+        </form>
       </div>
     </div>
   <% }) %>

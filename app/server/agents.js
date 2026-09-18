@@ -329,6 +329,58 @@ async function reviewSession({ campaignTitle, sessionNumber, playLog, metrics })
   }
 }
 
+// Generates a fresh campaign premise for the procedural/roguelike mode: a title, an
+// opening scene, and a quest hook with a DM-private "why this actually matters" secret
+// -- the same structured-JSON-alongside-the-system-prompt pattern reviewSession()
+// already uses for lessons, just producing a campaign seed instead of a review. This
+// replaces hand-authoring a scenario (like the Greymark Road demo data) with the DM
+// making one up on the spot, grounded in the actual PCs and the chosen ruleset's tone.
+async function generateCampaignPremise({ ruleset, tone, difficulty, characters }) {
+  const roster = characters
+    .map((c) => `${c.name} (${c.species || "?"}, ${c.class_level || "?"})`)
+    .join("; ");
+  const system = [
+    "You are generating the opening premise for a brand-new procedurally-started campaign",
+    "in the D&D Duo Engine. This is a one-shot generation step, not in-character play --",
+    "you are inventing a fresh, original scenario, not continuing an existing one.",
+    formatRuleset(ruleset),
+    `Requested tone: ${tone || "balanced"}. Requested difficulty: ${difficulty || "standard"}.`,
+    `The party: ${roster || "(not yet established)"}.`,
+    "---",
+    "Invent an ORIGINAL premise -- do not reuse well-known published campaign names,",
+    "adventure titles, or copyrighted setting content. Ground the opening scene in the",
+    "actual party members listed above.",
+    "Respond with ONLY a JSON object (no prose, no markdown fences) in exactly this shape:",
+    '{"campaign_title": string, "location_name": string, "description_public": string,',
+    ' "environment": string, "quest_title": string, "quest_description": string,',
+    ' "hidden_stakes": string, "antagonist_hint": string}',
+    "campaign_title: a short evocative name for this run.",
+    "location_name / description_public / environment: where the party starts, written",
+    "the way a DM would describe it to players -- description_public is 2-4 sentences.",
+    "quest_title / quest_description: the hook that gets the party moving, player-visible.",
+    "hidden_stakes: the DM-private truth behind the hook (a secret, a twist, a real",
+    "antagonist) -- never shown to players, only used by the DM later to guide the story.",
+    "antagonist_hint: one sentence, DM-private, about who or what is really behind this.",
+  ]
+    .filter(Boolean)
+    .join("\n\n");
+
+  const result = await provider.chat({
+    system,
+    messages: [{ role: "user", content: "Generate the campaign premise now." }],
+    maxTokens: 1536,
+    effort: "medium",
+  });
+  if (!result.ok) return result;
+  try {
+    const jsonText = result.text.replace(/^```json\s*|\s*```$/g, "").trim();
+    const parsed = JSON.parse(jsonText);
+    return { ok: true, premise: parsed, usage: result.usage };
+  } catch (e) {
+    return { ok: false, reason: `Could not parse premise output as JSON: ${e.message}`, raw: result.text };
+  }
+}
+
 module.exports = {
   isConfigured,
   estimateCostUsd,
@@ -338,5 +390,6 @@ module.exports = {
   reviewSession,
   extractSceneUpdate,
   isPass,
+  generateCampaignPremise,
   ROLE_TO_LEARNING_AGENT,
 };

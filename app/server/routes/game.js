@@ -48,6 +48,28 @@ router.get("/game", (req, res) => {
   const areas = (ruleset.game && ruleset.game.areas) || [];
   const area = areas.length ? pickArea(areas, sceneText) : null;
 
+  // A procedurally-generated campaign has its own dungeon layout (server/mapgen.js,
+  // regenerated per run -- see routes/campaigns.js) instead of one of the ruleset's
+  // small fixed hand-authored areas. Keep the matched area's palette/enemy roster
+  // (still a reasonable stylistic fit for the current scene) but swap in the generated
+  // layout and start position, so a roguelike run's map is actually unique to that run.
+  const dungeon = full.dungeon;
+  let effectiveArea = area;
+  if (dungeon && dungeon.mapLayout) {
+    effectiveArea = area
+      ? { ...area, mapLayout: dungeon.mapLayout, playerStart: dungeon.playerStart || area.playerStart }
+      : {
+          mapLayout: dungeon.mapLayout,
+          playerStart: dungeon.playerStart,
+          tileColors: {},
+          impassableTiles: ["#"],
+          encounterTile: '"',
+          encounterChance: 0.15,
+          encounterIntro: "Something blocks the path!",
+          enemyTemplates: [],
+        };
+  }
+
   res.render("game", {
     campaignId: req.campaignId,
     campaignTitle: full.campaign.campaign_title,
@@ -56,8 +78,9 @@ router.get("/game", (req, res) => {
     // (server/rulesets/*.json "game" block) so a cyberpunk campaign's Play (Beta)
     // screen looks and plays like a different place, not a reskinned fantasy dungeon --
     // and now which *area* of that pack's content, chosen by the campaign's actual
-    // current scene rather than always the same one map.
-    gameContent: area ? { partyColors: ruleset.game.partyColors, ...area } : {},
+    // current scene rather than always the same one map (or the campaign's own
+    // procedurally-generated dungeon layout, for a roguelike run -- see above).
+    gameContent: effectiveArea ? { partyColors: ruleset.game.partyColors, ...effectiveArea } : {},
     classKits,
     sceneLocationName: scene.location_name || "",
     sceneDescription: scene.description_public || "",

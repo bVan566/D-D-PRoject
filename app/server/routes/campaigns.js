@@ -3,6 +3,8 @@ const state = require("../state");
 const { requireCampaign, resolveRole, resolveCompanionId } = require("../middleware");
 const { projectState } = require("../visibility");
 const { listRulesets, getRuleset } = require("../rulesets");
+const { generateDungeonLayout } = require("../mapgen");
+const { isConfigured, generateCampaignPremise } = require("../agents");
 
 const router = express.Router();
 
@@ -11,14 +13,25 @@ router.get("/", (req, res) => {
   res.render("dashboard", { campaigns });
 });
 
+// A roguelike run is meant to be disposable -- this is the one irreversible action in
+// the app, gated by a client-side confirm() in dashboard.ejs (a local single-user tool
+// doesn't need a full server-side confirmation page for this).
+router.post("/campaigns/:id/delete", (req, res) => {
+  state.deleteCampaign(req.params.id);
+  res.redirect("/");
+});
+
 router.get("/campaigns/new", (req, res) => {
   res.render("campaign-new", { error: null, form: {}, rulesets: listRulesets() });
 });
 
 router.post("/campaigns", (req, res) => {
   const b = req.body;
-  if (!b.campaign_title || !b.campaign_title.trim()) {
-    return res.render("campaign-new", { error: "Campaign title is required.", form: b, rulesets: listRulesets() });
+  // A procedural run's title comes from the DM's generated premise later (see
+  // routes/campaigns.js companion/new -- generation fires after Session Zero
+  // characters exist), so only a hand-built campaign needs one typed up front.
+  if (b.mode !== "procedural" && (!b.campaign_title || !b.campaign_title.trim())) {
+    return res.render("campaign-new", { error: "Campaign title is required for a custom campaign.", form: b, rulesets: listRulesets() });
   }
   const campaign = state.createCampaign(b);
   res.redirect(`/campaigns/${campaign.campaign_id}/session-zero`);
@@ -125,7 +138,7 @@ router.get("/campaigns/:id/characters/companion/new", requireCampaign, (req, res
   });
 });
 
-router.post("/campaigns/:id/characters/companion/new", requireCampaign, (req, res) => {
+router.post("/campaigns/:id/characters/companion/new", requireCampaign, async (req, res) => {
   const b = req.body;
   const isFirstCompanion = state.readSlice(req.campaignId, "characters").companions.length === 0;
   const companion = {
@@ -203,7 +216,72 @@ router.post("/campaigns/:id/characters/companion/new", requireCampaign, (req, re
 
   if (isFirstCompanion) {
     state.updateSlice(req.campaignId, "campaign", (c) => ({ ...c, status: "active", session_number: Math.max(c.session_number, 1) }));
+
+    const campaign = state.readSlice(req.campaignId, "campaign");
+    if (campaign.mode === "procedural") {
+      // The core roguelike promise: a brand-new run gets its own original story and its
+      // own fresh dungeon, generated the moment characters exist -- no hand-authored
+      // scenario to write, and a different campaign next time produces both a
+      // different map (server/mapgen.js, free/local, no AI) and a different premise
+      // (agents.js generateCampaignPremise, one AI call).
+      const { mapLayout, playerStart } = generateDungeonLayout();
+      state.updateSlice(req.campaignId, "dungeon", () => ({
+        mapLayout,
+        playerStart,
+        areaId: "procedural",
+        generatedAt: new Date().toISOString(),
+      }));
+
+      if (isConfigured()) {
+        const ruleset = getRuleset(campaign.ruleset);
+        const chars = state.readSlice(req.campaignId, "characters");
+        const roster = [chars.human, ...chars.companions].filter(Boolean);
+        const result = await generateCampaignPremise({
+          ruleset,
+          tone: campaign.tone?.tone,
+          difficulty: campaign.tone?.difficulty,
+          characters: roster,
+        });
+        if (result.ok) {
+          const p = result.premise || {};
+          state.updateSlice(req.campaignId, "campaign", (c) => ({ ...c, campaign_title: p.campaign_title || c.campaign_title }));
+          state.updateSlice(req.campaignId, "scene", (s) => ({
+            ...s,
+            location_name: p.location_name || s.location_name,
+            description_public: p.description_public || s.description_public,
+            environment: p.environment || s.environment,
+            dm_notes: p.hidden_stakes ? `Generated premise secret: ${p.hidden_stakes}` : s.dm_notes,
+          }));
+          if (p.quest_title) {
+            state.updateSlice(req.campaignId, "quests", (quests) => [
+              ...quests,
+              {
+                id: state.newId("quest"),
+                title: p.quest_title,
+                player_visible_description: p.quest_description || "",
+                status: "open",
+                originating_event: "Generated at campaign start",
+                known_objectives: [],
+                hidden_stakes: p.hidden_stakes || "",
+                relevant_entities: p.antagonist_hint ? [p.antagonist_hint] : [],
+                consequences_triggered: [],
+                unresolved_questions: [],
+                visibility: "public",
+                provenance: "procedural generation",
+              },
+            ]);
+          }
+        }
+        // A generation failure (rate limit, parse error) isn't fatal -- the map still
+        // generated, and the player lands on a blank-scene game screen exactly like a
+        // manual campaign would, rather than blocking character creation on an AI call.
+      }
+    }
+
     state.createCheckpoint(req.campaignId, "Session Zero complete — characters created", "session_start");
+    if (campaign.mode === "procedural") {
+      return res.redirect(`/campaigns/${req.campaignId}/game`);
+    }
   }
   res.redirect(`/campaigns/${req.campaignId}/party`);
 });
