@@ -68,7 +68,24 @@
     <div class="card">
       <h2 style="margin-top:0">Table Log</h2>
       <div class="chat-log">
-        <% if (!view.play_log.length) { %><p class="empty">No messages yet.</p><% } %>
+        <% if (!view.play_log.length && llmConfigured && (role === 'dm' || role === 'human')) { %>
+          <div class="banner">
+            <p style="margin-top:0">Nothing has happened yet in this campaign. The DM already has your character
+              sheets and campaign setup — it just needs a nudge to open the scene.</p>
+            <form method="post" action="/campaigns/<%= campaignId %>/play/message" style="margin:0">
+              <input type="hidden" name="role" value="<%= role %>" />
+              <input type="hidden" name="speaker_name" value="<%= role === 'human' ? (view.characters.human ? view.characters.human.name : 'Human') : 'Table' %>" />
+              <input type="hidden" name="content" value="Let's begin — please set the opening scene." />
+              <input type="hidden" name="ask_agent" value="dm" />
+              <button type="submit">Start the Session</button>
+            </form>
+          </div>
+        <% } else if (!view.play_log.length && !llmConfigured) { %>
+          <p class="empty">No messages yet. No API key is configured, so the DM can't open the scene automatically
+            &mdash; narrate the opening yourself below, or add an <%= 'ANTHROPIC_API_KEY' %> to play live.</p>
+        <% } else if (!view.play_log.length) { %>
+          <p class="empty">No messages yet. Switch to the DM or human seat to start the session.</p>
+        <% } %>
         <% view.play_log.forEach(m => { %>
           <div class="chat-msg role-<%= m.role %> <%= m.is_roll ? 'is-roll' : '' %>">
             <div class="who"><span class="badge <%= m.role %>"><%= m.role %></span> <%= m.speaker_name %>
