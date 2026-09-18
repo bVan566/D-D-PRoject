@@ -19,4 +19,11 @@ function check(actor, bonus, dc, advantage = false) {
   return { roll, total, hit, crit, fumble };
 }
 
-module.exports = { check };
+// Standard 5e ability-score-to-modifier math -- needed to turn a PC's raw ability
+// score into the bonus check() takes. Not a new system, just the one conversion any
+// caller of check() needs.
+function abilityModifier(score) {
+  return Math.floor((score - 10) / 2);
+}
+
+module.exports = { check, abilityModifier };
