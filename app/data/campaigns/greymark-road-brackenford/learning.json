@@ -1,24 +1,24 @@
 [
   {
-    "id": "lesson-5969db50",
+    "id": "lesson-f51d38cd",
     "agent": "dm",
     "observation": "DM re-read full campaign file before two routine narration beats where active-session state was sufficient.",
     "classification": "single_session",
     "evidence_session": 2,
     "recommended_change": "Reinforce the Fast-Flow anti-overinspection guardrail.",
     "status": "active",
-    "created_at": "2026-09-18T14:04:24.020Z",
-    "decided_at": "2026-09-18T14:04:24.020Z"
+    "created_at": "2026-09-18T14:11:24.026Z",
+    "decided_at": "2026-09-18T14:11:24.026Z"
   },
   {
-    "id": "lesson-bdd8a374",
+    "id": "lesson-24e8c5f1",
     "agent": "player_agent",
     "observation": "Mira initiated 3 of 4 investigation beats this session without being prompted.",
     "classification": "recurring_pattern",
     "evidence_session": 3,
     "recommended_change": "Independence patch 0.2.1 is holding — keep current independent-loop instructions as-is.",
     "status": "proposed",
-    "created_at": "2026-09-18T14:04:24.020Z",
+    "created_at": "2026-09-18T14:11:24.026Z",
     "decided_at": null
   }
 ]

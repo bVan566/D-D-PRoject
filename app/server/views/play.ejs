@@ -35,6 +35,7 @@
           <p><%= view.scene.combat_active ? 'ACTIVE — round ' + view.scene.round : 'Not active' %></p>
         </div>
       </div>
+      <%- include('partials/combat-tracker', { view, role, campaignId }) %>
       <% if (role === 'dm' && view.scene.dm_notes) { %>
         <div class="banner warn"><strong>DM-private notes:</strong> <%= view.scene.dm_notes %></div>
       <% } %>

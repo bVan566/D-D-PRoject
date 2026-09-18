@@ -24,8 +24,11 @@ const SLICE_DEFAULTS = {
     objectives_public: [],
     unresolved_questions_public: [],
     combat_active: false,
+    // Each entry: { id, name, side: "party"|"enemy"|"npc", initiative, hp_current,
+    // hp_max, conditions: [], is_hidden_from_players }. Sorted high-to-low initiative.
     initiative_order: [],
     round: 0,
+    current_turn_index: 0,
     dm_notes: "",
     visibility_note: "dm_notes is dm_private/lore_only",
   }),
@@ -231,7 +234,11 @@ function restoreCheckpoint(id, checkpointId) {
   if (!fs.existsSync(p)) throw new Error("Checkpoint not found");
   const rec = JSON.parse(fs.readFileSync(p, "utf8"));
   for (const slice of SLICE_NAMES) {
-    writeSlice(id, slice, rec.state[slice]);
+    // A checkpoint saved before a slice existed (e.g. worldbuilding_log, added after
+    // this campaign's first save) won't have that key. Fall back to the slice's empty
+    // default rather than writing `undefined`, which would throw.
+    const value = slice in rec.state ? rec.state[slice] : SLICE_DEFAULTS[slice]();
+    writeSlice(id, slice, value);
   }
   return rec;
 }

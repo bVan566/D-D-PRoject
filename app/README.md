@@ -38,8 +38,30 @@ files, and copy key beats back into this UI to keep state in sync).
   `agents/*.md` files plus a role-filtered state projection and calls the Anthropic API,
   if configured. Nothing else in the app depends on this working.
 - `server/routes/` — campaign setup & character creation, the play screen (scene, chat
-  log, dice), and records (sheets, quests, lore/canon, relationships, recap, saves).
+  log, dice, initiative tracker), and records (sheets, quests, lore/canon,
+  relationships, recap + the auto-review learning loop, world-building, saves).
 - `server/views/` — server-rendered EJS templates; `server/public/` — CSS/JS.
+
+## Beyond the basics
+
+- **Initiative/combat tracker** (Play screen): add party/NPC/enemy combatants, roll or
+  enter initiative, step through turns and rounds, adjust HP/conditions live. Enemies
+  can be flagged "hidden from players" — they simply aren't in the initiative order a
+  human/companion role receives until the DM reveals them (same visibility.js
+  mechanism as everything else). Party members' HP/conditions sync back to their
+  character sheet when combat ends, so the tracker and the sheet don't drift apart.
+- **Automatic learning loop** (Recap screen): a reviewer call reads the session's play
+  log + independence metrics against the engine's own acceptance criteria and proposes
+  lessons — the automated version of what a human did by hand after Prototype Test
+  Sessions 001/002. Nothing becomes durable until you approve it (Controlled Learning
+  Policy). Approved lessons get injected into the relevant agent's own system prompt on
+  future calls, kept separate from world-fact visibility since performance coaching and
+  narrative secrecy are different concerns.
+- **World Building** (its own tab): a separate out-of-character workspace where a
+  creative-collaborator persona is *allowed* to propose and riff — unlike the in-session
+  Lore Agent, which never authors story direction. Nothing said there is canon until you
+  hit "Commit to Canon." The Companion role is hard-blocked from this page; it's
+  pre-canon possibility space her character has no legitimate way to know.
 
 ## Demo data
 

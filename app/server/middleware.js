@@ -6,6 +6,12 @@ function requireCampaign(req, res, next) {
     return res.status(404).render("not-found", { path: req.originalUrl });
   }
   req.campaignId = id;
+  // Available to every view's nav bar without every route handler having to pass it
+  // explicitly -- this engine is meant to run any campaign, not just the Greymark Road
+  // demo, so the nav can't hardcode character names.
+  const characters = state.readSlice(id, "characters");
+  res.locals.humanName = characters.human?.name || "Human PC";
+  res.locals.companionName = characters.companion?.name || "Companion";
   next();
 }
 

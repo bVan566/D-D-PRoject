@@ -1,0 +1,98 @@
+<% const order = view.scene.initiative_order || []; %>
+<div style="margin-top:14px; padding-top:14px; border-top:1px solid var(--border)">
+  <div class="campaign-list-item">
+    <h3 style="margin:0">Initiative Tracker</h3>
+    <% if (role === 'dm') { %>
+      <div class="btn-row" style="margin-top:0">
+        <% if (!view.scene.combat_active) { %>
+          <form method="post" action="/campaigns/<%= campaignId %>/play/combat/start"><button type="submit">Start Combat</button></form>
+        <% } else { %>
+          <form method="post" action="/campaigns/<%= campaignId %>/play/combat/next-turn"><button type="submit">Next Turn</button></form>
+          <form method="post" action="/campaigns/<%= campaignId %>/play/combat/end"><button type="submit" class="secondary">End Combat</button></form>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+
+  <% if (!order.length) { %>
+    <p class="empty" style="margin-top:8px">
+      <%= role === 'dm' ? 'No combatants yet — add some below.' : 'No combat in progress.' %>
+    </p>
+  <% } else { %>
+    <table style="margin-top:8px">
+      <thead><tr><th>Init</th><th>Name</th><th>Side</th><th>HP</th><th>Conditions</th><% if (role==='dm') { %><th></th><% } %></tr></thead>
+      <tbody>
+        <% order.forEach((c, i) => { %>
+          <tr style="<%= view.scene.combat_active && i === view.scene.current_turn_index ? 'background:rgba(201,162,75,0.12)' : '' %>">
+            <td><%= c.initiative %></td>
+            <td>
+              <% if (view.scene.combat_active && i === view.scene.current_turn_index) { %>&#9654; <% } %>
+              <%= c.name %>
+              <% if (role === 'dm' && c.is_hidden_from_players) { %><span class="badge dm_private">hidden</span><% } %>
+            </td>
+            <td><span class="badge <%= c.side === 'party' ? 'public' : c.side === 'enemy' ? 'dm_private' : '' %>"><%= c.side %></span></td>
+            <td>
+              <div class="hp-bar <%= c.hp_current <= c.hp_max/3 ? 'low' : '' %>" style="width:80px;display:inline-block;vertical-align:middle">
+                <span style="width:<%= Math.max(0, Math.round(100*c.hp_current/Math.max(1,c.hp_max))) %>%"></span>
+              </div>
+              <span class="hint"><%= c.hp_current %>/<%= c.hp_max %></span>
+            </td>
+            <td class="hint"><%= (c.conditions||[]).join(', ') || '—' %></td>
+            <% if (role === 'dm') { %>
+              <td>
+                <details>
+                  <summary class="hint" style="cursor:pointer">edit</summary>
+                  <form method="post" action="/campaigns/<%= campaignId %>/play/combat/<%= c.id %>/update" style="margin-top:6px;min-width:180px">
+                    <label>HP<input name="hp_current" type="number" value="<%= c.hp_current %>" /></label>
+                    <label>Conditions (comma-separated)<input name="conditions" value="<%= (c.conditions||[]).join(', ') %>" /></label>
+                    <label><input type="checkbox" name="is_hidden_from_players" style="width:auto;display:inline-block" <%= c.is_hidden_from_players ? 'checked' : '' %> /> Hidden from players</label>
+                    <button type="submit" style="font-size:0.75rem;padding:4px 8px">Save</button>
+                  </form>
+                  <form method="post" action="/campaigns/<%= campaignId %>/play/combat/<%= c.id %>/remove" style="margin-top:4px">
+                    <button type="submit" class="danger" style="font-size:0.75rem;padding:4px 8px">Remove</button>
+                  </form>
+                </details>
+              </td>
+            <% } %>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <% if (role === 'dm') { %>
+    <div class="btn-row" style="margin-top:8px">
+      <% ['human','companion'].forEach(cid => { const c = view.characters[cid];
+         if (!c || order.some(o => o.name === c.name)) return; %>
+        <form method="post" action="/campaigns/<%= campaignId %>/play/combat/add">
+          <input type="hidden" name="name" value="<%= c.name %>" />
+          <input type="hidden" name="side" value="party" />
+          <input type="hidden" name="initiative" value="10" />
+          <input type="hidden" name="hp_max" value="<%= c.hp.max %>" />
+          <input type="hidden" name="hp_current" value="<%= c.hp.current %>" />
+          <button type="submit" class="secondary">+ Add <%= c.name %></button>
+        </form>
+      <% }) %>
+    </div>
+    <p class="hint">Party HP/conditions here sync back to the character sheet when combat ends.</p>
+    <details style="margin-top:4px">
+      <summary class="hint" style="cursor:pointer">Add combatant</summary>
+      <form method="post" action="/campaigns/<%= campaignId %>/play/combat/add" style="margin-top:8px">
+        <div class="grid cols-4">
+          <label>Name<input name="name" required /></label>
+          <label>Side
+            <select name="side">
+              <option value="party">party</option>
+              <option value="enemy" selected>enemy</option>
+              <option value="npc">npc</option>
+            </select>
+          </label>
+          <label>Initiative<input name="initiative" type="number" value="10" /></label>
+          <label>Max HP<input name="hp_max" type="number" value="10" /></label>
+        </div>
+        <label><input type="checkbox" name="is_hidden_from_players" style="width:auto;display:inline-block" checked /> Hidden from players until revealed</label>
+        <button type="submit" style="margin-top:8px">Add to Initiative</button>
+      </form>
+    </details>
+  <% } %>
+</div>

@@ -72,6 +72,12 @@ function projectScene(scene, role) {
   const clone = { ...scene };
   if (role !== "dm" && role !== "lore") delete clone.dm_notes;
   delete clone.visibility_note;
+  // "The DM may keep encounter compositions and hidden statistics private" (core
+  // architecture, DM-PRIVATE STATE). A combatant flagged hidden simply doesn't exist
+  // in the initiative order a player-facing role receives, until the DM reveals it.
+  if (role !== "dm" && role !== "lore" && Array.isArray(clone.initiative_order)) {
+    clone.initiative_order = clone.initiative_order.filter((c) => !c.is_hidden_from_players);
+  }
   return clone;
 }
 

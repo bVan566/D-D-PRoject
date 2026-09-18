@@ -41,6 +41,117 @@ router.post("/play/scene", (req, res) => {
   res.redirect(`/campaigns/${req.campaignId}/play?role=dm`);
 });
 
+// ---------- Combat / initiative tracker ----------
+// The original scene schema had combat_active/round/initiative_order as fields with no
+// UI behind them. This is the actual tracker: add combatants (PCs, NPCs, or enemies
+// the DM wants to keep hidden until revealed), roll/enter initiative, step through
+// turns and rounds, and adjust HP/conditions as it happens -- the piece of "current
+// scene and session state" that was still just a checkbox.
+
+function sortByInitiative(order) {
+  return [...order].sort((a, b) => b.initiative - a.initiative);
+}
+
+router.post("/play/combat/start", (req, res) => {
+  state.updateSlice(req.campaignId, "scene", (scene) => ({
+    ...scene,
+    combat_active: true,
+    round: scene.round > 0 ? scene.round : 1,
+    current_turn_index: 0,
+    initiative_order: sortByInitiative(scene.initiative_order),
+  }));
+  res.redirect(`/campaigns/${req.campaignId}/play?role=dm`);
+});
+
+router.post("/play/combat/end", (req, res) => {
+  const scene = state.readSlice(req.campaignId, "scene");
+  // Write party combatants' final HP/conditions back to their character sheets so the
+  // tracker and the sheet don't quietly drift apart once combat is over.
+  state.updateSlice(req.campaignId, "characters", (chars) => {
+    const next = { ...chars };
+    for (const c of scene.initiative_order) {
+      if (c.side !== "party") continue;
+      for (const key of ["human", "companion"]) {
+        if (next[key] && next[key].name === c.name) {
+          next[key] = { ...next[key], hp: { current: c.hp_current, max: c.hp_max }, conditions: c.conditions };
+        }
+      }
+    }
+    return next;
+  });
+  state.updateSlice(req.campaignId, "scene", (s) => ({
+    ...s,
+    combat_active: false,
+    round: 0,
+    current_turn_index: 0,
+    initiative_order: [],
+  }));
+  res.redirect(`/campaigns/${req.campaignId}/play?role=dm`);
+});
+
+router.post("/play/combat/add", (req, res) => {
+  const b = req.body;
+  const combatant = {
+    id: state.newId("cbt"),
+    name: b.name || "Unnamed",
+    side: b.side || "enemy",
+    initiative: Number(b.initiative) || 0,
+    hp_max: Number(b.hp_max) || 1,
+    hp_current: b.hp_current !== undefined ? Number(b.hp_current) : Number(b.hp_max) || 1,
+    conditions: [],
+    is_hidden_from_players: b.is_hidden_from_players === "on",
+  };
+  state.updateSlice(req.campaignId, "scene", (scene) => ({
+    ...scene,
+    initiative_order: sortByInitiative([...scene.initiative_order, combatant]),
+  }));
+  res.redirect(`/campaigns/${req.campaignId}/play?role=dm`);
+});
+
+router.post("/play/combat/:combatantId/update", (req, res) => {
+  const b = req.body;
+  state.updateSlice(req.campaignId, "scene", (scene) => ({
+    ...scene,
+    initiative_order: scene.initiative_order.map((c) =>
+      c.id === req.params.combatantId
+        ? {
+            ...c,
+            hp_current: b.hp_current !== undefined ? Number(b.hp_current) : c.hp_current,
+            conditions: b.conditions !== undefined ? b.conditions.split(",").map((s) => s.trim()).filter(Boolean) : c.conditions,
+            is_hidden_from_players: b.is_hidden_from_players === "on",
+          }
+        : c
+    ),
+  }));
+  res.redirect(`/campaigns/${req.campaignId}/play?role=dm`);
+});
+
+router.post("/play/combat/:combatantId/remove", (req, res) => {
+  state.updateSlice(req.campaignId, "scene", (scene) => {
+    const order = scene.initiative_order.filter((c) => c.id !== req.params.combatantId);
+    return {
+      ...scene,
+      initiative_order: order,
+      current_turn_index: Math.min(scene.current_turn_index, Math.max(0, order.length - 1)),
+    };
+  });
+  res.redirect(`/campaigns/${req.campaignId}/play?role=dm`);
+});
+
+router.post("/play/combat/next-turn", (req, res) => {
+  state.updateSlice(req.campaignId, "scene", (scene) => {
+    if (!scene.initiative_order.length) return scene;
+    const nextIndex = scene.current_turn_index + 1;
+    const wrapped = nextIndex >= scene.initiative_order.length;
+    return {
+      ...scene,
+      current_turn_index: wrapped ? 0 : nextIndex,
+      round: wrapped ? scene.round + 1 : scene.round,
+    };
+  });
+  res.redirect(`/campaigns/${req.campaignId}/play?role=dm`);
+});
+
 router.post("/play/message", async (req, res) => {
   const b = req.body;
   const role = b.role || "human";

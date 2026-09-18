@@ -6,8 +6,8 @@
     <% if (typeof campaignId !== 'undefined' && campaignId) { %>
       <nav class="tabs">
         <a href="/campaigns/<%= campaignId %>/play?role=<%= role %>" class="<%= active === 'play' ? 'active' : '' %>">Play</a>
-        <a href="/campaigns/<%= campaignId %>/sheet/human?role=<%= role %>" class="<%= active === 'sheet-human' ? 'active' : '' %>">Dhovir Sheet</a>
-        <a href="/campaigns/<%= campaignId %>/sheet/companion?role=<%= role %>" class="<%= active === 'sheet-companion' ? 'active' : '' %>">Companion Sheet</a>
+        <a href="/campaigns/<%= campaignId %>/sheet/human?role=<%= role %>" class="<%= active === 'sheet-human' ? 'active' : '' %>"><%= typeof humanName !== 'undefined' ? humanName : 'Human PC' %> Sheet</a>
+        <a href="/campaigns/<%= campaignId %>/sheet/companion?role=<%= role %>" class="<%= active === 'sheet-companion' ? 'active' : '' %>"><%= typeof companionName !== 'undefined' ? companionName : 'Companion' %> Sheet</a>
         <a href="/campaigns/<%= campaignId %>/quests?role=<%= role %>" class="<%= active === 'quests' ? 'active' : '' %>">Quests</a>
         <a href="/campaigns/<%= campaignId %>/lore?role=<%= role %>" class="<%= active === 'lore' ? 'active' : '' %>">Lore &amp; Canon</a>
         <a href="/campaigns/<%= campaignId %>/worldbuilding?role=<%= role %>" class="<%= active === 'worldbuilding' ? 'active' : '' %>">World Building</a>
