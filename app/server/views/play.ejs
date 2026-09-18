@@ -110,12 +110,12 @@
         <% if (llmConfigured) { %>
           <label>Ask an agent to respond in character</label>
           <select name="ask_agent">
-            <option value="">(no — just log this message)</option>
-            <option value="dm">DM Agent</option>
+            <option value="dm" selected>DM Agent</option>
             <% view.characters.companions.forEach(c => { %>
               <option value="companion:<%= c.character_id %>">Ask <%= c.name %> (Player Agent)</option>
             <% }) %>
             <option value="lore">Lore Agent</option>
+            <option value="">(no — just log this message)</option>
           </select>
         <% } %>
         <div class="btn-row"><button type="submit">Send</button></div>
