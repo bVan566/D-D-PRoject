@@ -78,6 +78,49 @@ function newSession({
   };
 }
 
+// commands is a fixed Slice 1 constant, not per-PC configuration -- every PC gets the
+// same five, same as every Session gets the same two clocks.
+const PC_COMMANDS = ["Strike", "Hack", "Item", "Hold", "Flee"];
+
+function newPC({
+  name,
+  portrait_id,
+  abilities = { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10 },
+  hp = 20,
+  max_hp = 20,
+  neural = 0,
+  max_neural = 0,
+  defense = 10,
+  cash = 0,
+  humanity = 10,
+  inventory = [],
+  position,
+  status_effects = [],
+}) {
+  return {
+    name,
+    portrait_id,
+    abilities,
+    hp,
+    max_hp,
+    neural,
+    max_neural,
+    defense,
+    cash,
+    humanity,
+    inventory,
+    commands: PC_COMMANDS,
+    position,
+    status_effects,
+  };
+}
+
+// Retainers are not characters -- no abilities, no inventory, no inner life. Just
+// enough to reference one in a node or a line of dialogue.
+function newRetainerToken({ id, label }) {
+  return { id, label };
+}
+
 module.exports = {
   newClock,
   newHeatClock,
@@ -85,4 +128,6 @@ module.exports = {
   newNode,
   newFloor,
   newSession,
+  newPC,
+  newRetainerToken,
 };
