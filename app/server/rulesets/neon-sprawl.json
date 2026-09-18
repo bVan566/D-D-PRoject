@@ -1,0 +1,24 @@
+{
+  "id": "neon-sprawl",
+  "name": "Neon Sprawl (cyberpunk-flavored)",
+  "description": "High-tech, low-life dystopia. An original setting name, not tied to any published cyberpunk property.",
+  "tone": "High-tech, low-life. Corporate power structures, chrome augmentation, and quiet desperation define the world. Violence is fast, often lethal, and rarely glamorous. Information and access are worth more than cash. Style masks how little control most people actually have.",
+  "vocabulary": {
+    "class": "Role",
+    "power_source": "Cyberware and street tech (no magic)",
+    "currency": "eurodollars (eb)",
+    "weapon_flavor": "firearms, monowire, and cybernetic weapons",
+    "armor_flavor": "subdermal plating and armored jackets",
+    "faction_flavor": "corporations, fixers, and gangs"
+  },
+  "abilities": {
+    "str": "Body",
+    "dex": "Reflexes",
+    "con": "Endurance",
+    "int": "Tech",
+    "wis": "Awareness",
+    "cha": "Cool"
+  },
+  "skill_examples": ["Hacking", "Streetwise", "Ballistics", "Stealth", "Interface", "Intimidation"],
+  "narration_notes": "Rename ability-driven checks to this pack's vocabulary (Body instead of Strength, Tech instead of Intelligence, etc.) even though the underlying numbers and math work exactly the same as any other campaign. No swords, no spellcasting, no fantasy-world nouns (kingdoms, gold pieces, magic) unless the campaign's own established canon has specifically introduced one. Prefer guns, hacking, and corporate leverage over blades and spells for how problems get solved."
+}

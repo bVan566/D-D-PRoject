@@ -1,0 +1,24 @@
+{
+  "id": "fantasy",
+  "name": "Traditional Fantasy",
+  "description": "Grounded sword-and-sorcery fantasy — the default this whole prototype was built against.",
+  "tone": "Grounded sword-and-sorcery fantasy. Magic is real but not casual to cast or to witness; danger is physical first (blades, monsters, wilderness, dungeons) with the supernatural as an occasional, notable exception rather than the everyday backdrop.",
+  "vocabulary": {
+    "class": "Class",
+    "power_source": "Magic",
+    "currency": "gold pieces (gp)",
+    "weapon_flavor": "blades, bows, axes, and old steel",
+    "armor_flavor": "mail, plate, and leather",
+    "faction_flavor": "kingdoms, guilds, and cults"
+  },
+  "abilities": {
+    "str": "Strength",
+    "dex": "Dexterity",
+    "con": "Constitution",
+    "int": "Intelligence",
+    "wis": "Wisdom",
+    "cha": "Charisma"
+  },
+  "skill_examples": ["Investigation", "Perception", "Persuasion", "Athletics", "Arcana", "Survival"],
+  "narration_notes": "Checks are called by their 5e-style names (Investigation, Perception, Athletics, etc.). Treat found gear, coin, and combat in classic fantasy terms — no technology anachronisms unless the campaign's own canon has introduced one."
+}

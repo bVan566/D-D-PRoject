@@ -2,21 +2,23 @@ const express = require("express");
 const state = require("../state");
 const { requireCampaign, resolveRole, resolveCompanionId } = require("../middleware");
 const { projectState } = require("../visibility");
+const { listRulesets, getRuleset } = require("../rulesets");
 
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.render("dashboard", { campaigns: state.listCampaigns() });
+  const campaigns = state.listCampaigns().map((c) => ({ ...c, rulesetName: getRuleset(c.ruleset).name }));
+  res.render("dashboard", { campaigns });
 });
 
 router.get("/campaigns/new", (req, res) => {
-  res.render("campaign-new", { error: null, form: {} });
+  res.render("campaign-new", { error: null, form: {}, rulesets: listRulesets() });
 });
 
 router.post("/campaigns", (req, res) => {
   const b = req.body;
   if (!b.campaign_title || !b.campaign_title.trim()) {
-    return res.render("campaign-new", { error: "Campaign title is required.", form: b });
+    return res.render("campaign-new", { error: "Campaign title is required.", form: b, rulesets: listRulesets() });
   }
   const campaign = state.createCampaign(b);
   res.redirect(`/campaigns/${campaign.campaign_id}/session-zero`);

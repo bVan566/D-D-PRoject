@@ -177,6 +177,7 @@ function createCampaign(fields) {
     campaign_package_id: fields.campaign_package_id || base,
     campaign_title: fields.campaign_title || "Untitled Campaign",
     rules_baseline: fields.rules_baseline || "5e-style; exact edition not locked",
+    ruleset: fields.ruleset || "fantasy",
     active_house_rulings: [],
     session_number: 0,
     in_world_date: fields.in_world_date || "",

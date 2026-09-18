@@ -93,6 +93,36 @@ companions from the Party page (during setup or anytime after). What that touche
 - **Relationships**: one companion→human record per companion (`{companionId}__human`),
   each with its own owner-scoped private read.
 
+## Genre / ruleset packs
+
+The core resolution math (d20 + ability modifier vs. a target number, HP as a damage
+pool) never changes between settings — that part was already generic. What actually
+changes between a traditional-fantasy campaign and, say, a cyberpunk one is vocabulary:
+what the six abilities are called, what tone the AI narrates in, what nouns fit the
+world. `server/rulesets/*.json` is that seam — a small pack per genre (`fantasy.json`,
+`neon-sprawl.json`) declaring a `tone`, a `vocabulary` map, and labels for the six
+abilities. A campaign picks one at creation (`campaign.ruleset`, defaults to `fantasy`
+for backward compatibility with campaigns created before this existed), and it's threaded
+into two places:
+
+- **The AI's system prompt** (`agents.js formatRuleset`) — the DM/companion/Lore calls
+  narrate using that pack's ability names, tone, and vocabulary instead of always
+  defaulting to fantasy phrasing, while the actual role rules and dice math underneath
+  stay identical.
+- **The character sheet display** (`views/sheet.ejs`) — ability scores are labeled with
+  the active pack's names (e.g. "Body"/"Reflexes"/"Tech" instead of "Strength"/
+  "Dexterity"/"Intelligence"), though the stored keys and battle math stay the same six
+  generic slots.
+
+Adding a new genre means adding one more JSON file to `server/rulesets/`, never editing
+agents.js, routes, or views. What this does *not* do yet: change the actual mechanical
+subsystems (a real action economy, advantage/disadvantage, genre-specific mechanics like
+netrunning or humanity loss) — that's real rules design, not a vocabulary swap, and is
+deliberately out of scope for this first pass. `server/seed.js`'s `runNeonSprawl()`
+seeds a small proof-of-concept cyberpunk-flavored campaign (one human, one companion,
+one scene) to demonstrate the pack mechanism live without building out any of that
+deeper subsystem work.
+
 ## Play (Beta)
 
 `/campaigns/:id/game` — the first slice of an actual game layer, deliberately scoped

@@ -119,7 +119,34 @@ function formatActingAs(role, projectedState) {
   ].join("\n");
 }
 
-function buildSystemPrompt(role, projectedState, activeLearning) {
+function formatRuleset(ruleset) {
+  // The genre-pack seam: everything the "core" DM/Player/Lore spec files say about
+  // mechanics (the dice math, the role boundaries) stays fixed across every campaign.
+  // What a ruleset pack changes is purely narration vocabulary -- what the six
+  // abilities are called, what tone to narrate in, what nouns fit the setting -- never
+  // the underlying numbers, which is why this is a short prose block, not new rules.
+  if (!ruleset) return "";
+  const vocab = Object.entries(ruleset.vocabulary || {})
+    .map(([k, v]) => `${k}: ${v}`)
+    .join("; ");
+  const abilities = Object.entries(ruleset.abilities || {})
+    .map(([k, v]) => `${k} → "${v}"`)
+    .join(", ");
+  return [
+    "---",
+    `SETTING: ${ruleset.name}.`,
+    ruleset.tone,
+    abilities ? `Call the six abilities by this pack's names, not their generic keys: ${abilities}.` : "",
+    vocab ? `Setting vocabulary: ${vocab}.` : "",
+    ruleset.narration_notes || "",
+    "The dice math, ability modifiers, HP, and AC underneath all of this work exactly the",
+    "same as any other setting -- only the vocabulary and tone change, never the numbers.",
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+function buildSystemPrompt(role, projectedState, activeLearning, ruleset) {
   const sources = SYSTEM_PROMPT_SOURCES[role] || [];
   const specText = sources.map(readEngineFile).join("\n\n");
   const stateText = JSON.stringify(projectedState, null, 2);
@@ -128,6 +155,7 @@ function buildSystemPrompt(role, projectedState, activeLearning) {
     ROLE_LOCK_MATRIX,
     specText,
     formatActingAs(role, projectedState),
+    formatRuleset(ruleset),
     formatLearning(activeLearning),
     "---",
     "The JSON below is your ENTIRE view of campaign state. It has already been filtered",
@@ -143,8 +171,8 @@ function buildSystemPrompt(role, projectedState, activeLearning) {
     .join("\n\n");
 }
 
-async function callClaude({ role, projectedState, history, userMessage, activeLearning }) {
-  const system = buildSystemPrompt(role, projectedState, activeLearning);
+async function callClaude({ role, projectedState, history, userMessage, activeLearning, ruleset }) {
+  const system = buildSystemPrompt(role, projectedState, activeLearning, ruleset);
   const messages = [
     ...history.map((m) => ({
       role: m.role === role ? "assistant" : "user",

@@ -524,8 +524,158 @@ function run() {
   return id;
 }
 
-if (require.main === module) {
-  run();
+// A second, deliberately small demo campaign using the "neon-sprawl" ruleset pack --
+// just enough (one human, one companion, one scene) to prove the genre-pack mechanism
+// actually changes DM/companion vocabulary and tone in a live call, without building
+// out any cyberpunk-specific subsystems (netrunning minigames, humanity tracking,
+// etc.) that were deliberately scoped out for now.
+const NEON_TITLE = "Static District Job";
+
+function runNeonSprawl() {
+  const existing = state.listCampaigns().find((c) => c.campaign_title === NEON_TITLE);
+  if (existing) {
+    console.log(`Neon Sprawl demo campaign already exists: ${existing.campaign_id}`);
+    return existing.campaign_id;
+  }
+
+  const campaign = state.createCampaign({
+    campaign_title: NEON_TITLE,
+    rules_baseline: "5e-style resolution, cyberpunk-flavored vocabulary",
+    ruleset: "neon-sprawl",
+    in_world_date: "Night, rain, Lower Static District",
+    tone: "Grim & high-stakes",
+    play_balance: "Balanced roleplay / exploration / combat",
+    death_policy: "possible_uncommon",
+    horror_intensity: "none",
+    romance: "off",
+    companion_dynamic: "wary_professional",
+    difficulty: "standard",
+    content_boundaries: "Broadly open unless changed by the human player during play.",
+  });
+  const id = campaign.campaign_id;
+  state.updateSlice(id, "campaign", (c) => ({ ...c, status: "active", session_number: 1 }));
+
+  const human = {
+    character_id: "pc-human",
+    controller: "human",
+    name: "Reyes Okafor",
+    species: "Human",
+    class_level: "Fixer 3",
+    background: "Ex-corporate security",
+    alignment: "",
+    abilities: { str: 12, dex: 15, con: 13, int: 14, wis: 12, cha: 16 },
+    ac: 14,
+    hp: { current: 24, max: 24 },
+    temp_hp: 0,
+    speed: 30,
+    conditions: [],
+    inventory: [
+      { item: "sidearm (light pistol)", qty: 1 },
+      { item: "armored jacket", qty: 1 },
+      { item: "burner commlink", qty: 2 },
+    ],
+    currency: { eb: 850 },
+    personality: {
+      traits: "Charming when it costs nothing, ruthless when it doesn't.",
+      ideals: "Everyone's for sale; the trick is knowing the price.",
+      bonds: "Owes a favor to the netrunner who got him out of corporate security alive.",
+      flaws: "Never walks away from a job once he's said yes, even when he should.",
+    },
+    goals_public: ["Land a job clean enough to pay off the debt", "Stay off corporate radar"],
+    location: "Lower Static District, outside a noodle stall near the transit line",
+    status: "active",
+    player_notes: "",
+  };
+
+  const runner = {
+    character_id: "pc-vex",
+    controller: "player_agent",
+    name: "Vex",
+    species: "Human",
+    class_level: "Netrunner 3",
+    background: "Corp-trained, blacklisted",
+    alignment: "",
+    abilities: { str: 8, dex: 13, con: 11, int: 18, wis: 14, cha: 10 },
+    ac: 12,
+    hp: { current: 16, max: 16 },
+    temp_hp: 0,
+    speed: 30,
+    conditions: [],
+    inventory: [
+      { item: "deck (custom rig)", qty: 1 },
+      { item: "holdout pistol", qty: 1 },
+    ],
+    currency: { eb: 140 },
+    personality: {
+      traits: "Blunt, allergic to small talk, trusts code more than people.",
+      ideals: "Information wants to be free; people who hoard it are the enemy.",
+      bonds: "Reyes got her out from under a corp contract; she hasn't decided if that's a debt or a trap.",
+      flaws: "Underestimates how much physical danger matters when she's mid-run.",
+    },
+    goals_public: ["Stay employable without going back on a corp leash"],
+    location: "Lower Static District, outside a noodle stall near the transit line",
+    status: "active",
+    private: {
+      visibility: ["companion_pc", "lore_only"],
+      beliefs: ["Suspects the job Reyes is about to take is a corp trap, but doesn't have proof yet."],
+      fears: ["Getting ICE-burned on a run with no one able to pull her out in time."],
+      personal_goals: ["Build enough of a reputation to start picking her own jobs"],
+      suspicions: ["The client contact hasn't given a real name."],
+      unresolved_questions: ["Who actually owns the job?"],
+      relationship_opinions: { reyes: "Useful, maybe trustworthy. Still watching." },
+      tactical_preferences: [
+        "Stay out of the direct line of fire",
+        "Handle problems through the net before they become physical",
+      ],
+    },
+  };
+
+  state.writeSlice(id, "characters", { human, companions: [runner] });
+
+  state.writeSlice(id, "scene", {
+    location_name: "Lower Static District, transit-line noodle stall",
+    description_public:
+      "Rain sheets off a cracked awning; the noodle stall's the only warm light on the block. A contact is late.",
+    present_npcs: [],
+    environment: "Wet pavement, distant traffic drone, flickering signage.",
+    hazards: [],
+    objectives_public: ["Meet the contact and get the job details"],
+    unresolved_questions_public: ["Who is the client, really?"],
+    combat_active: false,
+    initiative_order: [],
+    round: 0,
+    dm_notes:
+      "DM truth (dm_private): the 'client' is a shell for Ashvale Dynamics staging a recovery of data it itself " +
+      "leaked, not a theft. None of this is established to the players yet.",
+    visibility_note: "dm_notes is dm_private/lore_only",
+  });
+
+  state.writeSlice(id, "quests", [
+    {
+      id: "quest-static-job",
+      title: "The Static District job",
+      player_visible_description:
+        "A contact reached out through Vex's usual channel with a data job, no client name given yet, cash up front.",
+      status: "open",
+      originating_event: "Message came in six hours ago",
+      known_objectives: ["Meet the contact, learn what the job actually is"],
+      hidden_stakes: "The client is a shell for Ashvale Dynamics staging a recovery of data it itself leaked.",
+      relevant_entities: ["Vex", "unnamed contact"],
+      consequences_triggered: [],
+      unresolved_questions: ["Who is the real client?"],
+      visibility: "public",
+      provenance: "Session 1",
+    },
+  ]);
+
+  state.createCheckpoint(id, "Neon Sprawl demo seeded", "session_start");
+  console.log(`Seeded Neon Sprawl demo campaign: ${id}`);
+  return id;
 }
 
-module.exports = { run };
+if (require.main === module) {
+  run();
+  runNeonSprawl();
+}
+
+module.exports = { run, runNeonSprawl };

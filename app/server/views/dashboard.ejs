@@ -24,7 +24,7 @@
         <h3><%= c.campaign_title %></h3>
         <div class="hint">
           <span class="badge"><%= c.status %></span>
-          Session <%= c.session_number %> &middot; <%= c.rules_baseline %>
+          Session <%= c.session_number %> &middot; <%= c.rulesetName %>
           <% if (c.tone) { %> &middot; tone: <%= c.tone.tone %>, difficulty: <%= c.tone.difficulty %><% } %>
         </div>
       </div>

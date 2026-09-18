@@ -4,6 +4,7 @@ const { projectState, canSee } = require("../visibility");
 const { requireCampaign, resolveRole, resolveCompanionId } = require("../middleware");
 const { isConfigured, reviewSession, askWorldbuilder } = require("../agents");
 const { recordUsage, summarize } = require("../usage");
+const { getRuleset } = require("../rulesets");
 
 const router = express.Router({ mergeParams: true });
 router.use(requireCampaign);
@@ -29,7 +30,16 @@ router.get("/sheet/:charId", (req, res) => {
   const charId = req.params.charId;
   const character = findCharacter(view.characters, charId);
   if (!character) return res.status(404).render("not-found", { path: req.originalUrl });
-  res.render("sheet", { role, companionId, charId, character, campaignId: req.campaignId, active: "sheet-" + charId });
+  const ruleset = getRuleset(full.campaign.ruleset);
+  res.render("sheet", {
+    role,
+    companionId,
+    charId,
+    character,
+    abilityLabels: ruleset.abilities || {},
+    campaignId: req.campaignId,
+    active: "sheet-" + charId,
+  });
 });
 
 router.post("/sheet/:charId", (req, res) => {

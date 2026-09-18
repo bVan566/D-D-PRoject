@@ -1,0 +1,23 @@
+[
+  {
+    "id": "quest-static-job",
+    "title": "The Static District job",
+    "player_visible_description": "A contact reached out through Vex's usual channel with a data job, no client name given yet, cash up front.",
+    "status": "open",
+    "originating_event": "Message came in six hours ago",
+    "known_objectives": [
+      "Meet the contact, learn what the job actually is"
+    ],
+    "hidden_stakes": "The client is a shell for Ashvale Dynamics staging a recovery of data it itself leaked.",
+    "relevant_entities": [
+      "Vex",
+      "unnamed contact"
+    ],
+    "consequences_triggered": [],
+    "unresolved_questions": [
+      "Who is the real client?"
+    ],
+    "visibility": "public",
+    "provenance": "Session 1"
+  }
+]

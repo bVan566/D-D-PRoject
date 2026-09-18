@@ -13,7 +13,7 @@
       <h2 style="margin-top:0">Abilities</h2>
       <div class="grid cols-3">
         <% Object.entries(character.abilities || {}).forEach(([k,v]) => { %>
-          <div class="stat-mini"><div class="val"><%= v %></div><div class="lbl"><%= k %></div></div>
+          <div class="stat-mini"><div class="val"><%= v %></div><div class="lbl"><%= (abilityLabels && abilityLabels[k]) || k %></div></div>
         <% }) %>
       </div>
     </div>

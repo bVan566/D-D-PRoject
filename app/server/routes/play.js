@@ -4,6 +4,7 @@ const { projectState } = require("../visibility");
 const { requireCampaign, resolveRole, resolveCompanionId } = require("../middleware");
 const { callClaude, isConfigured, ROLE_TO_LEARNING_AGENT } = require("../agents");
 const { recordUsage } = require("../usage");
+const { getRuleset } = require("../rulesets");
 
 function activeLearningFor(full, role) {
   const agent = ROLE_TO_LEARNING_AGENT[role];
@@ -200,6 +201,7 @@ router.post("/play/message", async (req, res) => {
       history,
       userMessage: `[${message.speaker_name}] ${message.content}`,
       activeLearning: activeLearningFor(full, targetRole),
+      ruleset: getRuleset(full.campaign.ruleset),
     });
     recordUsage(req.campaignId, { agentRole: targetRole, usage: result.usage });
     const speaker =

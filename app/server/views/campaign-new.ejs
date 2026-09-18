@@ -19,6 +19,16 @@
         <input name="rules_baseline" value="<%= form.rules_baseline || '5e-style; exact edition not locked' %>" />
       </div>
     </div>
+    <label>Setting / genre</label>
+    <select name="ruleset">
+      <% rulesets.forEach(r => { %>
+        <option value="<%= r.id %>" <%= form.ruleset === r.id ? 'selected' : '' %>><%= r.name %></option>
+      <% }) %>
+    </select>
+    <p class="subtitle" style="margin-top:4px">
+      Changes vocabulary and narration tone (ability names, currency, tech-vs-magic flavor) that the DM,
+      companions, and Lore use. The underlying dice math is the same for every setting.
+    </p>
     <label>Starting in-world date / time marker (optional)</label>
     <input name="in_world_date" value="<%= form.in_world_date || '' %>" placeholder="Early autumn, frontier road season" />
   </div>
