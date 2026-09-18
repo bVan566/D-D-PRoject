@@ -194,11 +194,22 @@ proving the loop is fun before anyone draws anything. Built with
   the app never drift into two different truths about a character's HP. A defeat isn't
   permanent: the party wakes up battered at 1 HP rather than hitting a dead end, which
   keeps this an arcade-y first slice rather than trying to replicate the main engine's
-  own (more careful) death rules.
+  own (more careful) death rules. Fleeing now syncs HP too — it used to skip the sync
+  entirely, silently discarding any damage taken during a failed flee attempt.
+- **Narrative continuity with the text side**: every battle result also appends a
+  `play_log` entry (role `"system"`, speaker "Encounter") summarizing what happened —
+  who was fought, the outcome, everyone's resulting HP. Without this, the graphical
+  screen and the text-based DM were two systems that shared a character sheet but not a
+  memory: fighting a battle in Play (Beta) left literally no trace the DM could ever
+  reference, so asking about it afterward would draw a blank. Verified live: after a
+  graphical win, asking the DM "is everyone alright?" produced a reply correctly
+  grounded in that specific fight (enemy count, no invented details).
 - **Deliberately not here yet**: items in battle, advantage/disadvantage, conditions,
-  more than one map, real sprite art, sound. This is a proof of the loop, not the
-  finished game — expand it only once the core "walk, fight, come back" cycle is
-  confirmed to actually be fun.
+  more than one map, real sprite art, sound, and tying the map itself to the campaign's
+  actual current scene/location (right now it's one fixed generic map regardless of
+  where the story says you are). This is a proof of the loop, not the finished game —
+  expand it only once the core "walk, fight, come back" cycle is confirmed to actually
+  be fun.
 
 ## Beyond the basics
 

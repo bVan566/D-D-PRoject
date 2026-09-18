@@ -411,26 +411,29 @@ class BattleScene extends Phaser.Scene {
 
   async endBattle(won, fled) {
     this.menuContainer.removeAll(true);
-    if (!fled) {
-      const results = this.party.map((p) => ({ character_id: p.character_id, hp_current: p.hp }));
-      try {
-        await fetch(`/campaigns/${window.CAMPAIGN_ID}/game/battle-result`, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ results }),
-        });
-        // Keep the in-page copy in sync too, so re-entering battle later uses the
-        // HP that was actually just persisted rather than stale page-load data.
-        this.party.forEach((p) => {
-          if (window.PARTY_DATA.human && window.PARTY_DATA.human.character_id === p.character_id) {
-            window.PARTY_DATA.human.hp.current = p.hp;
-          }
-          const comp = window.PARTY_DATA.companions.find((c) => c.character_id === p.character_id);
-          if (comp) comp.hp.current = p.hp;
-        });
-      } catch (e) {
-        console.error("Failed to persist battle result", e);
-      }
+    // Always sync -- fleeing still means whatever hits landed before you broke away
+    // are real damage taken, not a reason to discard the fight's HP changes. (This
+    // used to skip the sync entirely on a successful flee, silently losing that
+    // damage -- fixed while wiring in the encounter log below.)
+    const results = this.party.map((p) => ({ character_id: p.character_id, hp_current: p.hp }));
+    const outcome = won ? "won" : fled ? "fled" : "defeated";
+    try {
+      await fetch(`/campaigns/${window.CAMPAIGN_ID}/game/battle-result`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ results, outcome, enemyNames: this.enemies.map((e) => e.name) }),
+      });
+      // Keep the in-page copy in sync too, so re-entering battle later uses the
+      // HP that was actually just persisted rather than stale page-load data.
+      this.party.forEach((p) => {
+        if (window.PARTY_DATA.human && window.PARTY_DATA.human.character_id === p.character_id) {
+          window.PARTY_DATA.human.hp.current = p.hp;
+        }
+        const comp = window.PARTY_DATA.companions.find((c) => c.character_id === p.character_id);
+        if (comp) comp.hp.current = p.hp;
+      });
+    } catch (e) {
+      console.error("Failed to persist battle result", e);
     }
     this.scene.stop();
     this.scene.wake("MapScene", { playerPos: this.playerPos });

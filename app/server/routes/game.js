@@ -49,16 +49,43 @@ router.post("/game/battle-result", (req, res) => {
   const results = req.body.results; // [{ character_id, hp_current }]
   if (!Array.isArray(results)) return res.status(400).json({ ok: false, error: "results must be an array" });
 
+  let finalChars = null;
   state.updateSlice(req.campaignId, "characters", (chars) => {
     const applyOne = (c) => {
       const r = results.find((x) => x.character_id === c.character_id);
       return r ? { ...c, hp: { ...c.hp, current: Math.max(0, Math.min(c.hp.max, r.hp_current)) } } : c;
     };
-    return {
+    finalChars = {
       human: chars.human ? applyOne(chars.human) : chars.human,
       companions: (chars.companions || []).map(applyOne),
     };
+    return finalChars;
   });
+
+  // Without this, the text-based DM has no way to ever know a graphical-mode battle
+  // happened -- the map/battle screen would silently update HP with no narrative
+  // record, so asking the DM about it afterward would draw a blank. This is a plain
+  // factual note (role "system", not "dm") since no agent actually generated it.
+  const { outcome, enemyNames } = req.body;
+  const roster = [finalChars.human, ...finalChars.companions].filter(Boolean);
+  const hpSummary = roster.map((c) => `${c.name} ${c.hp.current}/${c.hp.max} HP`).join(", ");
+  const enemyList = Array.isArray(enemyNames) && enemyNames.length ? enemyNames.join(", ") : "an encounter";
+  let summary;
+  if (outcome === "won") summary = `Encounter resolved: the party defeated ${enemyList}. ${hpSummary}.`;
+  else if (outcome === "fled") summary = `Encounter resolved: the party disengaged from ${enemyList} and retreated. ${hpSummary}.`;
+  else summary = `Encounter resolved: the party was overwhelmed by ${enemyList} and driven back, battered but alive. ${hpSummary}.`;
+
+  state.updateSlice(req.campaignId, "play_log", (log) => [
+    ...log,
+    {
+      id: state.newId("msg"),
+      timestamp: new Date().toISOString(),
+      role: "system",
+      speaker_name: "Encounter",
+      content: summary,
+      visibility: "public",
+    },
+  ]);
 
   res.json({ ok: true });
 });
