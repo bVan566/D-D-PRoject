@@ -2,7 +2,7 @@ const express = require("express");
 const state = require("../state");
 const { projectState } = require("../visibility");
 const { requireCampaign, resolveRole, resolveCompanionId } = require("../middleware");
-const { callClaude, isConfigured, ROLE_TO_LEARNING_AGENT } = require("../agents");
+const { callClaude, isConfigured, ROLE_TO_LEARNING_AGENT, extractSceneUpdate } = require("../agents");
 const { recordUsage } = require("../usage");
 const { getRuleset } = require("../rulesets");
 
@@ -210,16 +210,37 @@ router.post("/play/message", async (req, res) => {
         : targetRole === "lore"
         ? "Lore"
         : full.characters.companions.find((c) => c.character_id === targetCompanionId)?.name || "Companion";
+
+    // Only the DM's system prompt ever asks for a trailing scene-state block (see
+    // agents.js SCENE_STATE_INSTRUCTIONS) -- this is a no-op pass-through for every
+    // other role, since the regex just won't match anything in their replies.
+    const { cleanText, sceneUpdate } = result.ok
+      ? extractSceneUpdate(result.text)
+      : { cleanText: `[agent bridge unavailable] ${result.reason}`, sceneUpdate: null };
+
     const reply = {
       id: state.newId("msg"),
       timestamp: new Date().toISOString(),
       role: targetRole,
       character_id: targetRole === "companion" ? targetCompanionId : undefined,
       speaker_name: speaker,
-      content: result.ok ? result.text : `[agent bridge unavailable] ${result.reason}`,
+      content: cleanText,
       visibility: "public",
     };
     state.updateSlice(req.campaignId, "play_log", (log) => [...log, reply]);
+
+    // Keeps scene.location_name/description_public (and therefore which Play (Beta)
+    // map area gets picked -- see routes/game.js pickArea) in sync with where the DM's
+    // own narration says the party actually is, instead of only updating when someone
+    // remembers to use the manual "Edit scene" form.
+    if (sceneUpdate) {
+      state.updateSlice(req.campaignId, "scene", (s) => ({
+        ...s,
+        location_name: sceneUpdate.location_name || s.location_name,
+        description_public: sceneUpdate.description_public || s.description_public,
+        environment: sceneUpdate.environment || s.environment,
+      }));
+    }
   }
 
   res.redirect(`/campaigns/${req.campaignId}/play?role=${role}${companionId ? `&companionId=${companionId}` : ""}`);

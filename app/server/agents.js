@@ -146,6 +146,26 @@ function formatRuleset(ruleset) {
     .join("\n");
 }
 
+// The DM is the only role allowed to move the party's actual location -- asking it to
+// also emit a small structured block after its narrative is what lets scene.location_name
+// /description_public (and therefore which Play (Beta) map area gets picked -- see
+// routes/game.js pickArea) stay in sync with the story without a human manually re-typing
+// it into the "Edit scene" form after every location change. Same "structured output
+// appended to a normal reply" pattern reviewSession() already uses for lessons, just
+// inline in the narrative call instead of a separate one, so it costs nothing extra.
+const SCENE_STATE_INSTRUCTIONS = `
+---
+After your in-character narrative reply, if the party's physical location or the scene
+has meaningfully changed as a result of this beat, append EXACTLY one block, after all
+narrative text, in this exact format:
+<<<SCENE_STATE>>>
+{"changed": true, "location_name": "...", "description_public": "...", "environment": "..."}
+<<<END_SCENE_STATE>>>
+If the location/scene has NOT changed, either omit this block entirely or include it with
+"changed": false. The block must be the last thing in your reply, must contain nothing but
+valid JSON between the markers, and must never appear inside your narrative text.
+`.trim();
+
 function buildSystemPrompt(role, projectedState, activeLearning, ruleset) {
   const sources = SYSTEM_PROMPT_SOURCES[role] || [];
   const specText = sources.map(readEngineFile).join("\n\n");
@@ -163,12 +183,30 @@ function buildSystemPrompt(role, projectedState, activeLearning, ruleset) {
     "invent information outside it; if something is not established, say so plainly.",
     "Stay strictly in role. Do not narrate or decide for the human player's character",
     "or for any other AI party member.",
+    role === "dm" ? SCENE_STATE_INSTRUCTIONS : "",
     "---",
     `CURRENT STATE (role=${role}):`,
     stateText,
   ]
     .filter(Boolean)
     .join("\n\n");
+}
+
+// Pulls the DM's optional trailing scene-state block (see SCENE_STATE_INSTRUCTIONS)
+// out of a raw reply. Always returns clean narrative text safe to show/log even when
+// no block is present, when it's malformed, or when the role wasn't "dm" and the model
+// never had the instructions in the first place -- a parse failure means "no scene
+// update," never a thrown error or corrupted-looking chat message.
+function extractSceneUpdate(text) {
+  const match = /<<<SCENE_STATE>>>([\s\S]*?)<<<END_SCENE_STATE>>>/.exec(text || "");
+  if (!match) return { cleanText: (text || "").trim(), sceneUpdate: null };
+  const cleanText = text.slice(0, match.index).trim();
+  try {
+    const parsed = JSON.parse(match[1].trim());
+    return { cleanText, sceneUpdate: parsed && parsed.changed ? parsed : null };
+  } catch (e) {
+    return { cleanText, sceneUpdate: null };
+  }
 }
 
 async function callClaude({ role, projectedState, history, userMessage, activeLearning, ruleset }) {
@@ -265,5 +303,6 @@ module.exports = {
   callClaude,
   askWorldbuilder,
   reviewSession,
+  extractSceneUpdate,
   ROLE_TO_LEARNING_AGENT,
 };

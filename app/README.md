@@ -215,19 +215,27 @@ proving the loop is fun before anyone draws anything. Built with
   an *approximation*, not literal reproduction — the DM narrates arbitrary, unbounded
   locations, so there's no way to hand-author a bespoke tile layout for every place it
   might improvise; matching against a handful of archetypes is the bounded version of
-  "the map matches your location" that's actually buildable. It also depends on the
-  `scene` slice being kept current — the DM's live chat replies don't automatically
-  update `scene.location_name`/`description_public` today, only the manual "Edit scene"
-  form does, so the graphical map can lag behind the conversation until that's updated.
-  Verified live: the demo campaign's starting scene ("...have not entered it yet")
-  correctly stays on the `wilderness` map; editing the scene to describe being inside
-  the tunnel correctly switches to the `dungeon` map, with area-specific enemy intro
-  text, and the same for Neon Sprawl's `street` → `interior` switch.
+  "the map matches your location" that's actually buildable.
+- **The scene stays in sync automatically** (`agents.js SCENE_STATE_INSTRUCTIONS` +
+  `extractSceneUpdate`): the DM's system prompt asks it to append one small structured
+  block after its narrative reply whenever the party's location meaningfully changes —
+  the same "structured output alongside a normal reply" pattern `reviewSession()`
+  already used for proposed lessons, just inline in the narrative call instead of a
+  separate one, so it costs nothing extra. `routes/play.js` strips that block out
+  before saving the visible chat message (players never see raw JSON) and, if present,
+  writes it straight into `scene.location_name`/`description_public`/`environment` — no
+  one has to remember to use the manual "Edit scene" form for this to work anymore.
+  Parse failures or a missing block are treated as "no change," never an error.
+  Verified live: asking the DM to lead the party into the tunnel produced a clean
+  narrative reply with no leaked markers *and* correctly updated the scene to a
+  synthesized description of the tunnel; reloading Play (Beta) right after, with no
+  manual scene edit at all, correctly showed the `dungeon` map area. A separate,
+  location-neutral exchange right after confirmed the scene is left untouched when
+  nothing has actually changed.
 - **Deliberately not here yet**: items in battle, advantage/disadvantage, conditions,
-  more than one map per area, real sprite art, sound, and auto-syncing `scene` from the
-  DM's live narration (see above). This is a proof of the loop, not the finished game —
-  expand it only once the core "walk, fight, come back" cycle is confirmed to actually
-  be fun.
+  more than one map per area, real sprite art, sound. This is a proof of the loop, not
+  the finished game — expand it only once the core "walk, fight, come back" cycle is
+  confirmed to actually be fun.
 
 ## Beyond the basics
 
