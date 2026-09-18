@@ -19,7 +19,14 @@
     "wis": "Wisdom",
     "cha": "Charisma"
   },
-  "skill_examples": ["Investigation", "Perception", "Persuasion", "Athletics", "Arcana", "Survival"],
+  "skill_examples": [
+    "Investigation",
+    "Perception",
+    "Persuasion",
+    "Athletics",
+    "Arcana",
+    "Survival"
+  ],
   "narration_notes": "Checks are called by their 5e-style names (Investigation, Perception, Athletics, etc.). Treat found gear, coin, and combat in classic fantasy terms — no technology anachronisms unless the campaign's own canon has introduced one.",
   "theme": {
     "bg": "#16151b",
@@ -47,16 +54,881 @@
       "#..............#",
       "################"
     ],
-    "tileColors": { "#": "#2a2733", ".": "#1f3d24", "\"": "#3a6b2e", "~": "#1c3a52" },
-    "impassableTiles": ["#", "~"],
+    "tileColors": {
+      "#": "#2a2733",
+      ".": "#1f3d24",
+      "\"": "#3a6b2e",
+      "~": "#1c3a52"
+    },
+    "impassableTiles": [
+      "#",
+      "~"
+    ],
     "encounterTile": "\"",
     "encounterChance": 0.35,
-    "playerStart": { "col": 2, "row": 2 },
-    "partyColors": ["#3f7fb1", "#4f9e6b", "#c9a24b", "#9a6fc9", "#b1543f"],
+    "playerStart": {
+      "col": 2,
+      "row": 2
+    },
+    "partyColors": [
+      "#3f7fb1",
+      "#4f9e6b",
+      "#c9a24b",
+      "#9a6fc9",
+      "#b1543f"
+    ],
     "encounterIntro": "A Deserter patrol blocks the path!",
     "enemyTemplates": [
-      { "name": "Deserter Skirmisher", "hp": 16, "ac": 13, "attackBonus": 4, "damageDie": 6, "damageBonus": 2, "color": "#b1543f" },
-      { "name": "Deserter Skirmisher", "hp": 16, "ac": 13, "attackBonus": 4, "damageDie": 6, "damageBonus": 2, "color": "#b1543f" }
+      {
+        "name": "Deserter Skirmisher",
+        "hp": 16,
+        "ac": 13,
+        "attackBonus": 4,
+        "damageDie": 6,
+        "damageBonus": 2,
+        "color": "#b1543f"
+      },
+      {
+        "name": "Deserter Skirmisher",
+        "hp": 16,
+        "ac": 13,
+        "attackBonus": 4,
+        "damageDie": 6,
+        "damageBonus": 2,
+        "color": "#b1543f"
+      }
+    ]
+  },
+  "characterOptions": {
+    "skillList": [
+      {
+        "key": "acrobatics",
+        "label": "Acrobatics",
+        "ability": "dex"
+      },
+      {
+        "key": "animal_handling",
+        "label": "Animal Handling",
+        "ability": "wis"
+      },
+      {
+        "key": "arcana",
+        "label": "Arcana",
+        "ability": "int"
+      },
+      {
+        "key": "athletics",
+        "label": "Athletics",
+        "ability": "str"
+      },
+      {
+        "key": "deception",
+        "label": "Deception",
+        "ability": "cha"
+      },
+      {
+        "key": "history",
+        "label": "History",
+        "ability": "int"
+      },
+      {
+        "key": "insight",
+        "label": "Insight",
+        "ability": "wis"
+      },
+      {
+        "key": "intimidation",
+        "label": "Intimidation",
+        "ability": "cha"
+      },
+      {
+        "key": "investigation",
+        "label": "Investigation",
+        "ability": "int"
+      },
+      {
+        "key": "medicine",
+        "label": "Medicine",
+        "ability": "wis"
+      },
+      {
+        "key": "nature",
+        "label": "Nature",
+        "ability": "int"
+      },
+      {
+        "key": "perception",
+        "label": "Perception",
+        "ability": "wis"
+      },
+      {
+        "key": "performance",
+        "label": "Performance",
+        "ability": "cha"
+      },
+      {
+        "key": "persuasion",
+        "label": "Persuasion",
+        "ability": "cha"
+      },
+      {
+        "key": "religion",
+        "label": "Religion",
+        "ability": "int"
+      },
+      {
+        "key": "sleight_of_hand",
+        "label": "Sleight of Hand",
+        "ability": "dex"
+      },
+      {
+        "key": "stealth",
+        "label": "Stealth",
+        "ability": "dex"
+      },
+      {
+        "key": "survival",
+        "label": "Survival",
+        "ability": "wis"
+      }
+    ],
+    "races": [
+      {
+        "id": "human",
+        "name": "Human",
+        "speed": 30,
+        "abilityBonuses": {
+          "str": 1,
+          "dex": 1,
+          "con": 1,
+          "int": 1,
+          "wis": 1,
+          "cha": 1
+        },
+        "traits": [
+          "Adaptable and ambitious — a little of everything, no glaring weakness."
+        ]
+      },
+      {
+        "id": "elf-high",
+        "name": "Elf (High)",
+        "speed": 30,
+        "abilityBonuses": {
+          "dex": 2,
+          "int": 1
+        },
+        "traits": [
+          "Keen senses and trained reflexes from centuries of practice.",
+          "Trance: needs only a few hours of light rest instead of full sleep."
+        ]
+      },
+      {
+        "id": "elf-wood",
+        "name": "Elf (Wood)",
+        "speed": 35,
+        "abilityBonuses": {
+          "dex": 2,
+          "wis": 1
+        },
+        "traits": [
+          "Moves quietly and swiftly through natural terrain.",
+          "Trance: needs only a few hours of light rest instead of full sleep."
+        ]
+      },
+      {
+        "id": "elf-dark",
+        "name": "Elf (Dark)",
+        "speed": 30,
+        "abilityBonuses": {
+          "dex": 2,
+          "cha": 1
+        },
+        "traits": [
+          "Sees in darkness others can't.",
+          "Grew up in a world of politics and shadow — hard to rattle."
+        ]
+      },
+      {
+        "id": "dwarf-hill",
+        "name": "Dwarf (Hill)",
+        "speed": 25,
+        "abilityBonuses": {
+          "con": 2,
+          "wis": 1
+        },
+        "traits": [
+          "Tough, and hard to poison or wear down.",
+          "An instinct for stonework and what's built to last."
+        ]
+      },
+      {
+        "id": "dwarf-mountain",
+        "name": "Dwarf (Mountain)",
+        "speed": 25,
+        "abilityBonuses": {
+          "con": 2,
+          "str": 1
+        },
+        "traits": [
+          "Built for heavy armor and a hard day's work.",
+          "An instinct for stonework and what's built to last."
+        ]
+      },
+      {
+        "id": "halfling-lightfoot",
+        "name": "Halfling (Lightfoot)",
+        "speed": 25,
+        "abilityBonuses": {
+          "dex": 2,
+          "cha": 1
+        },
+        "traits": [
+          "Naturally lucky — bad rolls have a way of not quite landing.",
+          "Can slip behind a larger ally's cover in a pinch."
+        ]
+      },
+      {
+        "id": "halfling-stout",
+        "name": "Halfling (Stout)",
+        "speed": 25,
+        "abilityBonuses": {
+          "dex": 2,
+          "con": 1
+        },
+        "traits": [
+          "Naturally lucky — bad rolls have a way of not quite landing.",
+          "Sturdier than their size suggests; resists poison well."
+        ]
+      },
+      {
+        "id": "gnome-forest",
+        "name": "Gnome (Forest)",
+        "speed": 25,
+        "abilityBonuses": {
+          "int": 2,
+          "dex": 1
+        },
+        "traits": [
+          "A knack for small illusions and talking to small animals.",
+          "Small, quick, and easy to underestimate."
+        ]
+      },
+      {
+        "id": "gnome-rock",
+        "name": "Gnome (Rock)",
+        "speed": 25,
+        "abilityBonuses": {
+          "int": 2,
+          "con": 1
+        },
+        "traits": [
+          "A tinkerer's mind for small mechanisms and inventions.",
+          "Small, quick, and easy to underestimate."
+        ]
+      },
+      {
+        "id": "half-elf",
+        "name": "Half-Elf",
+        "speed": 30,
+        "abilityBonuses": {
+          "cha": 2,
+          "dex": 1,
+          "wis": 1
+        },
+        "traits": [
+          "Doesn't fully belong to either parent culture — fits in everywhere and nowhere.",
+          "Sees in darkness others can't."
+        ]
+      },
+      {
+        "id": "half-orc",
+        "name": "Half-Orc",
+        "speed": 30,
+        "abilityBonuses": {
+          "str": 2,
+          "con": 1
+        },
+        "traits": [
+          "Can push through a would-be killing blow and keep standing, once, when it matters most.",
+          "Hits harder than most in the heat of a fight."
+        ]
+      },
+      {
+        "id": "tiefling",
+        "name": "Tiefling",
+        "speed": 30,
+        "abilityBonuses": {
+          "cha": 2,
+          "int": 1
+        },
+        "traits": [
+          "Fiendish blood shows in small ways — and draws stares.",
+          "Resists fire more than most; sees in darkness others can't."
+        ]
+      },
+      {
+        "id": "dragonkin",
+        "name": "Dragonkin",
+        "speed": 30,
+        "abilityBonuses": {
+          "str": 2,
+          "cha": 1
+        },
+        "traits": [
+          "A breath weapon tied to draconic ancestry (element varies by lineage — pick one with your DM).",
+          "Resists the same element as their breath weapon."
+        ]
+      }
+    ],
+    "classes": [
+      {
+        "id": "fighter",
+        "name": "Fighter",
+        "hitDie": 10,
+        "primaryAbility": "Strength or Dexterity",
+        "savingThrows": [
+          "str",
+          "con"
+        ],
+        "skillChoices": {
+          "count": 2,
+          "from": [
+            "athletics",
+            "intimidation",
+            "survival",
+            "perception",
+            "acrobatics"
+          ]
+        },
+        "features": [
+          "Second Wind: once per short rest, use a bonus action to recover a burst of HP.",
+          "Trained for the front line in a way most aren't."
+        ],
+        "kits": [
+          {
+            "name": "Kit A — Sword and Board",
+            "items": [
+              "longsword",
+              "shield",
+              "chain shirt",
+              "dagger",
+              "adventurer's pack"
+            ],
+            "ac": 16
+          },
+          {
+            "name": "Kit B — Archer",
+            "items": [
+              "longbow",
+              "quiver of 20 arrows",
+              "leather armor",
+              "shortsword",
+              "adventurer's pack"
+            ],
+            "ac": 13
+          }
+        ]
+      },
+      {
+        "id": "rogue",
+        "name": "Rogue",
+        "hitDie": 8,
+        "primaryAbility": "Dexterity",
+        "savingThrows": [
+          "dex",
+          "int"
+        ],
+        "skillChoices": {
+          "count": 4,
+          "from": [
+            "stealth",
+            "acrobatics",
+            "sleight_of_hand",
+            "deception",
+            "investigation",
+            "perception"
+          ]
+        },
+        "features": [
+          "Sneak Attack: extra damage once per turn against a distracted foe.",
+          "Expertise: exceptionally skilled in one chosen trained skill."
+        ],
+        "kits": [
+          {
+            "name": "Kit A — Blades",
+            "items": [
+              "two shortswords",
+              "leather armor",
+              "thieves' tools",
+              "two daggers",
+              "burglar's pack"
+            ],
+            "ac": 13
+          },
+          {
+            "name": "Kit B — Ranged",
+            "items": [
+              "shortbow",
+              "quiver of 20 arrows",
+              "leather armor",
+              "thieves' tools",
+              "burglar's pack"
+            ],
+            "ac": 13
+          }
+        ]
+      },
+      {
+        "id": "wizard",
+        "name": "Wizard",
+        "hitDie": 6,
+        "primaryAbility": "Intelligence",
+        "savingThrows": [
+          "int",
+          "wis"
+        ],
+        "skillChoices": {
+          "count": 2,
+          "from": [
+            "arcana",
+            "investigation",
+            "history",
+            "insight"
+          ]
+        },
+        "features": [
+          "Spellcasting: prepares and casts arcane spells from a spellbook (narrate effects with the DM — no spell-slot tracker yet).",
+          "Arcane Recovery: regains some spell energy on a short rest."
+        ],
+        "kits": [
+          {
+            "name": "Kit A — Scholar",
+            "items": [
+              "quarterstaff",
+              "spellbook",
+              "component pouch",
+              "scholar's pack"
+            ],
+            "ac": 11
+          },
+          {
+            "name": "Kit B — Duelist Caster",
+            "items": [
+              "dagger",
+              "spellbook",
+              "component pouch",
+              "explorer's pack"
+            ],
+            "ac": 11
+          }
+        ]
+      },
+      {
+        "id": "cleric",
+        "name": "Cleric",
+        "hitDie": 8,
+        "primaryAbility": "Wisdom",
+        "savingThrows": [
+          "wis",
+          "cha"
+        ],
+        "skillChoices": {
+          "count": 2,
+          "from": [
+            "religion",
+            "insight",
+            "medicine",
+            "persuasion"
+          ]
+        },
+        "features": [
+          "Spellcasting: channels divine power granted by their faith (narrate with the DM).",
+          "Channel Divinity: once per rest, invokes a minor divine effect (narrate with the DM)."
+        ],
+        "kits": [
+          {
+            "name": "Kit A — Battle Priest",
+            "items": [
+              "mace",
+              "chain shirt",
+              "shield",
+              "holy symbol",
+              "priest's pack"
+            ],
+            "ac": 18
+          },
+          {
+            "name": "Kit B — Healer",
+            "items": [
+              "mace",
+              "scale mail",
+              "holy symbol",
+              "healer's kit",
+              "priest's pack"
+            ],
+            "ac": 15
+          }
+        ]
+      },
+      {
+        "id": "ranger",
+        "name": "Ranger",
+        "hitDie": 10,
+        "primaryAbility": "Dexterity or Wisdom",
+        "savingThrows": [
+          "str",
+          "dex"
+        ],
+        "skillChoices": {
+          "count": 3,
+          "from": [
+            "survival",
+            "perception",
+            "stealth",
+            "animal_handling",
+            "nature"
+          ]
+        },
+        "features": [
+          "Favored terrain: exceptionally skilled at tracking and surviving in one chosen environment.",
+          "Fighting style suited to ranged attacks or two-weapon combat."
+        ],
+        "kits": [
+          {
+            "name": "Kit A — Skirmisher",
+            "items": [
+              "two shortswords",
+              "leather armor",
+              "longbow",
+              "quiver of 20 arrows",
+              "explorer's pack"
+            ],
+            "ac": 13
+          },
+          {
+            "name": "Kit B — Hunter",
+            "items": [
+              "longbow",
+              "quiver of 20 arrows",
+              "studded leather",
+              "shortsword",
+              "explorer's pack"
+            ],
+            "ac": 14
+          }
+        ]
+      },
+      {
+        "id": "barbarian",
+        "name": "Barbarian",
+        "hitDie": 12,
+        "primaryAbility": "Strength",
+        "savingThrows": [
+          "str",
+          "con"
+        ],
+        "skillChoices": {
+          "count": 2,
+          "from": [
+            "athletics",
+            "intimidation",
+            "survival",
+            "perception"
+          ]
+        },
+        "features": [
+          "Rage: bonus damage and resistance to physical harm for a short burst (narrate with the DM).",
+          "Unarmored Defense: AC benefits from Constitution even without armor."
+        ],
+        "kits": [
+          {
+            "name": "Kit A — Berserker",
+            "items": [
+              "greataxe",
+              "two handaxes",
+              "explorer's pack"
+            ],
+            "ac": 12
+          },
+          {
+            "name": "Kit B — Guardian",
+            "items": [
+              "greatsword",
+              "four javelins",
+              "explorer's pack"
+            ],
+            "ac": 12
+          }
+        ]
+      },
+      {
+        "id": "bard",
+        "name": "Bard",
+        "hitDie": 8,
+        "primaryAbility": "Charisma",
+        "savingThrows": [
+          "dex",
+          "cha"
+        ],
+        "skillChoices": {
+          "count": 3,
+          "from": [
+            "persuasion",
+            "performance",
+            "deception",
+            "insight",
+            "history"
+          ]
+        },
+        "features": [
+          "Bardic Inspiration: grants an ally a boost die to a future roll.",
+          "Spellcasting: a small, versatile spell list drawn from wit and willpower."
+        ],
+        "kits": [
+          {
+            "name": "Kit A — Performer",
+            "items": [
+              "rapier",
+              "leather armor",
+              "an instrument",
+              "entertainer's pack"
+            ],
+            "ac": 12
+          },
+          {
+            "name": "Kit B — Skald",
+            "items": [
+              "longsword",
+              "leather armor",
+              "an instrument",
+              "diplomat's pack"
+            ],
+            "ac": 12
+          }
+        ]
+      },
+      {
+        "id": "druid",
+        "name": "Druid",
+        "hitDie": 8,
+        "primaryAbility": "Wisdom",
+        "savingThrows": [
+          "int",
+          "wis"
+        ],
+        "skillChoices": {
+          "count": 2,
+          "from": [
+            "nature",
+            "animal_handling",
+            "survival",
+            "medicine"
+          ]
+        },
+        "features": [
+          "Wild Shape: can transform into a familiar animal form for a short time (narrate with the DM).",
+          "Spellcasting: draws on the natural world for primal magic."
+        ],
+        "kits": [
+          {
+            "name": "Kit A — Circle Walker",
+            "items": [
+              "scimitar",
+              "leather armor",
+              "druidic focus",
+              "explorer's pack"
+            ],
+            "ac": 12
+          },
+          {
+            "name": "Kit B — Shapeshifter",
+            "items": [
+              "quarterstaff",
+              "leather armor",
+              "druidic focus",
+              "explorer's pack"
+            ],
+            "ac": 12
+          }
+        ]
+      },
+      {
+        "id": "monk",
+        "name": "Monk",
+        "hitDie": 8,
+        "primaryAbility": "Dexterity and Wisdom",
+        "savingThrows": [
+          "str",
+          "dex"
+        ],
+        "skillChoices": {
+          "count": 2,
+          "from": [
+            "acrobatics",
+            "stealth",
+            "athletics",
+            "insight"
+          ]
+        },
+        "features": [
+          "Martial Arts: strikes effectively unarmed or with simple monk weapons.",
+          "Unarmored Defense: AC benefits from Dexterity and Wisdom without armor."
+        ],
+        "kits": [
+          {
+            "name": "Kit A — Open Hand",
+            "items": [
+              "quarterstaff",
+              "ten darts",
+              "explorer's pack"
+            ],
+            "ac": 14
+          },
+          {
+            "name": "Kit B — Shadow Fist",
+            "items": [
+              "shortsword",
+              "ten darts",
+              "explorer's pack"
+            ],
+            "ac": 14
+          }
+        ]
+      },
+      {
+        "id": "paladin",
+        "name": "Paladin",
+        "hitDie": 10,
+        "primaryAbility": "Strength and Charisma",
+        "savingThrows": [
+          "wis",
+          "cha"
+        ],
+        "skillChoices": {
+          "count": 2,
+          "from": [
+            "persuasion",
+            "religion",
+            "insight",
+            "athletics"
+          ]
+        },
+        "features": [
+          "Divine Sense & Lay on Hands: can detect powerful evil/good and heal with a touch a few times per rest.",
+          "Spellcasting: a small list of oath-bound divine spells at higher levels."
+        ],
+        "kits": [
+          {
+            "name": "Kit A — Sworn Shield",
+            "items": [
+              "longsword",
+              "shield",
+              "chain mail",
+              "holy symbol",
+              "priest's pack"
+            ],
+            "ac": 18
+          },
+          {
+            "name": "Kit B — Zealot",
+            "items": [
+              "greatsword",
+              "chain mail",
+              "holy symbol",
+              "priest's pack"
+            ],
+            "ac": 16
+          }
+        ]
+      },
+      {
+        "id": "sorcerer",
+        "name": "Sorcerer",
+        "hitDie": 6,
+        "primaryAbility": "Charisma",
+        "savingThrows": [
+          "con",
+          "cha"
+        ],
+        "skillChoices": {
+          "count": 2,
+          "from": [
+            "arcana",
+            "deception",
+            "persuasion",
+            "intimidation"
+          ]
+        },
+        "features": [
+          "Spellcasting: innate magic drawn from bloodline rather than study.",
+          "Font of Magic: can flex spell energy in small, flexible ways (narrate with the DM)."
+        ],
+        "kits": [
+          {
+            "name": "Kit A — Bloodline",
+            "items": [
+              "two daggers",
+              "component pouch",
+              "dungeoneer's pack"
+            ],
+            "ac": 12
+          },
+          {
+            "name": "Kit B — Wildfire",
+            "items": [
+              "quarterstaff",
+              "component pouch",
+              "explorer's pack"
+            ],
+            "ac": 12
+          }
+        ]
+      },
+      {
+        "id": "warlock",
+        "name": "Warlock",
+        "hitDie": 8,
+        "primaryAbility": "Charisma",
+        "savingThrows": [
+          "wis",
+          "cha"
+        ],
+        "skillChoices": {
+          "count": 2,
+          "from": [
+            "arcana",
+            "deception",
+            "intimidation",
+            "investigation"
+          ]
+        },
+        "features": [
+          "Pact Magic: a small number of powerful spell slots that recharge quickly, granted by a patron.",
+          "Eldritch Invocations: small permanent magical perks granted by the pact (narrate specifics with the DM)."
+        ],
+        "kits": [
+          {
+            "name": "Kit A — Pact of the Blade",
+            "items": [
+              "shortsword",
+              "leather armor",
+              "component pouch",
+              "scholar's pack"
+            ],
+            "ac": 12
+          },
+          {
+            "name": "Kit B — Pact of the Tome",
+            "items": [
+              "dagger",
+              "leather armor",
+              "component pouch",
+              "scholar's pack"
+            ],
+            "ac": 12
+          }
+        ]
+      }
     ]
   }
 }

@@ -12,16 +12,45 @@
     <h2 style="margin-top:0">Identity</h2>
     <div class="grid cols-2">
       <label>Name<input name="name" required placeholder="Mira Vey" /></label>
-      <label>Species<input name="species" placeholder="Human" /></label>
-      <label>Class &amp; level<input name="class_level" placeholder="Rogue 4" /></label>
+      <% if (typeof characterOptions !== 'undefined' && characterOptions) { %>
+        <label>Race<select id="race-select" name="race_id"></select></label>
+        <label>Class<select id="class-select" name="class_id"></select></label>
+        <input type="hidden" name="species" id="species-hidden" />
+        <input type="hidden" name="class_level" id="class-level-hidden" />
+      <% } else { %>
+        <label>Species<input name="species" placeholder="Human" /></label>
+        <label>Class &amp; level<input name="class_level" placeholder="Rogue 4" /></label>
+      <% } %>
       <label>Background<input name="background" placeholder="Courier / former border runner" /></label>
       <label>Alignment<input name="alignment" placeholder="Neutral Good" /></label>
       <label>Starting <%= typeof currencyLabel !== 'undefined' ? currencyLabel : 'gold' %><input name="gp" type="number" value="20" /></label>
     </div>
+    <% if (typeof characterOptions !== 'undefined' && characterOptions) { %>
+      <p class="hint" id="race-traits"></p>
+      <p class="hint" id="class-info"></p>
+    <% } %>
   </div>
+
+  <% if (typeof characterOptions !== 'undefined' && characterOptions) { %>
+    <div class="card">
+      <h2 style="margin-top:0">Starting Equipment Kit</h2>
+      <p class="hint">Picking a kit fills in inventory and a suggested Armor Class below &mdash; both stay editable.</p>
+      <div id="kit-options"></div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0">Skill Proficiencies <span class="hint" id="skill-count-hint"></span></h2>
+      <div id="skill-checkboxes"></div>
+    </div>
+  <% } %>
 
   <div class="card">
     <h2 style="margin-top:0">Abilities</h2>
+    <% if (typeof characterOptions !== 'undefined' && characterOptions) { %>
+      <button type="button" id="roll-btn" class="secondary">Roll Ability Scores (4d6, drop lowest)</button>
+      <div id="roll-pool"></div>
+      <p class="hint" style="margin-top:14px"><strong>Final scores</strong> (rolled value + racial bonus &mdash; these are what get saved):</p>
+    <% } %>
     <div class="grid cols-3">
       <label><%= (abilityLabels && abilityLabels.str) || 'STR' %><input name="str" type="number" value="10" /></label>
       <label><%= (abilityLabels && abilityLabels.dex) || 'DEX' %><input name="dex" type="number" value="10" /></label>
@@ -30,6 +59,9 @@
       <label><%= (abilityLabels && abilityLabels.wis) || 'WIS' %><input name="wis" type="number" value="10" /></label>
       <label><%= (abilityLabels && abilityLabels.cha) || 'CHA' %><input name="cha" type="number" value="10" /></label>
     </div>
+    <% if (typeof characterOptions !== 'undefined' && characterOptions) { %>
+      <p class="hint">Race ability bonuses are applied automatically once you pick a race above.</p>
+    <% } %>
   </div>
 
   <div class="card">
@@ -73,5 +105,13 @@
     <button type="submit">Add to Party &rarr;</button>
   </div>
 </form>
+
+<% if (typeof characterOptions !== 'undefined' && characterOptions) { %>
+  <script>
+    window.CHARACTER_OPTIONS = <%- JSON.stringify(characterOptions).replace(/</g, '\\u003c') %>;
+    window.ABILITY_LABELS = <%- JSON.stringify(abilityLabels || {}).replace(/</g, '\\u003c') %>;
+  </script>
+  <script src="/js/character-creator.js"></script>
+<% } %>
 
 <%- include('partials/foot') %>

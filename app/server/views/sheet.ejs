@@ -16,6 +16,10 @@
           <div class="stat-mini"><div class="val"><%= v %></div><div class="lbl"><%= (abilityLabels && abilityLabels[k]) || k %></div></div>
         <% }) %>
       </div>
+      <% if ((character.skills||[]).length) { %>
+        <strong class="hint">Skill proficiencies</strong>
+        <p><%= character.skills.join(', ') %></p>
+      <% } %>
     </div>
 
     <div class="card">

@@ -135,6 +135,30 @@ seeds a small proof-of-concept cyberpunk-flavored campaign (one human, one compa
 one scene) to demonstrate the pack mechanism live without building out any of that
 deeper subsystem work.
 
+## Character creation content (races, classes, dice rolling)
+
+Surfaced by playtesting: creating a character used to be six free-text fields with no
+guidance. `fantasy.json`'s `characterOptions` block adds a full original race/class
+roster for that pack specifically — 14 races (including subraces: three Elf lineages,
+two Dwarf, two Halfling, two Gnome, plus Human/Half-Elf/Half-Orc/Tiefling/Dragonkin) and
+12 classes (Fighter, Rogue, Wizard, Cleric, Ranger, Barbarian, Bard, Druid, Monk,
+Paladin, Sorcerer, Warlock), each with ability-score bonuses, hit die, saving throws, a
+skill-proficiency list (choose N), short original-flavor trait/feature text, and two
+starting-equipment kit choices. None of this is copied from any published ruleset's
+exact tables or wording — it's original content built to the same general shape
+5e-descended systems use, matching this project's existing "5e-style, not locked" stance.
+
+`public/js/character-creator.js` (loaded by `character-new-human.ejs` /
+`character-new-companion.ejs` only when the active ruleset defines `characterOptions`)
+turns that data into: race/class dropdowns that populate trait text, a kit picker that
+auto-fills inventory and a suggested AC, skill checkboxes capped at the class's allowed
+count, and a "Roll Ability Scores" button (4d6, drop the lowest, six times) with an
+assignment UI — race bonuses are applied automatically on top of whatever's assigned,
+and HP auto-suggests from the class's hit die + Constitution modifier. Everything stays
+editable afterward. A ruleset pack without `characterOptions` (Neon Sprawl, for now)
+falls back to the original plain free-text fields — nothing forces every genre to author
+this content before it's usable.
+
 ## Play (Beta)
 
 `/campaigns/:id/game` — the first slice of an actual game layer, deliberately scoped

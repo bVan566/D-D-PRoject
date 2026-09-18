@@ -62,6 +62,7 @@ router.get("/campaigns/:id/characters/human/new", requireCampaign, (req, res) =>
     campaign,
     abilityLabels: ruleset.abilities || {},
     currencyLabel: (ruleset.vocabulary && ruleset.vocabulary.currency) || "gp",
+    characterOptions: ruleset.characterOptions || null,
   });
 });
 
@@ -73,6 +74,8 @@ router.post("/campaigns/:id/characters/human/new", requireCampaign, (req, res) =
     name: b.name || "Unnamed",
     species: b.species || "",
     class_level: b.class_level || "",
+    race_id: b.race_id || "",
+    class_id: b.class_id || "",
     background: b.background || "",
     alignment: b.alignment || "",
     abilities: {
@@ -83,6 +86,7 @@ router.post("/campaigns/:id/characters/human/new", requireCampaign, (req, res) =
       wis: Number(b.wis) || 10,
       cha: Number(b.cha) || 10,
     },
+    skills: Array.isArray(b.skills) ? b.skills : b.skills ? [b.skills] : [],
     ac: Number(b.ac) || 10,
     hp: { current: Number(b.hp_max) || 10, max: Number(b.hp_max) || 10 },
     temp_hp: 0,
@@ -116,6 +120,7 @@ router.get("/campaigns/:id/characters/companion/new", requireCampaign, (req, res
     campaign,
     abilityLabels: ruleset.abilities || {},
     currencyLabel: (ruleset.vocabulary && ruleset.vocabulary.currency) || "gp",
+    characterOptions: ruleset.characterOptions || null,
   });
 });
 
@@ -128,6 +133,8 @@ router.post("/campaigns/:id/characters/companion/new", requireCampaign, (req, re
     name: b.name || "Unnamed",
     species: b.species || "",
     class_level: b.class_level || "",
+    race_id: b.race_id || "",
+    class_id: b.class_id || "",
     background: b.background || "",
     alignment: b.alignment || "",
     abilities: {
@@ -138,6 +145,7 @@ router.post("/campaigns/:id/characters/companion/new", requireCampaign, (req, re
       wis: Number(b.wis) || 10,
       cha: Number(b.cha) || 10,
     },
+    skills: Array.isArray(b.skills) ? b.skills : b.skills ? [b.skills] : [],
     ac: Number(b.ac) || 10,
     hp: { current: Number(b.hp_max) || 10, max: Number(b.hp_max) || 10 },
     temp_hp: 0,
