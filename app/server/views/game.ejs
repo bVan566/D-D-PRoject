@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%= campaignTitle %> — Play (Beta)</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    body { display: flex; flex-direction: column; align-items: center; }
+    #game-header { width: 100%; max-width: 1000px; padding: 10px 20px; box-sizing: border-box; }
+    #game-header a { margin-right: 14px; }
+    #game-root { image-rendering: pixelated; border: 2px solid var(--border); border-radius: 8px; overflow: hidden; margin: 10px; }
+    #game-help { color: var(--text-dim); font-size: 0.8rem; max-width: 960px; text-align: center; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <div id="game-header">
+    <a href="/campaigns/<%= campaignId %>/play?role=human">&larr; Back to text play</a>
+    <a href="/campaigns/<%= campaignId %>/party">Party</a>
+    <span class="badge" style="margin-left:8px">BETA</span>
+  </div>
+  <div id="game-root"></div>
+  <p id="game-help">Arrow keys / WASD to move. Walk onto the tall-grass tiles and you might run into trouble.
+    This is a first playable slice — placeholder art, one map, one enemy type — proving the loop before
+    anyone draws a real sprite.</p>
+
+  <script>
+    // Party data is the same human-role visibility projection every other screen uses
+    // -- public stats only, nothing DM-private or another companion's private diary.
+    // A character name or item string could legally contain a script-closing tag; the
+    // angle-bracket escaping below keeps that from ever prematurely ending this block.
+    // (Deliberately not spelling that tag out even in this comment -- the HTML parser
+    // scans for it byte-for-byte and does not know it is reading a JS comment.)
+    window.CAMPAIGN_ID = <%- JSON.stringify(campaignId).replace(/</g, '\\u003c') %>;
+    window.PARTY_DATA = <%- JSON.stringify(party).replace(/</g, '\\u003c') %>;
+  </script>
+  <script src="/js/vendor/phaser.min.js"></script>
+  <script src="/js/game/data.js"></script>
+  <script src="/js/game/mapScene.js"></script>
+  <script src="/js/game/battleScene.js"></script>
+  <script src="/js/game/main.js"></script>
+</body>
+</html>

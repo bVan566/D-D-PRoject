@@ -14,6 +14,11 @@ AI-controlled party members, each with its own seat, its own private beliefs/fea
 its own independence metrics — not shared with the others, not even with each other
 (see "Party of more than one" below).
 
+There's also a first small step toward an actual game rather than a web app about a
+game: `/campaigns/:id/game`, a top-down tile map you walk around on with real party
+sprites, where wandering into danger cuts to an FF-style turn-based battle screen wired
+to the same character HP/AC/abilities as everything else (see "Play (Beta)" below).
+
 ## Run it
 
 ```bash
@@ -87,6 +92,34 @@ companions from the Party page (during setup or anytime after). What that touche
   remains separate from any specific companion profile such as Mira").
 - **Relationships**: one companion→human record per companion (`{companionId}__human`),
   each with its own owner-scoped private read.
+
+## Play (Beta)
+
+`/campaigns/:id/game` — the first slice of an actual game layer, deliberately scoped
+small: one map, one enemy type, placeholder colored-square sprites instead of real art,
+proving the loop is fun before anyone draws anything. Built with
+[Phaser 3](https://phaser.io) (installed as a normal npm dependency and served from
+`node_modules` rather than a CDN, so it works fully offline like everything else here).
+
+- **Map** (`public/js/game/mapScene.js`): arrow keys/WASD move the human PC one tile at
+  a time; companions trail behind in a follow-the-leader chain (the classic Chrono
+  Trigger/FF technique — each follower moves to where the member ahead of it just was).
+  Walking onto a tall-grass tile has a chance to trigger a battle.
+- **Battle** (`public/js/game/battleScene.js`): party on the right, enemies on the left
+  (classic FF orientation), a menu when it's your turn (Attack/Defend/Flee), simple
+  enemy AI. Built directly from real party data — names, HP, AC, STR modifier — fetched
+  via the same `human`-role visibility projection every other screen uses, so nothing
+  DM-private or another companion's private diary ends up in client-side JS.
+- **Persistence** (`routes/game.js`): a battle's outcome POSTs final HP back to the real
+  character sheets (`POST /campaigns/:id/game/battle-result`) — the same pattern as the
+  text-based combat tracker's end-of-fight sync — so the map/battle game and the rest of
+  the app never drift into two different truths about a character's HP. A defeat isn't
+  permanent: the party wakes up battered at 1 HP rather than hitting a dead end, which
+  keeps this an arcade-y first slice rather than trying to replicate the main engine's
+  own (more careful) death rules.
+- **Deliberately not here yet**: items/spells in battle, more than one map, real sprite
+  art, sound. This is a proof of the loop, not the finished game — expand it only once
+  the core "walk, fight, come back" cycle is confirmed to actually be fun.
 
 ## Beyond the basics
 

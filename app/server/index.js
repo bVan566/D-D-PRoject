@@ -10,6 +10,7 @@ const path = require("path");
 const campaignsRouter = require("./routes/campaigns");
 const playRouter = require("./routes/play");
 const recordsRouter = require("./routes/records");
+const gameRouter = require("./routes/game");
 const { isConfigured } = require("./agents");
 
 const app = express();
@@ -20,6 +21,12 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
+// Served from the npm package rather than a CDN -- keeps the "runs entirely locally,
+// nothing phones home" property that the rest of the app already has, and sidesteps
+// depending on a third-party CDN staying reachable/up.
+app.get("/js/vendor/phaser.min.js", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "node_modules", "phaser", "dist", "phaser.min.js"));
+});
 
 // Available to every view without threading it through each render() call.
 app.use((req, res, next) => {
@@ -31,6 +38,7 @@ app.use((req, res, next) => {
 app.use("/", campaignsRouter);
 app.use("/campaigns/:id", playRouter);
 app.use("/campaigns/:id", recordsRouter);
+app.use("/campaigns/:id", gameRouter);
 
 app.use((req, res) => {
   res.status(404).render("not-found", { path: req.path });

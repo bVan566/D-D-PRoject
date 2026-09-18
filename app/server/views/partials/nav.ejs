@@ -6,6 +6,7 @@
     <% if (typeof campaignId !== 'undefined' && campaignId) { %>
       <nav class="tabs">
         <a href="/campaigns/<%= campaignId %>/play?role=<%= role %>" class="<%= active === 'play' ? 'active' : '' %>">Play</a>
+        <a href="/campaigns/<%= campaignId %>/game" class="<%= active === 'game' ? 'active' : '' %>">Play (Beta) 🎮</a>
         <a href="/campaigns/<%= campaignId %>/party?role=<%= role %>" class="<%= active === 'party' || (active && active.indexOf('sheet-') === 0) ? 'active' : '' %>">Party</a>
         <a href="/campaigns/<%= campaignId %>/quests?role=<%= role %>" class="<%= active === 'quests' ? 'active' : '' %>">Quests</a>
         <a href="/campaigns/<%= campaignId %>/lore?role=<%= role %>" class="<%= active === 'lore' ? 'active' : '' %>">Lore &amp; Canon</a>
