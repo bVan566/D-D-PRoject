@@ -1,0 +1,36 @@
+D&D DUO ENGINE — ACTIVE LORE PROJECTION — CAMPAIGN 001 / SESSION 003
+Projection version: 0.2.1
+Authority: convenience projection only. LORE_MASTER_STATE.txt remains authoritative.
+Visibility: mixed internal projection; runtime must filter by requester role.
+
+CURRENT SCENE
+- Location: narrow old drainage opening downslope from the Pell farm/quarry track, east of Brackenford.
+- Time: daylight, morning after first night in Brackenford.
+- Combat: none.
+- Immediate next beat: Dhovir and Mira decide whether/how to investigate or enter the drainage opening.
+- Immediate hazards known: rough loose shale, brush, old quarry terrain. Interior not yet assessed.
+
+PC STATE
+- Dhovir Drunkfoot: HP 32/32; condition none; no combat/limited-use resources expended in Session 002.
+- Mira Vey: HP 27/27; condition none; no combat/limited-use resources expended in Session 002.
+- Relationship: mutually acknowledged partners; deeper friendship/loyalty/romance remains emergent.
+
+ACTIVE PLAYER-VISIBLE LEADS
+- Three disappearances were reported along the quarry-road area within the established recent timeline.
+- Known missing people include peddler Caldus Marr and farm boy Jory Pell; quarry hand identity remains as established in master state.
+- Harlan Pell reported Jory had seen something troubling near the old quarry road before disappearing.
+- Harlan reported quarry-side dog barking, heavy brush movement, and one indistinct calling voice.
+- Mira found disturbed ground near the quarry track.
+- Dhovir Investigation 13 established at least two overlapping sets of impressions leaving the track; one deeper set was consistent with greater/carried weight.
+- The intermittent trail led to the current drainage opening.
+- Orren Vale previously reported old drainage cuts/abandoned quarry passages in the area and believed someone had been using them; this remains a reported claim, not automatic objective truth.
+
+CURRENT CONTINUITY WATCHES
+- Do not reintroduce the discarded improvised “six weeks earlier” disappearance timing. Locked recent-disappearance timeline governs.
+- Claims from Tann, Harlan, Orren, or Torris remain claims unless independently established.
+- Cause of the voice/scream phenomenon remains unresolved to the players.
+
+SESSION 003 FLOW SUPPORT
+- Routine player clarification should answer from this projection when sufficient.
+- Ordinary scene play should not require full Lore Master reread.
+- Escalate to Master State only for absent/uncertain facts, contradiction signals, hidden-information questions, major reveals/consequences, or authoritative persistence.

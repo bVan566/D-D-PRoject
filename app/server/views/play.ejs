@@ -1,0 +1,183 @@
+<%- include('partials/head', { title: 'Play — ' + view.campaign.campaign_title }) %>
+<%- include('partials/nav', { campaignId, role, companionId, active: 'play' }) %>
+
+<% const myCompanion = role === 'companion' ? view.characters.companions.find(c => c.character_id === view.companionId) : null; %>
+
+<h1><%= view.campaign.campaign_title %></h1>
+<p class="subtitle">Session <%= view.campaign.session_number %> &middot; <%= view.campaign.in_world_date || 'time not set' %>
+  &middot; viewing as <span class="badge <%= role %>"><%= role %><%= myCompanion ? ': ' + myCompanion.name : '' %></span></p>
+
+<% if (role === 'companion') { %>
+  <div class="banner">This is <%= myCompanion ? myCompanion.name + "'s" : "a companion's" %> seat (Player Agent).
+    DM-private facts, hidden NPC motives, secret DCs, and every other party member's private thoughts are not in
+    this response &mdash; the server never sent them.</div>
+<% } else if (role === 'human') { %>
+  <div class="banner">This is the human player's seat. You see public state and <%= view.characters.human ? view.characters.human.name : 'your character' %>'s own notes only.</div>
+<% } else if (role === 'lore') { %>
+  <div class="banner">Lore reference view: the full master record, for continuity/rules auditing. Lore's actual
+    replies to DM/human/companion must still be filtered to whoever asked &mdash; see the Lore &amp; Canon page.</div>
+<% } %>
+
+<div class="two-col">
+  <div>
+    <div class="card">
+      <h2 style="margin-top:0">Current Scene</h2>
+      <h3><%= view.scene.location_name || 'Unset' %></h3>
+      <p><%= view.scene.description_public || '—' %></p>
+      <div class="grid cols-2">
+        <div>
+          <strong class="hint">Environment</strong>
+          <p><%= view.scene.environment || '—' %></p>
+          <strong class="hint">Hazards</strong>
+          <ul class="clean"><% (view.scene.hazards||[]).forEach(h => { %><li><%= h %></li><% }) %></ul>
+        </div>
+        <div>
+          <strong class="hint">Objectives</strong>
+          <ul class="clean"><% (view.scene.objectives_public||[]).forEach(o => { %><li><%= o %></li><% }) %></ul>
+          <strong class="hint">Combat</strong>
+          <p><%= view.scene.combat_active ? 'ACTIVE — round ' + view.scene.round : 'Not active' %></p>
+        </div>
+      </div>
+      <%- include('partials/combat-tracker', { view, role, companionId, campaignId }) %>
+      <% if (role === 'dm' && view.scene.dm_notes) { %>
+        <div class="banner warn"><strong>DM-private notes:</strong> <%= view.scene.dm_notes %></div>
+      <% } %>
+      <% if (role === 'dm') { %>
+        <details>
+          <summary class="hint" style="cursor:pointer">Edit scene (DM)</summary>
+          <form method="post" action="/campaigns/<%= campaignId %>/play/scene" style="margin-top:10px">
+            <label>Location name</label>
+            <input name="location_name" value="<%= view.scene.location_name %>" />
+            <label>Public description</label>
+            <textarea name="description_public"><%= view.scene.description_public %></textarea>
+            <label>Environment</label>
+            <input name="environment" value="<%= view.scene.environment %>" />
+            <div class="grid cols-2">
+              <label>Hazards (one per line)<textarea name="hazards"><%= (view.scene.hazards||[]).join('\n') %></textarea></label>
+              <label>Objectives (one per line)<textarea name="objectives_public"><%= (view.scene.objectives_public||[]).join('\n') %></textarea></label>
+            </div>
+            <label><input type="checkbox" name="combat_active" style="width:auto;display:inline-block" <%= view.scene.combat_active ? 'checked' : '' %> /> Combat active</label>
+            <label>DM-private notes (never sent to human/companion views)</label>
+            <textarea name="dm_notes"><%= view.scene.dm_notes %></textarea>
+            <button type="submit">Update Scene</button>
+          </form>
+        </details>
+      <% } %>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0">Table Log</h2>
+      <div class="chat-log">
+        <% if (!view.play_log.length && llmConfigured && (role === 'dm' || role === 'human')) { %>
+          <div class="banner">
+            <p style="margin-top:0">Nothing has happened yet in this campaign. The DM already has your character
+              sheets and campaign setup — it just needs a nudge to open the scene.</p>
+            <form method="post" action="/campaigns/<%= campaignId %>/play/message" style="margin:0">
+              <input type="hidden" name="role" value="<%= role %>" />
+              <input type="hidden" name="speaker_name" value="<%= role === 'human' ? (view.characters.human ? view.characters.human.name : 'Human') : 'Table' %>" />
+              <input type="hidden" name="content" value="Let's begin — please set the opening scene." />
+              <input type="hidden" name="ask_agent" value="dm" />
+              <button type="submit">Start the Session</button>
+            </form>
+          </div>
+        <% } else if (!view.play_log.length && !llmConfigured) { %>
+          <p class="empty">No messages yet. No API key is configured, so the DM can't open the scene automatically
+            &mdash; narrate the opening yourself below, or add an <%= 'ANTHROPIC_API_KEY' %> to play live.</p>
+        <% } else if (!view.play_log.length) { %>
+          <p class="empty">No messages yet. Switch to the DM or human seat to start the session.</p>
+        <% } %>
+        <% view.play_log.forEach(m => { %>
+          <div class="chat-msg role-<%= m.role %> <%= m.is_roll ? 'is-roll' : '' %>">
+            <div class="who"><span class="badge <%= m.role %>"><%= m.role %></span> <%= m.speaker_name %>
+              <% if (m.declares_action) { %><span class="badge companion">independent action</span><% } %>
+              <span class="hint" style="margin-left:auto"><%= new Date(m.timestamp).toLocaleTimeString() %></span>
+            </div>
+            <div class="content"><%= m.content %></div>
+          </div>
+        <% }) %>
+      </div>
+
+      <form method="post" action="/campaigns/<%= campaignId %>/play/message" style="margin-top:14px">
+        <input type="hidden" name="role" value="<%= role %>" />
+        <% if (role === 'companion') { %><input type="hidden" name="companionId" value="<%= view.companionId %>" /><% } %>
+        <label>Speaking as</label>
+        <input name="speaker_name" value="<%= role === 'human' ? (view.characters.human ? view.characters.human.name : 'Human') : (role === 'companion' ? (myCompanion ? myCompanion.name : 'Companion') : role.toUpperCase()) %>" />
+        <label>Message</label>
+        <textarea name="content" placeholder="Say or describe what happens..."></textarea>
+        <% if (role === 'companion') { %>
+          <label><input type="checkbox" name="declares_action" style="width:auto;display:inline-block" /> This is an independent action declaration (counts toward Player Agent independence metrics)</label>
+        <% } %>
+        <% if (llmConfigured) { %>
+          <label>Who responds</label>
+          <select name="ask_agent">
+            <option value="auto" selected>Let the table respond (companions react or pass, then DM if needed)</option>
+            <option value="dm">DM Agent only</option>
+            <% view.characters.companions.forEach(c => { %>
+              <option value="companion:<%= c.character_id %>">Ask <%= c.name %> only (Player Agent)</option>
+            <% }) %>
+            <option value="lore">Lore Agent</option>
+            <option value="">(no — just log this message)</option>
+          </select>
+          <p class="hint">"Let the table respond" runs each companion's own judgment first (they may say nothing),
+            then the DM only if the beat actually calls for a ruling or scene progression — the other options
+            address one specific agent directly and always get a reply.</p>
+        <% } %>
+        <div class="btn-row"><button type="submit">Send</button></div>
+      </form>
+      <% if (!llmConfigured) { %>
+        <p class="hint">Live agent replies are off in this environment. Play by narrating manually here, or run the
+          DM/Companion/Lore conversation in a separate Claude session using the specs in
+          <code>DnD_Duo_Engine_MVP_0.2/agents/</code> and copy key beats back into this log to keep state in sync.</p>
+      <% } %>
+    </div>
+  </div>
+
+  <div>
+    <div class="card">
+      <h3>Dice</h3>
+      <form method="post" action="/campaigns/<%= campaignId %>/play/roll">
+        <input type="hidden" name="role" value="<%= role %>" />
+        <% if (role === 'companion') { %><input type="hidden" name="companionId" value="<%= view.companionId %>" /><% } %>
+        <div class="grid cols-3">
+          <label>Count<input name="count" type="number" value="1" min="1" max="10" /></label>
+          <label>Sides<input name="sides" type="number" value="20" /></label>
+          <label>Mod<input name="modifier" type="number" value="0" /></label>
+        </div>
+        <div class="grid cols-2">
+          <label>Character<input name="character" value="<%= role === 'human' ? (view.characters.human ? view.characters.human.name : '') : role === 'companion' ? (myCompanion ? myCompanion.name : '') : '' %>" /></label>
+          <label>DC (optional)<input name="dc" type="number" /></label>
+        </div>
+        <label>Label</label>
+        <input name="label" placeholder="Investigation check" />
+        <button type="submit" style="margin-top:10px">Roll</button>
+      </form>
+    </div>
+
+    <% const partyRoster = [['human', view.characters.human], ...view.characters.companions.map(c => [c.character_id, c])]; %>
+    <% partyRoster.forEach(([cid, c]) => { if (!c) return; %>
+      <div class="card">
+        <h3><%= c.name %> <span class="hint">(<%= c.class_level %>)</span><% if (cid !== 'human') { %> <span class="badge companion">companion</span><% } %></h3>
+        <div class="hp-bar <%= c.hp.current <= c.hp.max/3 ? 'low' : '' %>"><span style="width:<%= Math.max(0, Math.round(100*c.hp.current/Math.max(1,c.hp.max))) %>%"></span></div>
+        <p class="hint">HP <%= c.hp.current %>/<%= c.hp.max %> &middot; AC <%= c.ac %> &middot; <%= (c.conditions||[]).join(', ') || 'no conditions' %></p>
+        <a href="/campaigns/<%= campaignId %>/sheet/<%= cid %>?role=<%= role %>">Open sheet &rarr;</a>
+      </div>
+    <% }) %>
+    <% if (!view.characters.companions.length) { %>
+      <div class="card"><p class="empty">No AI companions in this campaign yet.</p>
+        <a href="/campaigns/<%= campaignId %>/characters/companion/new">+ Add one &rarr;</a></div>
+    <% } %>
+
+    <div class="card">
+      <h3>Active Threads</h3>
+      <ul class="clean">
+        <% (view.quests||[]).filter(q => q.status === 'open').slice(0,6).forEach(q => { %>
+          <li><%= q.title %></li>
+        <% }) %>
+        <% if (!(view.quests||[]).some(q=>q.status==='open')) { %><li class="empty">None yet</li><% } %>
+      </ul>
+      <a href="/campaigns/<%= campaignId %>/quests?role=<%= role %>">Full quest tracker &rarr;</a>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/foot') %>

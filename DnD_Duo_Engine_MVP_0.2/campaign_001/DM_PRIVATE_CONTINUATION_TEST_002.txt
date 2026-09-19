@@ -1,0 +1,93 @@
+D&D DUO ENGINE — DM PRIVATE CONTINUATION PREP — PROTOTYPE TEST 002
+
+SPOILER CONTROL
+DM-private / Lore-only. Do not expose this prep, hidden statistics, clocks, motives, or unrevealed consequences to Billy or Mira unless actual play reveals them.
+
+PURPOSE
+Make Test 002 genuinely resumable and mechanically fair even if Billy immediately chooses combat, pursuit, supernatural investigation, or an unexpected route. This prep extends the existing Prototype Test 001 DM Runtime; it does not replace its committed truths.
+
+TEST 001 LEARNING CONSUMED
+- Never narrate Dhovir's voluntary internal conclusions. Describe evidence and external consequences; Billy owns Dhovir's beliefs and decisions.
+- Lore silently distinguishes objective fact from observation, reported claim, inference, and belief.
+- Mira receives only public state + her private state and acts independently.
+
+WORLD CONTINUATION / OVERNIGHT CLOCKS
+These clocks are committed before Session 002 starts so consequences are not retrofitted around player choices.
+
+CLOCK A — DESERTER PRESSURE
+At the start of the night, Hask Renn knows the roadside incident went wrong and that at least one watchman escaped. His priority is to reduce exposure, not attack Brackenford openly.
+Overnight action: Hask orders one small cache moved deeper into the drainage works and tells exposed deserters to avoid the main road until he decides whether to abandon the area.
+Consequence available to discover: one previously used hiding point may be partially cleared, leaving rushed traces rather than a full cache.
+No automatic attack on Dhovir/Mira merely because they asked questions.
+
+CLOCK B — ORREN VALE
+Orren leaves the quarry office after Dhovir. He is unsettled by the voice phenomenon and by Dhovir's interest.
+Overnight action: Orren attempts to contact the deserters indirectly and warn them that the north-road survivors reached town and that Dhovir is asking questions.
+He does not know whether the message reaches Hask successfully before morning. Resolve only if/when timing matters; do not predetermine success unless play approaches the contact chain.
+
+CLOCK C — SUPERNATURAL ESCALATION
+The supernatural presence remains localized around the disturbed chamber and nearby works. It is weak but becoming more disruptive.
+Overnight effect: intermittent voice mimicry / wrong echoes may occur in the lower works. It does not roam into Brackenford during the night and does not target Dhovir personally without causal contact.
+
+CLOCK D — WATCH RESPONSE
+Sergeant Tann keeps ordinary watch coverage in town and sends a cautious daylight search toward the road if manpower allows. She does not secretly solve the adventure overnight.
+
+COMBAT PREP — DESERTERS
+Use these original prototype stat blocks unless fiction clearly calls for a different individual.
+
+DESERTER SKIRMISHER
+Medium humanoid.
+AC 13 | HP 16 | Speed 30.
+STR 11 DEX 14 CON 12 INT 10 WIS 11 CHA 10.
+Attack: shortsword +4, 1d6+2 piercing; shortbow +4, 1d6+2 piercing, range 80/320.
+Tactical behavior: use cover, withdraw when isolated, protect escape routes, surrender or flee when morale breaks. They are not fanatics.
+
+DESERTER BRUISER
+Medium humanoid.
+AC 14 | HP 24 | Speed 30.
+STR 15 DEX 12 CON 14 INT 9 WIS 11 CHA 10.
+Attack: handaxe +4, 1d6+2 slashing; light crossbow +3, 1d8+1 piercing.
+Trait: once per turn after hitting in melee, may shove as a bonus action if fiction supports close-quarters pressure; contested normally.
+Tactical behavior: hold chokepoints, cover retreat, avoid suicidal fighting.
+
+HASK RENN
+Medium humanoid, former infantry corporal.
+AC 15 | HP 38 | Speed 30.
+STR 15 DEX 14 CON 14 INT 11 WIS 13 CHA 12.
+Saves: Str +4, Wis +3.
+Skills: Athletics +4, Insight +3, Intimidation +3.
+Multiattack: two melee attacks with saber.
+Saber: +4 to hit, 1d6+2 slashing.
+Heavy crossbow: +4 to hit, 1d10+2 piercing, range 100/400, loading.
+Commanding Withdrawal (1/round, reaction when an allied deserter within 30 ft is hit): that ally may move up to half speed without provoking from the attacker, if it can hear Hask. This is tactical discipline, not magic.
+Morale: Hask bargains if cornered and survival remains plausible. He may surrender if convinced his people can live; he may also betray Orren or abandon supplies. He does not fight to the death merely to preserve a plot.
+
+ENCOUNTER BALANCE GUIDANCE
+For two Level 4 PCs, default direct confrontation should normally involve Hask plus 1-2 skirmishers, or 3-4 ordinary deserters without Hask, depending terrain and prior attrition. Use environment, morale, retreat, surprise, and negotiation to shape difficulty. Do not silently add reinforcements because the PCs are winning.
+
+SUPERNATURAL THREAT — THE ECHO WRAITH (WORKING DM LABEL ONLY)
+The label is mechanical shorthand, not established lore and must never be presented as its true historical name unless later established.
+Medium supernatural entity.
+AC 13 | HP 42 | Speed 30; can move through narrow gaps/shadows only where physically plausible in the disturbed chamber complex; no unrestricted wall phasing.
+Resistances: nonmagical bludgeoning/piercing/slashing resistance only if needed to communicate supernatural durability; if this proves too punishing for the two-PC party, instead use ordinary damage with narrative strangeness. Do not alter mid-fight after seeing rolls; choose before initiative based on party resources and environment.
+Attack — Chilling Grasp: +5 to hit, 1d8+3 cold/necrotic-style damage (use one consistent damage type at encounter start).
+Borrowed Voice (Recharge 5-6): one creature within 30 ft that can hear it makes a Wisdom save DC 12. On failure, frightened until end of its next turn and hears a familiar voice from the wrong direction. On success, no frightened condition; still hears the unnatural echo if perception allows.
+Echo Lure: outside initiative, it can imitate short fragments of recently heard speech. This provides atmosphere/misdirection but cannot issue magical commands, perfectly reproduce information it never heard, or override player agency.
+Behavior: predatory, reactive to sound and panic, not tactically omniscient. It may retreat toward the disturbed chamber when badly hurt. Containment, escape, sealing access, or environmental solutions are valid.
+
+SUPERNATURAL FAIRNESS
+- Dhovir's paladin abilities work according to their actual character-sheet mechanics. Do not force Divine Sense or Detect Evil and Good to reveal more than the ability supports.
+- The entity's origin remains UNRESOLVED SPACE. Mechanics do not establish historical lore.
+- No surprise instant-death effects.
+
+LORE-INTEGRATION PRESSURE TESTS TO ALLOW NATURALLY
+1. Retrieve a previously established NPC/detail without contradicting the record.
+2. Treat an NPC claim as a claim, not automatic truth.
+3. If Billy asks about chamber origins before discovery, Lore answer is “Not established.”
+4. If a rule dispute matters, Lore gives narrow neutral ruling without tactical advice.
+5. If a DM-private truth becomes genuinely discovered, update visibility only for the information actually learned.
+6. Preserve Mira's private motive without using it as a quest compass.
+7. At session end, persist new canon, claims, resources, relationships, NPC states, and unresolved threads.
+
+START OF SESSION 002
+Default opening may be the following morning after an uneventful full rest unless a previously committed clock or Billy's explicit requested starting point makes interruption more appropriate. Do not manufacture a dramatic wake-up solely to force momentum. Let Brackenford exist around the players and allow Dhovir to choose what matters next.

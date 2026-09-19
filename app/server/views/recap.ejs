@@ -1,0 +1,110 @@
+<%- include('partials/head', { title: 'Session Recap' }) %>
+<%- include('partials/nav', { campaignId, role, companionId, active: 'recap' }) %>
+
+<h1>Session Recap</h1>
+<p class="subtitle">Ending a session writes a compressed canonical summary and takes an automatic save checkpoint,
+  matching the engine's persistence-checkpoint rule.</p>
+
+<% if (usage) { %>
+  <div class="card">
+    <h3 style="margin-top:0">Usage This Campaign</h3>
+    <div class="grid cols-4">
+      <div class="stat-mini"><div class="val"><%= usage.calls %></div><div class="lbl">AI calls</div></div>
+      <div class="stat-mini"><div class="val"><%= usage.input_tokens.toLocaleString() %></div><div class="lbl">Input tokens</div></div>
+      <div class="stat-mini"><div class="val"><%= usage.output_tokens.toLocaleString() %></div><div class="lbl">Output tokens</div></div>
+      <div class="stat-mini"><div class="val">$<%= usage.estimated_cost_usd.toFixed(4) %></div><div class="lbl">Est. cost</div></div>
+    </div>
+    <p class="hint">Estimate only, from local per-token rates in .env.example — check console.anthropic.com for
+      actual billing. Zero calls means either nothing's been asked yet, or ANTHROPIC_API_KEY isn't set.</p>
+  </div>
+<% } %>
+
+<% sessions.slice().reverse().forEach(s => { %>
+  <div class="card">
+    <h3>Session <%= s.session_number %> <span class="hint"><%= s.date %></span></h3>
+    <p><%= s.compressed_summary %></p>
+    <div class="grid cols-2">
+      <div><strong class="hint">Major choices</strong><ul class="clean"><% (s.major_choices||[]).forEach(x=>{ %><li><%= x %></li><% }) %></ul></div>
+      <div><strong class="hint">Discoveries</strong><ul class="clean"><% (s.discoveries||[]).forEach(x=>{ %><li><%= x %></li><% }) %></ul></div>
+      <div><strong class="hint">Resource changes</strong><ul class="clean"><% (s.resource_changes||[]).forEach(x=>{ %><li><%= x %></li><% }) %></ul></div>
+      <div><strong class="hint">Unresolved threads</strong><ul class="clean"><% (s.unresolved_threads||[]).forEach(x=>{ %><li><%= x %></li><% }) %></ul></div>
+    </div>
+    <% if (role === 'dm' || role === 'lore') { %>
+      <div class="grid cols-2" style="margin-top:8px">
+        <div><strong class="hint">DM self-review</strong><p><%= s.dm_self_review || '—' %></p></div>
+        <div><strong class="hint">Player Agent self-review</strong><p><%= s.player_agent_self_review || '—' %></p></div>
+      </div>
+      <strong class="hint">Human feedback</strong><p><%= s.human_feedback || '—' %></p>
+    <% } %>
+  </div>
+<% }) %>
+<% if (!sessions.length) { %><p class="empty">No sessions closed yet.</p><% } %>
+
+<% if (role === 'dm' || role === 'lore') { %>
+  <div class="card">
+    <h2 style="margin-top:0">End Session <%= campaign.session_number %></h2>
+    <form method="post" action="/campaigns/<%= campaignId %>/recap/end-session">
+      <label>Compressed canonical summary</label>
+      <textarea name="compressed_summary" required></textarea>
+      <div class="grid cols-2">
+        <label>Major choices (one per line)<textarea name="major_choices"></textarea></label>
+        <label>Discoveries (one per line)<textarea name="discoveries"></textarea></label>
+        <label>Resource changes (one per line)<textarea name="resource_changes"></textarea></label>
+        <label>Relationship changes (one per line)<textarea name="relationship_changes"></textarea></label>
+      </div>
+      <label>Unresolved threads (one per line)</label>
+      <textarea name="unresolved_threads"></textarea>
+      <div class="grid cols-2">
+        <label>DM self-review (pacing, fairness, agency, engagement)<textarea name="dm_self_review"></textarea></label>
+        <label>Player Agent self-review (independence, balance, consistency)<textarea name="player_agent_self_review"></textarea></label>
+      </div>
+      <label>Human feedback</label>
+      <textarea name="human_feedback" placeholder="Best part, weakest part, pacing, companion quality, more/less of anything"></textarea>
+      <button type="submit">Close Session &amp; Checkpoint</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Automatic Learning Loop</h2>
+    <p class="hint">Reads the play log + independence metrics against the engine's own acceptance criteria and
+      proposes lessons — the automatic version of what a human did by hand after Sessions 001/002. Nothing below
+      becomes durable guidance until you approve it, matching the project's Controlled Learning Policy.</p>
+
+    <% if (reviewError) { %><div class="banner warn">Review failed: <%= reviewError %></div><% } %>
+
+    <form method="post" action="/campaigns/<%= campaignId %>/recap/auto-review">
+      <button type="submit" <%= llmConfigured ? '' : 'disabled' %>>Auto-Review This Session</button>
+      <% if (!llmConfigured) { %><span class="hint"> (needs ANTHROPIC_API_KEY)</span><% } %>
+    </form>
+
+    <% const proposed = (learning||[]).filter(l => l.status === 'proposed'); %>
+    <% if (proposed.length) { %>
+      <h3 style="margin-top:16px">Proposed — awaiting your decision</h3>
+      <% proposed.forEach(l => { %>
+        <div class="card" style="background:var(--bg-raised)">
+          <span class="badge <%= l.agent === 'dm' ? 'dm' : l.agent === 'player_agent' ? 'companion' : 'lore' %>"><%= l.agent %></span>
+          <span class="badge">s<%= l.evidence_session %></span>
+          <span class="badge"><%= l.classification %></span>
+          <p><strong>Observed:</strong> <%= l.observation %></p>
+          <p><strong>Recommended:</strong> <%= l.recommended_change %></p>
+          <div class="btn-row">
+            <form method="post" action="/campaigns/<%= campaignId %>/learning/<%= l.id %>/approve"><button type="submit">Approve</button></form>
+            <form method="post" action="/campaigns/<%= campaignId %>/learning/<%= l.id %>/reject"><button type="submit" class="secondary">Reject</button></form>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+
+    <% const active = (learning||[]).filter(l => l.status === 'active'); %>
+    <h3 style="margin-top:16px">Active — currently shaping DM/Companion/Lore behavior</h3>
+    <% if (!active.length) { %><p class="empty">None approved yet.</p><% } %>
+    <ul class="clean">
+      <% active.forEach(l => { %>
+        <li><span class="badge <%= l.agent === 'dm' ? 'dm' : l.agent === 'player_agent' ? 'companion' : 'lore' %>"><%= l.agent %></span>
+          <%= l.recommended_change %> <span class="hint">(from Session <%= l.evidence_session %>)</span></li>
+      <% }) %>
+    </ul>
+  </div>
+<% } %>
+
+<%- include('partials/foot') %>

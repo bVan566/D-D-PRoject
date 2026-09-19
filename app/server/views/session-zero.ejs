@@ -1,0 +1,49 @@
+<%- include('partials/head', { title: 'Session Zero' }) %>
+<%- include('partials/nav', { campaignId: campaign.campaign_id, role: 'dm', active: null }) %>
+
+<h1>Session Zero &mdash; <%= campaign.campaign_title %></h1>
+<p class="subtitle">Step 2 of 3. These preferences are table law: the human player may revise them at any time during
+  play, and a boundary change takes effect immediately (per the engine's Session Zero standard).</p>
+
+<form method="post" action="/campaigns/<%= campaign.campaign_id %>/session-zero">
+  <div class="card">
+    <div class="grid cols-2">
+      <div>
+        <label>Tone</label>
+        <input name="tone" value="<%= campaign.tone.tone %>" />
+      </div>
+      <div>
+        <label>Play balance</label>
+        <input name="play_balance" value="<%= campaign.tone.play_balance %>" />
+      </div>
+      <div>
+        <label>Horror intensity</label>
+        <input name="horror_intensity" value="<%= campaign.tone.horror_intensity %>" />
+      </div>
+      <div>
+        <label>Romance</label>
+        <input name="romance" value="<%= campaign.tone.romance %>" />
+      </div>
+      <div>
+        <label>Companion dynamic</label>
+        <input name="companion_dynamic" value="<%= campaign.tone.companion_dynamic %>" />
+      </div>
+      <div>
+        <label>Death policy</label>
+        <input name="death_policy" value="<%= campaign.tone.death_policy %>" />
+      </div>
+      <div>
+        <label>Difficulty</label>
+        <input name="difficulty" value="<%= campaign.tone.difficulty %>" />
+      </div>
+    </div>
+    <label>Content boundaries / table rulings</label>
+    <textarea name="content_boundaries"><%= campaign.tone.content_boundaries %></textarea>
+  </div>
+
+  <div class="btn-row">
+    <button type="submit">Confirm Session Zero &rarr; Character Creation</button>
+  </div>
+</form>
+
+<%- include('partials/foot') %>

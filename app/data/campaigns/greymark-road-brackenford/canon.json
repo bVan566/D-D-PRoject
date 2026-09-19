@@ -1,0 +1,76 @@
+[
+  {
+    "id": "fact-dho-001",
+    "statement": "The DrunkFoot surname dates back three generations to an ancestor who, drunk on night guard duty, kicked a cornerstone in exactly the wrong way and collapsed an unfinished mountain-city hall.",
+    "canon_status": "locked_canon",
+    "visibility": "public",
+    "claim_type": "objective_fact",
+    "source": "Billy, established through Dhovir, Session 001",
+    "session": 1,
+    "contradiction_flag": false,
+    "related_entities": [
+      "Dhovir DrunkFoot"
+    ]
+  },
+  {
+    "id": "fact-tann-001",
+    "statement": "Three people have disappeared along the quarry-road stretch within the previous twelve days.",
+    "canon_status": "locked_canon",
+    "visibility": "public",
+    "claim_type": "reported_claim",
+    "source": "Sergeant Elra Tann, Session 001",
+    "session": 1,
+    "contradiction_flag": false,
+    "related_entities": [
+      "Sergeant Elra Tann"
+    ]
+  },
+  {
+    "id": "fact-timeline-conflict",
+    "statement": "An improvised line briefly placed the first disappearance six weeks earlier. Discarded — conflicts with the locked twelve-day window and must not persist.",
+    "canon_status": "possibility",
+    "visibility": "dm_private",
+    "claim_type": "disputed",
+    "source": "Session 002 continuity correction",
+    "session": 2,
+    "contradiction_flag": true,
+    "contradiction_note": "Superseded by fact-tann-001; caught by the human player and corrected.",
+    "related_entities": []
+  },
+  {
+    "id": "fact-dmtruth-deserters",
+    "statement": "A small band of deserters led by Hask Renn has been using the old drainage tunnels to rob isolated travelers.",
+    "canon_status": "dm_truth",
+    "visibility": "dm_private",
+    "claim_type": "objective_fact",
+    "source": "DM Private Runtime",
+    "session": 1,
+    "contradiction_flag": false,
+    "related_entities": [
+      "Hask Renn",
+      "Orren Vale"
+    ]
+  },
+  {
+    "id": "fact-unresolved-chamber",
+    "statement": "Exact origin and larger history of the sealed underground chamber.",
+    "canon_status": "unresolved_space",
+    "visibility": "lore_only",
+    "claim_type": "belief",
+    "source": "Core architecture — must not be filled automatically",
+    "session": 1,
+    "contradiction_flag": false,
+    "related_entities": []
+  },
+  {
+    "id": "fact-chamber-warprison",
+    "statement": "Dwarven folk memory holds the chamber was sealed after a war, not built as a shrine.",
+    "canon_status": "open_lore",
+    "visibility": "dm_private",
+    "claim_type": "objective_fact",
+    "source": "World-building session",
+    "session": 1,
+    "contradiction_flag": false,
+    "related_entities": []
+  }
+]

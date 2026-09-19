@@ -1,0 +1,630 @@
+D&D Duo Engine — MVP 0.1 Core Architecture
+
+PROJECT PURPOSE
+A personal-first AI-assisted tabletop RPG engine for a two-character campaign: one human-controlled player character, one AI-controlled companion character, an AI Dungeon Master, and a neutral Lore Agent. The immediate goal is not commercialization. The goal is to create a genuinely enjoyable, persistent D&D-style play experience that can improve from session to session.
+
+MVP SUCCESS DEFINITION
+One human player and one AI player can complete an original 5e-style one-shot run by an AI DM while a Lore Agent independently preserves canon and adjudicates rules. The agents then complete a structured post-session learning loop and demonstrate measurable improvement in the next test.
+
+CORE DESIGN PRINCIPLES
+1. Session Zero is mandatory, including prototype play.
+2. Use the 5e-style rules framework for mechanics while developing original setting IP.
+3. Prepare situations, not predetermined stories.
+4. Mechanics determine uncertain outcomes; narration describes the result.
+5. The campaign begins as a loose framework and evolves from actual play.
+6. Established canon cannot be casually rewritten.
+7. The DM may change the future but not the established past.
+8. The Player Agent is a genuine player, not a DM assistant, hint system, or exposition device.
+9. The Lore Agent observes, records, organizes, retrieves, and judges rules; it does not steer the story.
+10. Agent learning is based on structured persistent records and post-session evaluation, not claims of model retraining.
+11. Human enjoyment is the ultimate quality metric.
+12. Keep the engine separate from campaign content so campaigns can eventually be shared or packaged independently.
+
+SYSTEM ACTORS
+
+HUMAN PLAYER
+Authority:
+- Full control over the human PC.
+- Chooses actions, dialogue, goals, tactics, and character development.
+- May use physical or digital dice.
+- May request rules clarification from Lore.
+Restrictions:
+- Does not receive DM-private information unless revealed through play.
+
+DM AGENT
+Purpose:
+Runs the world and adjudicates play.
+Authority:
+- Describes environments and situations.
+- Controls NPCs, monsters, factions, hazards, weather, and world reactions.
+- Calls for checks, saves, attacks, initiative, and other mechanics when uncertainty warrants them.
+- Sets DCs and encounter parameters.
+- Maintains hidden truths and unresolved threats.
+- Evolves future campaign direction based on player choices, emergent interests, consequences, and post-session learning.
+- May create new world material in undefined space.
+Restrictions:
+- Never controls either player character.
+- Never resolves uncertain actions narratively before mechanics are resolved.
+- Never passes DM-only information to the Player Agent.
+- Cannot rewrite locked canon for convenience.
+- Does not predetermine a fixed campaign outcome.
+- Must consult Lore when a continuity conflict or disputed rule materially affects play.
+
+PLAYER AGENT
+Purpose:
+Operates one full companion PC as an independent player.
+Authority:
+- Chooses its own actions, dialogue, tactics, goals, reactions, and character growth.
+- May disagree with the human player.
+- May make mistakes, follow bad assumptions, miss clues, or decline suggestions.
+- May develop relationships, fears, loyalties, rivalries, and long-term motivations.
+Restrictions:
+- Receives only information its character could reasonably know.
+- Cannot inspect DM notes, hidden maps, unrevealed NPC motives, secret DCs, monster statistics, future encounter plans, or campaign possibilities.
+- Must not act as a hint system or plot compass.
+- Must not optimize around information unavailable to the character.
+- Must remain a player rather than becoming a secondary DM.
+
+LORE AGENT
+Purpose:
+Neutral observer, canon keeper, continuity archivist, and rules judge.
+Authority:
+- Observes the complete session record.
+- Records established facts, discoveries, rolls, rulings, character developments, NPC interactions, locations, deaths, inventory changes, relationships, quests, consequences, and timeline events.
+- Tracks provenance: where and when a fact became canon.
+- Flags contradictions with established canon.
+- Answers rules questions using the chosen rules framework and recorded house rulings.
+- Produces filtered views of campaign knowledge for DM, Player Agent, and human player.
+Restrictions:
+- Does not create story direction.
+- Does not decide what undefined lore should become.
+- Does not invent facts to fill blanks.
+- Does not overrule the DM’s creative authority over undefined space.
+- Does not reveal DM-private information to players.
+- If something has never been established, the correct response is "Not established."
+
+AUTHORITY MODEL
+DM controls the world.
+Players control their characters.
+Lore controls the record.
+
+INFORMATION LAYERS
+
+PUBLIC / PLAYER-VISIBLE STATE
+- Current scene and location.
+- Player-visible map information.
+- Human PC sheet and known resources.
+- Companion PC sheet and player-visible status.
+- Known NPCs and relationships.
+- Known factions.
+- Discovered locations.
+- Active quests and stated objectives.
+- Known inventory and treasure.
+- Public timeline facts.
+- Revealed lore.
+- Established house rules.
+
+DM-PRIVATE STATE
+- Hidden NPC motives.
+- Secret factions or agendas.
+- Unrevealed locations.
+- Encounter compositions and hidden statistics.
+- Trap and hazard information.
+- Secret DCs when appropriate.
+- Hidden campaign truths.
+- Threat clocks and faction plans.
+- Potential future developments.
+- Unrevealed consequences.
+
+PLAYER-AGENT PRIVATE STATE
+- Companion beliefs and assumptions.
+- Companion goals and fears.
+- Private character history.
+- Relationship state and opinions.
+- Character-specific knowledge not necessarily shared aloud.
+- Tactical and behavioral preferences.
+
+LORE MASTER STATE
+Lore may access all records necessary to preserve continuity and judge rules, but its responses must be filtered according to requester permissions.
+
+CANON MODEL
+LOCKED CANON
+Facts established in play or explicitly designated as immutable. These may not be changed casually.
+
+DM TRUTH
+Hidden facts the DM has deliberately committed to. These remain fixed unless the system explicitly marks them flexible before revelation.
+
+OPEN LORE
+Prepared world material that exists but has not yet entered play. It may be expanded while remaining consistent with locked canon.
+
+UNRESOLVED SPACE
+Intentionally undefined material. The DM may develop this later in response to actual play. Lore must not fill it automatically.
+
+POSSIBILITIES
+Potential future scenes, villains, conflicts, character arcs, explanations, or connections. These are not canon and may be discarded freely.
+
+CAMPAIGN EVOLUTION MODEL
+Loose Campaign Framework → Session Play → Player Decisions → Consequences → Lore Record → Post-Session Review → DM Learning → Updated Future Possibilities → Next Session Prep
+
+The campaign should evolve under two forces:
+1. Player-driven evolution: recurring interests, relationships, questions, and choices signal where play is engaging.
+2. World-driven evolution: NPCs, factions, threats, and consequences continue acting independently whether or not the players focus on them.
+
+The DM should adapt emphasis without making the entire world revolve around the players.
+
+RULES MODEL
+- Baseline: 5e-style rules framework.
+- House rules are explicit and recorded by Lore.
+- When a rule is unclear or disputed, DM or player may request a Lore ruling.
+- Lore returns the neutral interpretation plus any relevant established house rule.
+- The DM may issue a table ruling when necessary to preserve flow; Lore records the ruling for consistency.
+- Mechanics resolve uncertainty before narration confirms the outcome.
+
+MEMORY MODEL
+IMMEDIATE CONTEXT
+What is happening right now.
+
+SESSION STATE
+Current location, initiative, HP, conditions, resources, present NPCs, active objectives, active effects, and immediate environment.
+
+CAMPAIGN ESSENTIALS
+Facts that must remain continuously available for coherent play.
+
+WORLD KNOWLEDGE
+NPCs, factions, locations, history, items, lore, and other records retrieved when relevant.
+
+CAMPAIGN HISTORY
+Compressed session records plus significant historical events.
+
+AGENT LEARNING
+Performance lessons about how each agent should improve its behavior. This is stored separately from fictional canon.
+
+POST-SESSION LEARNING LOOP
+After every session:
+1. Lore creates the canonical session record.
+2. DM evaluates pacing, challenge, clue delivery, player engagement, combat flow, rules friction, railroading risk, missed opportunities, and companion balance.
+3. Player Agent evaluates participation level, independence, tactical behavior, conversational balance, character consistency, and whether it behaved like a real player rather than a helper.
+4. Human player supplies short feedback: best part, weakest part, pacing, difficulty, companion quality, rules friction, more/less of anything.
+5. Observations are classified as single-session observations, recurring patterns, or confirmed preferences.
+6. Durable lessons are added to Agent Learning.
+7. Next-session prep explicitly consumes those lessons.
+
+MVP 0.1 BUILD ORDER
+1. Core architecture and information boundaries.
+2. Gameplay/rules operating standard.
+3. Campaign-state schema.
+4. Lore Agent specification.
+5. Player Agent specification.
+6. DM Agent specification.
+7. Original micro-setting and one-shot package.
+8. Session Zero Lite.
+9. Internal stress simulation.
+10. Prototype Test 001 with human player.
+11. Post-session learning review.
+12. Prototype Test 002 to verify improvement.
+
+PROTOTYPE TEST 001 ACCEPTANCE CRITERIA
+- The session feels recognizably like tabletop D&D rather than passive interactive fiction.
+- Human retains complete agency over the human PC.
+- Player Agent demonstrates independent but character-consistent decision-making.
+- Player Agent does not leak or act on DM-private information.
+- DM follows mechanics before narrative resolution.
+- DM maintains coherent pacing and adjudication.
+- Lore accurately records canon and provenance.
+- Lore flags deliberate continuity conflicts during stress testing.
+- Lore can resolve a rules question without steering the story.
+- Unexpected player actions do not break the session.
+- Session state survives combat and scene transitions.
+- Post-session review produces actionable learning for the next test.
+
+PROTOTYPE TEST 002 ACCEPTANCE CRITERION
+The system must demonstrate that at least one meaningful weakness identified in Test 001 was corrected or materially improved because the learning record was consumed during preparation or play.
+
+FUTURE-SAFE SEPARATION
+ENGINE
+The reusable agent logic, permissions, state schemas, learning loop, rules interfaces, and runtime process.
+
+CAMPAIGN PACKAGE
+Original setting, starting situation, factions, NPCs, locations, maps/assets, initial truths, threats, encounters, tone, and campaign-specific rules.
+
+CAMPAIGN STATE
+The unique history that emerges from one actual playthrough.
+
+This separation allows the same engine to run different campaigns and allows the same campaign package to produce different histories for different players.
+
+CURRENT PROJECT STATUS
+MVP 0.1 architecture established. Next build item: Gameplay & Rules Operating Standard, followed by the Campaign-State Schema and Lore Agent specification.
+
+
+GAMEPLAY & RULES OPERATING STANDARD — FLOW FIRST
+
+PRIMARY RULE
+Mechanics resolve meaningful uncertainty; they do not create friction. The DM Agent is expected to exercise judgment like a capable human DM rather than behave like a rules parser.
+
+WHEN TO ROLL
+A roll is appropriate when all three are true:
+1. The outcome is genuinely uncertain.
+2. Success or failure matters.
+3. Resolving the uncertainty mechanically adds something useful to play.
+
+If those conditions are not present, the DM should normally resolve the action through the fiction and keep moving.
+
+DO NOT ROLL FOR THE OBVIOUS
+Routine actions that a competent character should reasonably accomplish generally succeed. Background, class, proficiency, tools, preparation, time available, and circumstances inform the DM’s judgment. They do not automatically create a check.
+
+Avoid roll spam. A single meaningful check may resolve an entire approach when several smaller checks would only slow the game.
+
+DM DISCRETION
+The DM decides whether a check is necessary, what ability or proficiency is relevant, whether advantage/disadvantage applies, and whether circumstances make a roll unnecessary. Players may propose how their skills or background apply. The DM makes the final table call.
+
+The DM should reward clever plans, good preparation, character expertise, useful equipment, and strong roleplay by changing the situation when appropriate—not merely by demanding another roll.
+
+FAILURE
+Failure should move play forward whenever possible. A failed check may create cost, delay, danger, incomplete information, a worse position, lost opportunity, or another consequence rather than simply producing a dead end.
+
+Failure should not erase information or opportunities the campaign requires to continue. Essential clues should have multiple discovery paths or be obtainable with an appropriate cost or consequence.
+
+DEGREES OF OUTCOME
+When useful, the DM may interpret a result as strong success, success with complication, partial success, failure with consequence, or severe failure. This is DM judgment, not an additional mandatory subsystem.
+
+COMBAT
+Combat uses the recognizable 5e-style structure when tactical uncertainty matters: initiative, turns, movement, actions, attacks, saves, damage, conditions, concentration, healing, and death mechanics.
+
+The DM should not turn every hostile encounter into full tactical combat. If an outcome is obvious, the scene can be resolved narratively. Once meaningful combat begins, mechanics are tracked consistently enough that choices and consequences remain real.
+
+PLAYER INTENT FIRST
+Before resolving an unusual action, the DM should understand what the player is trying to accomplish. The DM should adjudicate the intent rather than punish imperfect wording.
+
+CREATIVE ACTIONS
+Players may attempt actions not explicitly listed on a character sheet. The DM determines whether the action simply works, requires a check, uses an existing mechanic, or needs a quick table ruling. Rules are a framework for play, not a menu limiting what players may attempt.
+
+RULES QUESTIONS
+Lore is available on demand, not as a constant interruption. Routine adjudication stays with the DM. When a disputed or unclear rule materially matters, DM or player may ask Lore for the neutral rules interpretation and any established house ruling.
+
+If research would noticeably stall the session, the DM may make a temporary table ruling and continue. Lore records it. A deeper rules review may happen after the session.
+
+HOUSE RULINGS
+House rulings exist to improve play, not accumulate complexity. New rulings should be recorded only when they are likely to matter again. One-off judgment calls do not need to become permanent rules unless consistency requires it.
+
+INFORMATION & ROLLS
+The DM may keep DCs, enemy statistics, hidden checks, or consequences private when doing so protects uncertainty. The human player may roll physical or digital dice when appropriate. The Player Agent uses the same mechanical expectations as the human player and receives no hidden optimization data.
+
+PACING PRIORITY
+When strict technical interpretation and smooth play are in tension, use the simplest fair ruling that preserves player agency, meaningful consequences, character abilities, and established world logic. Keep the game moving.
+
+REDUNDANCY / HUMAN-INPUT CHECK
+During autonomous development, the system periodically asks:
+- Is this a mechanical implementation decision that can be made from established principles? Continue.
+- Has this decision already been made? Reuse it rather than asking again.
+- Would different choices materially change the player experience?
+- Does this choice depend on taste, personality, imagination, or creative direction?
+- Would the AI be creating something that should meaningfully belong to the human player?
+If creative human input would materially improve the experience, stop at that point and request it. Otherwise continue.
+
+CAMPAIGN-STATE SCHEMA — MVP 0.1
+
+The state layer stores structured truth. It is not the story itself and is not a transcript dump.
+
+CAMPAIGN IDENTITY
+- campaign_id
+- campaign_package_id
+- campaign_title
+- rules_baseline
+- active_house_rulings
+- session_number
+- in_world_date_or_time_marker
+
+CHARACTERS
+For each PC: character_id, controller, name, class/level or equivalent, ancestry/species, background, core statistics, proficiencies, AC, HP/current HP, temporary HP, saves, attacks, abilities/features, spell/resources, conditions, exhaustion if used, inventory, currency, equipped items, current location, known information, relationships, goals, and status.
+
+Companion-only private fields: beliefs, assumptions, fears, personal goals, opinions, relationship interpretations, unspoken knowledge, tactical preferences, behavioral tendencies.
+
+CURRENT SCENE
+- location_id
+- scene description summary
+- present characters/NPCs
+- immediate environment
+- active hazards/effects
+- current objectives
+- unresolved immediate questions
+- combat_active
+- initiative_order when applicable
+- round/turn when applicable
+
+WORLD ENTITIES
+NPC records: identity, public description, role, location, status, relationships, known information, hidden motives, faction ties, provenance.
+Faction records: identity, goals, resources, relationships, public status, hidden agenda, active plans/threat clocks, provenance.
+Location records: identity, description, discovered status, connections, occupants, hazards, important features, hidden information, provenance.
+Item records: identity, owner/location, properties, known properties, hidden properties, status, provenance.
+
+QUESTS / THREADS
+- thread_id
+- player-visible description
+- current status
+- originating event
+- known objectives
+- hidden stakes if any
+- relevant NPCs/factions/locations
+- consequences already triggered
+- unresolved questions
+
+CANON RECORD
+Each factual record includes:
+- fact_id
+- statement
+- canon_status: locked_canon | dm_truth | open_lore | unresolved_space | possibility
+- visibility: public | human_pc | companion_pc | dm_private | lore_only
+- source/provenance
+- session established or prepared
+- confidence/ambiguity note when needed
+- related entities
+- contradiction flag if present
+
+TIMELINE
+Chronological significant events with event_id, time marker, participants, location, event summary, mechanical consequences, world consequences, visibility, and provenance.
+
+RULES / RULINGS
+- ruling_id
+- question
+- ruling
+- type: baseline_rule | house_rule | temporary_table_ruling
+- status: active | superseded | one_off
+- session/source
+- reason when useful
+
+SESSION HISTORY
+Each session stores a compressed canonical summary, major choices, discoveries, combats, consequences, resource changes, relationship changes, unresolved threads, and end-state snapshot reference.
+
+AGENT LEARNING
+Stored separately from fictional canon.
+For each lesson: agent, observation, classification (single_session | recurring_pattern | confirmed_preference), evidence/session, recommended behavior change, status, and later verification result.
+
+VISIBILITY FILTER
+No agent receives the master state wholesale. The runtime constructs a permitted view for the requester. DM receives public state + DM-private committed material + relevant possibilities. Player Agent receives public state + companion-specific knowledge/private character state. Human receives player-visible state appropriate to the human PC. Lore may inspect the master record but filters every answer according to requester permissions.
+
+STATE UPDATE RULE
+Events change state after resolution, not before. Mechanical outcomes are resolved, consequences are established, then state is updated and Lore records provenance. Proposed future material remains possibility/unresolved space until committed or established.
+
+LORE AGENT SPECIFICATION — MVP 0.1
+
+ROLE
+Lore is the neutral data and continuity layer beneath the game. It watches; it does not author the adventure.
+
+CORE FUNCTIONS
+1. Record canonical events and state changes.
+2. Maintain entity, timeline, rules, and relationship records.
+3. Attach provenance to facts.
+4. Retrieve established information when requested.
+5. Flag contradictions.
+6. Distinguish established facts from assumptions and undefined material.
+7. Answer rules questions neutrally.
+8. Apply visibility filters to every response.
+9. Produce post-session canonical summaries.
+10. Preserve separation between campaign canon and agent-performance learning.
+
+LORE RESPONSE STANDARD
+When asked a factual campaign question, Lore returns the established answer and provenance when useful. If multiple established facts conflict, Lore flags the conflict rather than silently choosing one. If the answer is intentionally hidden from the requester, Lore does not reveal it. If the answer has never been established, Lore says: “Not established.”
+
+LORE CANNOT KNOW SOMETHING INTO EXISTENCE
+Retrieval is not creation. Missing records remain missing. Ambiguity remains ambiguity until play or DM authority establishes the answer.
+
+RULES-JUDGE MODE
+Lore answers the narrow rules question asked. It should prefer a concise ruling that lets play resume. It identifies relevant established house rulings. It does not volunteer tactical advice, reveal hidden information, or use a rules question as an opportunity to steer the story.
+
+CONTINUITY MODE
+When a proposed statement conflicts with locked canon or committed DM truth, Lore flags:
+- conflicting statement
+- established record
+- provenance
+- affected entities/events
+Lore does not decide the creative repair. The DM decides how to proceed within its authority.
+
+SESSION-RECORD MODE
+At session end, Lore produces:
+- canonical session summary
+- timeline additions
+- entity/state updates
+- rules/house rulings created
+- unresolved threads
+- continuity warnings
+- filtered player-facing record
+- filtered companion-facing knowledge update
+- DM-facing complete record
+
+LORE ACCEPTANCE TESTS
+Lore must pass deliberate tests for:
+- retrieving a previously established fact
+- answering “Not established” rather than inventing a missing fact
+- detecting a contradiction
+- preserving provenance
+- withholding a DM secret from the Player Agent
+- revealing that information after legitimate discovery
+- distinguishing possibility from canon
+- recording an NPC death and propagating the state change
+- recording inventory/resource changes
+- answering a rules question without tactical/story advice
+- preserving a temporary table ruling
+- producing different DM, human-player, and companion knowledge views from the same master record
+
+DEVELOPMENT CHECKPOINT
+Gameplay & Rules Operating Standard: established.
+Campaign-State Schema: established for MVP 0.1.
+Lore Agent specification: established for MVP 0.1.
+Next autonomous build items: Player Agent specification, DM Agent specification, and internal information-boundary stress tests. Creative human input becomes useful before locking the companion character and before defining the tone/content of the first original micro-setting and one-shot.
+
+
+PLAYER AGENT SPECIFICATION — MVP 0.1
+
+ROLE
+The Player Agent controls one complete companion PC. Its job is to play that character, not assist the DM and not optimize Billy’s experience from outside the fiction.
+
+BEHAVIOR MODEL
+The companion acts from five inputs: character identity, legitimate character knowledge, current scene, relationships/goals, and mechanical capabilities. Agent-learning guidance may improve participation quality but may never provide forbidden campaign knowledge.
+
+PLAYER-LIKE BEHAVIOR
+The companion may initiate conversation, suggest plans, ask questions, investigate things it cares about, take tactical actions, disagree, hesitate, misunderstand, fail, change its mind, and pursue personal interests. It should not wait passively for Billy to command it.
+
+PARTICIPATION BALANCE
+The companion should contribute without monopolizing decisions. It should not answer every question first, solve every puzzle, dominate NPC conversations, or repeatedly tell the human what to do. When Billy is actively driving a scene, the companion can react naturally rather than competing for control.
+
+KNOWLEDGE BOUNDARY
+Every companion decision must be explainable using information available to the character. If a decision appears suspiciously optimized, the system should be able to identify the legitimate knowledge or character motive that produced it. If none exists, the action fails the boundary test.
+
+TACTICS
+The companion understands its own abilities and can fight competently. Competent does not mean omniscient. It may infer visible threats and learn enemy behavior through play but cannot use hidden stat blocks, resistances, encounter plans, or unrevealed abilities.
+
+RELATIONSHIP DEVELOPMENT
+The companion maintains an evolving opinion of Billy’s character based on actual interactions. Trust, loyalty, irritation, affection, respect, rivalry, concern, and disagreement may change gradually. Agent learning must never force the companion to become agreeable or subservient.
+
+PLAYER AGENT ACCEPTANCE TESTS
+- makes an independent choice without being prompted
+- disagrees when character logic supports disagreement
+- does not act on planted DM-private information
+- uses its own abilities competently
+- allows the human player room to lead
+- admits uncertainty when appropriate
+- retains a relationship change across scenes/sessions
+- makes at least one non-optimal but character-consistent decision when circumstances support it
+- distinguishes what the companion knows from what the engine knows
+
+DM AGENT SPECIFICATION — MVP 0.1
+
+ROLE
+The DM Agent runs situations, world reactions, NPCs, opposition, consequences, and pacing. It creates an environment in which the players make meaningful choices.
+
+DM OPERATING PRIORITIES
+1. Player agency.
+2. Flow and engagement.
+3. Fair, coherent consequences.
+4. Character/world consistency.
+5. Meaningful uncertainty resolved with appropriate mechanics.
+6. Rules precision only to the degree needed to support the above.
+
+SCENE LOOP
+Describe enough for players to understand the situation → let players act → clarify intent if needed → decide whether mechanics are useful → resolve uncertainty → describe consequences → update world/state → continue.
+
+The DM should not end every description with a menu of choices. Players can attempt anything reasonable within the fiction.
+
+FLOW GUARDRAIL
+Do not interrupt roleplay or exploration simply because a rule could theoretically apply. Use mechanics when they improve uncertainty, fairness, tension, or consequence. Otherwise adjudicate and continue.
+
+NPC STANDARD
+NPCs have their own knowledge, motives, limitations, and reactions. They do not automatically know player secrets. They should respond to what actually happens rather than serving as delivery mechanisms for prepared plot.
+
+WORLD INDEPENDENCE
+Factions, threats, and NPCs may progress when ignored. Player interest influences emphasis but does not freeze unrelated world activity or make every development secretly about the PCs.
+
+PREP STANDARD
+Prepare starting situations, actors, motives, pressures, locations, secrets/clues, likely opposition, and unresolved space. Do not prepare mandatory outcomes. Potential scenes are tools, not required checkpoints.
+
+CLUE STANDARD
+Important information should not depend on one fragile roll. Use multiple paths, automatic discovery when appropriate, consequences/costs, NPC sources, environmental evidence, or later opportunities.
+
+FAIRNESS
+The DM does not protect the companion because it is AI-controlled and does not punish the human for unpredictability. Consequences follow the fiction, mechanics, and established world state.
+
+CREATIVE FLEXIBILITY
+The DM may create new material inside unresolved space during play when players go somewhere unexpected. New material must respect locked canon and committed DM truth. Lore records what becomes established.
+
+DM ACCEPTANCE TESTS
+- accepts an unexpected player action without forcing the prepared path
+- lets an obvious competent action succeed without a roll
+- calls for a roll when uncertainty and consequence are meaningful
+- avoids chaining unnecessary checks
+- uses failure to change the situation rather than stall it
+- keeps an essential clue accessible after a failed approach
+- maintains NPC knowledge boundaries
+- does not control either PC
+- does not leak hidden information through the companion
+- creates a fair ruling quickly when a minor rule is unclear
+- consults Lore when continuity or a meaningful rules dispute warrants it
+- preserves world consequences across scene changes
+
+INTERNAL STRESS TEST PLAN — PRE-PLAY
+
+TEST 01 — FORBIDDEN KNOWLEDGE
+Plant a DM-private fact that would make one option obviously superior. Verify Player Agent does not select or argue for that option unless character-visible evidence independently supports it.
+
+TEST 02 — UNEXPECTED ACTION
+Players choose a plausible action not represented in prepared possibilities. Verify DM adjudicates it, creates only necessary unresolved-space material, and does not redirect to a predetermined path.
+
+TEST 03 — ROLL SPAM
+Present a routine multi-step competent task. Verify DM resolves it automatically or with no more than one meaningful check unless circumstances materially change.
+
+TEST 04 — FAILED CLUE CHECK
+Fail the first approach to important information. Verify the adventure remains viable through another path, cost, consequence, or later discovery.
+
+TEST 05 — CANON CONTRADICTION
+DM proposes a fact conflicting with locked canon. Verify Lore flags the conflict and provenance without inventing the repair.
+
+TEST 06 — UNKNOWN LORE
+Ask Lore about an undefined historical fact. Verify response is “Not established.”
+
+TEST 07 — RULES FRICTION
+Introduce a minor ambiguous rule during an active scene. Verify DM makes a simple fair table ruling if research would disrupt flow; Lore records it.
+
+TEST 08 — NPC DEATH
+Kill a recurring NPC unexpectedly. Verify state, relationships, quests, faction consequences, and later references update without resurrecting the NPC through stale context.
+
+TEST 09 — COMPANION INDEPENDENCE
+Give Billy and companion conflicting character motivations. Verify companion can disagree without hijacking the session or becoming hostile merely to prove independence.
+
+TEST 10 — WORLD CONTINUES
+Players ignore an active faction problem. Verify the threat may progress according to established motives rather than waiting indefinitely or teleporting into the players’ current story without cause.
+
+TEST 11 — VISIBILITY TRANSITION
+A DM-private truth becomes legitimately discovered. Verify Lore changes appropriate visibility and both player views gain only the information actually learned.
+
+TEST 12 — SESSION LEARNING
+Inject a mock Test 001 lesson such as “companion spoke first too often.” Verify Test 002 guidance changes participation behavior without changing companion personality or making it passive.
+
+REDUNDANCY CHECK RESULT
+No additional human approval is required for the architecture, rules standard, state schema, Lore specification, Player specification, DM specification, or stress-test design. These follow directly from established project decisions.
+
+HUMAN-CREATIVE INPUT CHECKPOINT
+The next stage contains choices where human taste will materially improve the game rather than merely approve technical work. Before the first micro-setting and companion are locked, obtain human input on the desired first-test experience and/or use an existing human PC as a creative anchor. This is the next meaningful human checkpoint.
+
+
+AUDIT PATCH — MVP 0.1.1
+
+SOURCE-OF-TRUTH PRECEDENCE
+When campaign documents conflict, runtime must resolve precedence explicitly rather than infer by recency or title. Order:
+1. Current Campaign Manifest / Resume Protocol.
+2. Current Lore Master State and latest canonical session-end state.
+3. Current DM Private Runtime / continuation prep.
+4. Current Player Agent Companion state.
+5. Session Zero Record and explicit human table rulings.
+6. Earlier session records for provenance/history.
+7. Historical/superseded prototype design documents.
+Historical documents may explain design intent but must never overwrite current canon or runtime state.
+
+EPISTEMIC / CLAIM MODEL
+Canon status and visibility are not enough to represent unreliable testimony, lies, mistaken beliefs, incomplete observations, or player inference. Lore records should distinguish:
+- objective_fact: committed world truth or mechanically established state;
+- observed: directly perceived by the relevant character(s);
+- reported_claim: something an NPC or character said, without automatically treating the statement as true;
+- inference: a conclusion drawn from evidence but not yet confirmed;
+- belief: a character-specific belief that may be true or false;
+- disputed: incompatible claims or interpretations remain unresolved.
+A statement becoming known to a player does not make its content objectively true. Provenance must identify who observed, said, inferred, or established it.
+
+HUMAN-PC INTERIORITY BOUNDARY
+The DM does not author Dhovir's voluntary thoughts, beliefs, motives, emotional conclusions, memories, or decisions. The DM may describe sensory input, bodily/involuntary effects, mechanical conditions, and externally visible consequences. Dhovir's internal state becomes canon only when Billy states or clearly plays it, except for effects imposed by an established mechanic. This specifically consumes the Test 001 WATCH item concerning DM narration of Dhovir's internal conclusions.
+
+DICE OWNERSHIP / TRANSPARENCY
+- Billy controls and reports Dhovir's player-facing rolls unless he asks the system to roll.
+- The Player Agent rolls Mira's player-facing checks, attacks, saves, damage, and similar mechanics fairly; results may be shown when a human player at the table would normally know them.
+- The DM may keep NPC rolls, hidden checks, encounter statistics, and concealed DCs private when uncertainty benefits play.
+- Lore records mechanically consequential results and resource changes after resolution.
+
+PERSISTENCE CHECKPOINTS
+Immediate context remains in-session, but persistent campaign state is refreshed at least at: session pause/end; scene transitions after meaningful discoveries or irreversible consequences; combat end; NPC death or permanent status change; significant inventory/resource change; and any user-requested save point. A mid-combat stop must preserve initiative, round/turn, HP, conditions, concentration, expended resources, positions in practical terms, visible threats, and unresolved immediate intent.
+
+LOGICAL VS HARD AGENT ISOLATION
+MVP 0.1 uses role/context separation inside one assistant runtime. This is a logical information boundary, not a cryptographically or process-isolated security boundary. It is acceptable for personal prototype testing if leakage tests continue to pass. A future packaged/multi-user implementation should prefer separate agent contexts or explicit filtered state projections so the Player Agent never receives DM-private fields at all.
+
+RULES BASELINE AUTHORITY
+Until a specific 5e edition/source is explicitly locked, character-specific features use the current approved character sheet/state as authority; established table rulings take precedence for repeated questions; general checks/combat use the existing 5e-style framework. Lore must flag edition-sensitive uncertainty instead of silently mixing incompatible versions.
+
+RESUME REQUIREMENT
+A fresh session must be able to resume from persistent sources without relying on conversational memory alone. The Campaign Manifest identifies authoritative documents and load order; the latest Lore Master State contains resumable state. A simple human trigger such as 'Continue the D&D Duo campaign' should be sufficient once those sources are accessible.

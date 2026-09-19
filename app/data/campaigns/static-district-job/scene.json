@@ -1,0 +1,18 @@
+{
+  "location_name": "Lower Static District, transit-line noodle stall",
+  "description_public": "Rain sheets off a cracked awning; the noodle stall's the only warm light on the block. A contact is late.",
+  "present_npcs": [],
+  "environment": "Wet pavement, distant traffic drone, flickering signage.",
+  "hazards": [],
+  "objectives_public": [
+    "Meet the contact and get the job details"
+  ],
+  "unresolved_questions_public": [
+    "Who is the client, really?"
+  ],
+  "combat_active": false,
+  "initiative_order": [],
+  "round": 0,
+  "dm_notes": "DM truth (dm_private): the 'client' is a shell for Ashvale Dynamics staging a recovery of data it itself leaked, not a theft. None of this is established to the players yet.",
+  "visibility_note": "dm_notes is dm_private/lore_only"
+}

@@ -1,0 +1,48 @@
+<%- include('partials/head', { title: 'Campaigns' }) %>
+<%- include('partials/nav', { campaignId: null, role: null, active: null }) %>
+
+<h1>Campaigns</h1>
+<p class="subtitle">DM controls the world. Players control their characters. Lore controls the record.</p>
+
+<% if (!llmConfigured) { %>
+  <div class="banner">Live agent bridge is <strong>disabled</strong> (no <code>ANTHROPIC_API_KEY</code> in this
+    environment). State tracking, character sheets, visibility filtering, dice, quests, lore log, and save/resume
+    all work fully without it. Set the key and restart the server to let the DM / Companion / Lore roles reply for
+    themselves on the Play screen.</div>
+<% } %>
+
+<div class="card">
+  <a class="btn" href="/campaigns/new">+ New Campaign</a>
+</div>
+
+<% if (!campaigns.length) { %>
+  <p class="empty">No campaigns yet. Start one above.</p>
+<% } else { %>
+  <% campaigns.forEach(c => { %>
+    <div class="card campaign-list-item">
+      <div>
+        <h3><%= c.campaign_title %></h3>
+        <div class="hint">
+          <span class="badge"><%= c.status %></span>
+          Session <%= c.session_number %> &middot; <%= c.rulesetName %>
+          <% if (c.tone) { %> &middot; tone: <%= c.tone.tone %>, difficulty: <%= c.tone.difficulty %><% } %>
+        </div>
+      </div>
+      <div class="btn-row">
+        <% if (c.status === 'setup') { %>
+          <a class="btn" href="/campaigns/<%= c.campaign_id %>/session-zero">Continue setup</a>
+        <% } else if (c.mode === 'manual') { %>
+          <a class="btn" href="/campaigns/<%= c.campaign_id %>/play?role=dm">Open</a>
+        <% } else { %>
+          <a class="btn" href="/campaigns/<%= c.campaign_id %>/game">Open</a>
+        <% } %>
+        <form method="post" action="/campaigns/<%= c.campaign_id %>/delete"
+              onsubmit="return confirm('Delete &quot;<%= c.campaign_title %>&quot; permanently? This cannot be undone.');" style="display:inline">
+          <button type="submit" class="danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  <% }) %>
+<% } %>
+
+<%- include('partials/foot') %>

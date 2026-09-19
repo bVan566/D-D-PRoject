@@ -1,0 +1,81 @@
+{
+  "events": [
+    {
+      "from": "DM",
+      "to": "Lore",
+      "trigger": "resolved event/state change",
+      "payload": [
+        "resolved mechanics",
+        "world consequence",
+        "visibility",
+        "provenance"
+      ]
+    },
+    {
+      "from": "Player Agent",
+      "to": "DM",
+      "trigger": "companion chooses action",
+      "payload": [
+        "declared action",
+        "dialogue",
+        "intent",
+        "character-visible basis"
+      ]
+    },
+    {
+      "from": "DM",
+      "to": "Player Agent",
+      "trigger": "companion action requires adjudication",
+      "payload": [
+        "roll request when needed",
+        "applicable ability/skill/attack/save",
+        "publicly knowable modifiers/procedure",
+        "resolved player-visible outcome after roll"
+      ]
+    },
+    {
+      "from": "DM",
+      "to": "Player Agent",
+      "trigger": "scene/state update",
+      "payload": [
+        "public state",
+        "companion-visible state only"
+      ]
+    },
+    {
+      "from": "Lore",
+      "to": "requester",
+      "trigger": "fact/rules/state query",
+      "payload": [
+        "filtered answer",
+        "provenance/ruling when useful"
+      ]
+    },
+    {
+      "from": "Lore",
+      "to": "persistent state",
+      "trigger": "session checkpoint/end",
+      "payload": [
+        "canon updates",
+        "timeline",
+        "resources",
+        "relationships",
+        "rulings",
+        "unresolved threads"
+      ]
+    },
+    {
+      "from": "Lore",
+      "to": "DM",
+      "trigger": "session start / meaningful scene transition / routine continuity need",
+      "payload": [
+        "filtered active-session projection",
+        "current-scene continuity watches",
+        "relevant recent events/rulings"
+      ],
+      "rule": "Use smallest sufficient filtered projection first; escalate to Lore Master State only on defined deep-lookup triggers."
+    }
+  ],
+  "rule": "No agent receives another agent's private state unless explicitly authorized by role.",
+  "player_action_rule": "Player Agent declares action + intent. DM alone decides whether uncertainty requires a mechanic and adjudicates by the same standard used for the human PC."
+}

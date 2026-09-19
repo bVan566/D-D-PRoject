@@ -1,0 +1,107 @@
+<%- include('partials/head', { title: 'Create Human PC' }) %>
+<%- include('partials/nav', { campaignId: campaign.campaign_id, role: 'human', active: null }) %>
+
+<h1>Create Your Character &mdash; <%= campaign.campaign_title %></h1>
+<p class="subtitle">Step 3 of 3 (part 1). This is the human-controlled PC. Full agency over action, dialogue, goals,
+  and tactics stays with you &mdash; the DM never controls this character.</p>
+
+<form method="post" action="/campaigns/<%= campaign.campaign_id %>/characters/human/new">
+  <div class="card">
+    <h2 style="margin-top:0">Identity</h2>
+    <div class="grid cols-2">
+      <label>Name<input name="name" required /></label>
+      <% if (typeof characterOptions !== 'undefined' && characterOptions) { %>
+        <label>Race<select id="race-select" name="race_id"></select></label>
+        <label>Class<select id="class-select" name="class_id"></select></label>
+        <input type="hidden" name="species" id="species-hidden" />
+        <input type="hidden" name="class_level" id="class-level-hidden" />
+      <% } else { %>
+        <label>Species / ancestry<input name="species" placeholder="Mountain Dwarf" /></label>
+        <label>Class &amp; level<input name="class_level" placeholder="Paladin (Oath of Devotion) 4" /></label>
+      <% } %>
+      <label>Background<input name="background" placeholder="Soldier" /></label>
+      <label>Alignment<input name="alignment" placeholder="Chaotic Good" /></label>
+      <label>Starting <%= typeof currencyLabel !== 'undefined' ? currencyLabel : 'gold' %><input name="gp" type="number" value="100" /></label>
+    </div>
+    <% if (typeof characterOptions !== 'undefined' && characterOptions) { %>
+      <p class="hint" id="race-traits"></p>
+      <p class="hint" id="class-info"></p>
+    <% } %>
+  </div>
+
+  <% if (typeof characterOptions !== 'undefined' && characterOptions) { %>
+    <div class="card">
+      <h2 style="margin-top:0">Starting Equipment Kit</h2>
+      <p class="hint">Picking a kit fills in your inventory and a suggested Armor Class below &mdash; both stay editable.</p>
+      <div id="kit-options"></div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0">Skill Proficiencies <span class="hint" id="skill-count-hint"></span></h2>
+      <div id="skill-checkboxes"></div>
+    </div>
+
+    <div class="card" id="spell-section" style="display:none">
+      <h2 style="margin-top:0">Spells Known <span class="hint" id="spell-count-hint"></span></h2>
+      <p class="hint">Each spell you know can be cast a few times per battle &mdash; no separate spell-slot tracking.</p>
+      <div id="spell-checkboxes"></div>
+    </div>
+  <% } %>
+
+  <div class="card">
+    <h2 style="margin-top:0">Abilities</h2>
+    <% if (typeof characterOptions !== 'undefined' && characterOptions) { %>
+      <button type="button" id="roll-btn" class="secondary">Roll Ability Scores (4d6, drop lowest)</button>
+      <div id="roll-pool"></div>
+      <p class="hint" style="margin-top:14px"><strong>Final scores</strong> (rolled value + racial bonus &mdash; these are what get saved):</p>
+    <% } %>
+    <div class="grid cols-3">
+      <label><%= (abilityLabels && abilityLabels.str) || 'STR' %><input name="str" type="number" value="10" /></label>
+      <label><%= (abilityLabels && abilityLabels.dex) || 'DEX' %><input name="dex" type="number" value="10" /></label>
+      <label><%= (abilityLabels && abilityLabels.con) || 'CON' %><input name="con" type="number" value="10" /></label>
+      <label><%= (abilityLabels && abilityLabels.int) || 'INT' %><input name="int" type="number" value="10" /></label>
+      <label><%= (abilityLabels && abilityLabels.wis) || 'WIS' %><input name="wis" type="number" value="10" /></label>
+      <label><%= (abilityLabels && abilityLabels.cha) || 'CHA' %><input name="cha" type="number" value="10" /></label>
+    </div>
+    <% if (typeof characterOptions !== 'undefined' && characterOptions) { %>
+      <p class="hint">Race ability bonuses are applied automatically once you pick a race above.</p>
+    <% } %>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Combat basics</h2>
+    <div class="grid cols-3">
+      <label>Armor Class<input name="ac" type="number" value="10" /></label>
+      <label>Max HP<input name="hp_max" type="number" value="10" /></label>
+      <label>Speed<input name="speed" type="number" value="30" /></label>
+    </div>
+    <label>Inventory (one item per line)</label>
+    <textarea name="inventory" placeholder="chain mail&#10;shield&#10;battleaxe"></textarea>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Personality &amp; goals <span class="hint">(public &mdash; visible to DM, companion, and Lore)</span></h2>
+    <div class="grid cols-2">
+      <label>Traits<textarea name="traits"></textarea></label>
+      <label>Ideals<textarea name="ideals"></textarea></label>
+      <label>Bonds<textarea name="bonds"></textarea></label>
+      <label>Flaws<textarea name="flaws"></textarea></label>
+    </div>
+    <label>Goals (one per line)</label>
+    <textarea name="goals"></textarea>
+  </div>
+
+  <div class="btn-row">
+    <button type="submit">Save &amp; Create Companion &rarr;</button>
+  </div>
+</form>
+
+<% if (typeof characterOptions !== 'undefined' && characterOptions) { %>
+  <script>
+    window.CHARACTER_OPTIONS = <%- JSON.stringify(characterOptions).replace(/</g, '\\u003c') %>;
+    window.ABILITY_LABELS = <%- JSON.stringify(abilityLabels || {}).replace(/</g, '\\u003c') %>;
+  </script>
+  <script src="/js/character-creator.js"></script>
+<% } %>
+
+<%- include('partials/foot') %>

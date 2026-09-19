@@ -1,0 +1,26 @@
+D&D DUO ENGINE — DM PRIVATE CONTINUATION PREP — SESSION 003
+
+SPOILER CONTROL
+DM-private / Lore-only. Do not expose hidden truths, motives, encounter statistics, clocks, or unrevealed consequences except through valid play.
+
+RESUME POINT
+Dhovir and Mira are immediately outside a narrow old drainage opening approximately thirty yards downslope from the quarry track near the Pell farm. They have not entered. No combat is active. Both are uninjured and have expended no limited resources.
+
+PUBLICLY ESTABLISHED EVIDENCE AT RESUME
+- At least two overlapping sets of impressions left the quarry track toward the opening.
+- One set was deeper near the downslope edge, consistent with greater weight or carried weight; identity is not established.
+- Crushed stems/disturbed stone provided an intermittent followable trail.
+- Harlan's statements about Jory and recent quarry-side sounds remain claims, not objective truth unless corroborated.
+
+DM TRUTH
+All DM-private truths and combat/stat guidance from DM_PRIVATE_RUNTIME.txt and DM_PRIVATE_CONTINUATION_TEST_002.txt remain active unless actual play changes them. Do not add a new ancient history for the chamber.
+
+CONTINUITY CORRECTION
+Do NOT use the improvised 'six weeks ago' timing for the first disappearance. Locked authority remains Sergeant Tann's Session 001 statement that three people disappeared along that stretch within the previous twelve days. Occupational/name/family details introduced in Session 002 are retained as Tann/Harlan claims where applicable.
+
+SESSION 003 EXECUTION TARGETS
+- Let Billy choose whether/how to approach the opening; do not force entry.
+- Mira acts only from public + companion-private knowledge.
+- Use passive competence for obvious physical details; roll only for meaningful uncertainty.
+- Preserve possible negotiation, retreat, stealth, alternate-route, rescue, and containment solutions.
+- If supernatural evidence appears, keep history/origin unresolved unless actual evidence establishes it.

@@ -1,0 +1,95 @@
+<%- include('partials/head', { title: character.name + ' Sheet' }) %>
+<%- include('partials/nav', { campaignId, role, companionId, active: 'sheet-' + charId }) %>
+
+<h1><%= character.name %></h1>
+<p class="subtitle"><%= character.species %> &middot; <%= character.class_level %> &middot; <%= character.background %>
+  &middot; controller: <%= character.controller %></p>
+
+<form method="post" action="/campaigns/<%= campaignId %>/sheet/<%= charId %>">
+  <input type="hidden" name="role" value="<%= role %>" />
+
+  <div class="grid cols-2">
+    <div class="card">
+      <h2 style="margin-top:0">Abilities</h2>
+      <div class="grid cols-3">
+        <% Object.entries(character.abilities || {}).forEach(([k,v]) => { %>
+          <div class="stat-mini"><div class="val"><%= v %></div><div class="lbl"><%= (abilityLabels && abilityLabels[k]) || k %></div></div>
+        <% }) %>
+      </div>
+      <% if ((character.skills||[]).length) { %>
+        <strong class="hint">Skill proficiencies</strong>
+        <p><%= character.skills.join(', ') %></p>
+      <% } %>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0">Combat</h2>
+      <div class="grid cols-3">
+        <label>AC<input name="ac" type="number" value="<%= character.ac %>" /></label>
+        <label>HP current<input name="hp_current" type="number" value="<%= character.hp.current %>" /></label>
+        <label>HP max<input name="hp_max" type="number" value="<%= character.hp.max %>" /></label>
+      </div>
+      <div class="grid cols-2">
+        <label>Temp HP<input name="temp_hp" type="number" value="<%= character.temp_hp || 0 %>" /></label>
+        <label>Location<input name="location" value="<%= character.location || '' %>" /></label>
+      </div>
+      <label>Conditions (one per line)</label>
+      <textarea name="conditions"><%= (character.conditions||[]).join('\n') %></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Inventory &amp; Resources</h2>
+    <label>Inventory (one item per line)</label>
+    <textarea name="inventory"><%= (character.inventory||[]).map(i=>i.item).join('\n') %></textarea>
+    <label>Currency: <%= typeof currencyLabel !== 'undefined' ? currencyLabel : 'gp' %></label>
+    <input name="gp" type="number" value="<%= character.currency ? character.currency.gp : 0 %>" />
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Personality &amp; Public Goals <span class="badge public">public</span></h2>
+    <div class="grid cols-2">
+      <div><strong class="hint">Traits</strong><p><%= character.personality?.traits || '—' %></p></div>
+      <div><strong class="hint">Ideals</strong><p><%= character.personality?.ideals || '—' %></p></div>
+      <div><strong class="hint">Bonds</strong><p><%= character.personality?.bonds || '—' %></p></div>
+      <div><strong class="hint">Flaws</strong><p><%= character.personality?.flaws || '—' %></p></div>
+    </div>
+    <strong class="hint">Public goals</strong>
+    <ul class="clean"><% (character.goals_public||[]).forEach(g=>{ %><li><%= g %></li><% }) %></ul>
+  </div>
+
+  <% if (character.private) { %>
+    <div class="card">
+      <h2 style="margin-top:0">Private Character State
+        <span class="badge companion_pc">companion_pc</span><span class="badge lore_only">lore_only</span></h2>
+      <p class="hint">Visible only on the Companion and Lore role views &mdash; the DM and human-player projections
+        never receive this block.</p>
+      <label>Beliefs (one per line)</label>
+      <textarea name="private_beliefs"><%= (character.private.beliefs||[]).join('\n') %></textarea>
+      <label>Fears (one per line)</label>
+      <textarea name="private_fears"><%= (character.private.fears||[]).join('\n') %></textarea>
+      <label>Personal goals (one per line)</label>
+      <textarea name="private_goals"><%= (character.private.personal_goals||[]).join('\n') %></textarea>
+      <label>Suspicions (one per line)</label>
+      <textarea name="private_suspicions"><%= (character.private.suspicions||[]).join('\n') %></textarea>
+      <label>Unresolved questions (one per line)</label>
+      <textarea name="private_questions"><%= (character.private.unresolved_questions||[]).join('\n') %></textarea>
+    </div>
+  <% } else if (character.controller === 'player_agent') { %>
+    <div class="banner">Private state exists for <%= character.name %> but isn't visible to the
+      <strong><%= role %></strong> role<%= role === 'companion' ? ' (this is a different companion\'s sheet)' : '' %>.
+      Switch to <%= character.name %>'s own seat or Lore to view/edit it.</div>
+  <% } %>
+
+  <% if (charId === 'human' && (role === 'human' || role === 'lore')) { %>
+    <div class="card">
+      <h2 style="margin-top:0">Player Notes <span class="badge human_pc">human_pc</span></h2>
+      <p class="hint">Your own scratch notes. Not shown to the DM or companion views.</p>
+      <textarea name="player_notes"><%= character.player_notes || '' %></textarea>
+    </div>
+  <% } %>
+
+  <div class="btn-row"><button type="submit">Save Changes</button></div>
+</form>
+
+<%- include('partials/foot') %>

@@ -1,0 +1,75 @@
+<%- include('partials/head', { title: 'Quests' }) %>
+<%- include('partials/nav', { campaignId, role, companionId, active: 'quests' }) %>
+
+<h1>Quests / Threads</h1>
+<p class="subtitle">Player-visible objectives and status. Hidden stakes are DM-private and shown only on that role's view.</p>
+
+<% if (!quests.length) { %><p class="empty">No threads recorded yet.</p><% } %>
+<% quests.forEach(q => { %>
+  <div class="card">
+    <div class="campaign-list-item">
+      <h3><%= q.title %> <span class="badge <%= q.status === 'open' ? 'public' : 'human_pc' %>"><%= q.status %></span></h3>
+    </div>
+    <p><%= q.player_visible_description %></p>
+    <div class="grid cols-2">
+      <div>
+        <strong class="hint">Known objectives</strong>
+        <ul class="clean"><% (q.known_objectives||[]).forEach(o=>{ %><li><%= o %></li><% }) %></ul>
+      </div>
+      <div>
+        <strong class="hint">Unresolved questions</strong>
+        <ul class="clean"><% (q.unresolved_questions||[]).forEach(o=>{ %><li><%= o %></li><% }) %></ul>
+      </div>
+    </div>
+    <% if (q.consequences_triggered && q.consequences_triggered.length) { %>
+      <strong class="hint">Consequences so far</strong>
+      <ul class="clean"><% q.consequences_triggered.forEach(c=>{ %><li><%= c %></li><% }) %></ul>
+    <% } %>
+    <% if (role === 'dm' && q.hidden_stakes) { %>
+      <div class="banner warn"><strong>Hidden stakes (DM-private):</strong> <%= q.hidden_stakes %></div>
+    <% } %>
+    <p class="hint"><%= q.provenance %></p>
+
+    <% if (role === 'dm' || role === 'lore') { %>
+      <details>
+        <summary class="hint" style="cursor:pointer">Update</summary>
+        <form method="post" action="/campaigns/<%= campaignId %>/quests/<%= q.id %>" style="margin-top:8px">
+          <input type="hidden" name="role" value="<%= role %>" />
+          <div class="grid cols-2">
+            <label>Status
+              <select name="status">
+                <option <%= q.status==='open'?'selected':'' %>>open</option>
+                <option <%= q.status==='resolved'?'selected':'' %>>resolved</option>
+                <option <%= q.status==='abandoned'?'selected':'' %>>abandoned</option>
+                <option <%= q.status==='dormant'?'selected':'' %>>dormant</option>
+              </select>
+            </label>
+            <label>Add consequence<input name="new_consequence" /></label>
+          </div>
+          <button type="submit">Save</button>
+        </form>
+      </details>
+    <% } %>
+  </div>
+<% }) %>
+
+<% if (role === 'dm' || role === 'lore') { %>
+  <div class="card">
+    <h2 style="margin-top:0">New Thread</h2>
+    <form method="post" action="/campaigns/<%= campaignId %>/quests">
+      <input type="hidden" name="role" value="<%= role %>" />
+      <label>Title<input name="title" required /></label>
+      <label>Player-visible description<textarea name="player_visible_description"></textarea></label>
+      <label>Originating event<input name="originating_event" /></label>
+      <div class="grid cols-2">
+        <label>Known objectives (one per line)<textarea name="known_objectives"></textarea></label>
+        <label>Unresolved questions (one per line)<textarea name="unresolved_questions"></textarea></label>
+      </div>
+      <label>Relevant NPCs/locations/factions (one per line)<textarea name="relevant_entities"></textarea></label>
+      <label>Hidden stakes <span class="badge dm_private">dm_private</span><textarea name="hidden_stakes"></textarea></label>
+      <button type="submit">Add Thread</button>
+    </form>
+  </div>
+<% } %>
+
+<%- include('partials/foot') %>

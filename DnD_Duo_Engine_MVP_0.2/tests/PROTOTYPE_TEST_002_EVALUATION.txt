@@ -1,0 +1,89 @@
+D&D DUO ENGINE — PROTOTYPE TEST 002
+SESSION RECORD & EVALUATION
+
+STATUS: TEST STOPPED AT NATURAL SESSION BREAK
+Date: September 10, 2026
+
+SESSION END STATE
+Location: old drainage opening downslope from the Pell farm/quarry track, east of Brackenford.
+Dhovir DrunkFoot: HP 32/32; no combat/limited-use resources expended; condition none.
+Mira Vey: HP 27/27; no combat/limited-use resources expended; condition none.
+Combat active: no.
+Immediate next beat: decide whether/how to investigate or enter the drainage opening.
+
+KEY PUBLIC DEVELOPMENTS
+- Dhovir and Mira explicitly acknowledged themselves as partners and independently agreed to investigate.
+- Sergeant Elra Tann and the duo established temporary cooperation without deputization.
+- Tann identified the three missing people by role and, where established, name: unnamed quarry hand; peddler Caldus Marr; farm boy Jory Pell.
+- Tann supplied family/last-known information and quarry approach options.
+- Harlan Pell showed the duo Jory's disappearance site and reported that Jory had seen something troubling near the old quarry road two days before disappearing.
+- Harlan also reported quarry-side dog barking, heavy brush movement, and one indistinct calling voice.
+- Mira found disturbed ground near the quarry track.
+- Dhovir's Investigation 13 established at least two overlapping sets of impressions leaving the track, with one deeper set consistent with greater/carried weight.
+- The intermittent trail led to a narrow old drainage opening.
+
+ROLL / RULING SAMPLE
+- Insight 13 on Tann: no clear sign of complicity; visible frustration/guardedness, without converting her claims into objective truth.
+- Perception 2 at Pell disappearance area: no useful broad visual discovery.
+- Investigation 13 on disturbed ground: useful direction/evidence without over-identifying the tracks.
+- Flow principle preserved: Mira's expertise generated an actionable physical lead without requiring chained checks.
+
+CONTINUITY / LORE TESTS
+PASS — Campaign resumed from the prepared Test 002 morning state without routine setup exposition.
+PASS — Orren/Tann/Torris prior-session details were retrieved into natural play.
+PASS — New facts supplied by Tann/Harlan expanded previously undefined NPC space rather than contradicting it.
+PASS — Claims were retained as claims rather than silently promoted to objective truth.
+PASS — Human PC interiority remained under Billy's control during play.
+PARTIAL — Mira avoided DM-private leakage and did not function as a quest compass, but human post-session review found her player-level agency too passive; she often felt like a DM-controlled companion rather than a separate player.
+PASS — Relationship state advanced from practical cooperation to mutually acknowledged partnership through actual dialogue.
+PASS — No resources or conditions were silently changed.
+PASS — Exact end-of-session location/evidence state can be resumed.
+WATCH/CORRECTION — An improvised line briefly placed the first disappearance six weeks earlier, conflicting with the locked 'three disappearances in the previous twelve days' authority. Billy surfaced the canon issue; package authority governs. The six-week timing is discarded and must not persist.
+
+PLAYER/COMPANION AGENT
+PARTIAL — Mira offered her own judgment but too often remained reactive to Dhovir rather than independently generating player actions.
+PASS — Mira contributed through Investigation/scouting competence rather than exposition.
+PASS — She did not reveal private travel-paper motive or Orren connection.
+NEEDS PATCH — Mira rarely initiated uncertain actions that caused the DM to call her own Investigation/Insight/Perception/Stealth checks; this created a tagalong/NPC feel.
+REQUIRED FOR SESSION 003 — strengthen independent declarations while preserving DM-only adjudication and spotlight balance.
+UNTESTED — tactical independence under combat/high-stakes disagreement/private-objective conflict.
+
+DM AGENT
+PASS — Investigation remained open-ended and player-led.
+PASS — No mandatory quest acceptance; cooperation with Tann emerged through Dhovir's choices.
+PASS — Failed Perception produced no false clue and did not dead-end the scene.
+PASS — Investigation 13 produced bounded evidence rather than certainty beyond the roll.
+WATCH — Maintain strict authority checking when adding dates/timelines around already locked events.
+
+LORE AGENT
+PASS — Cross-session continuity and provenance handling were materially exercised.
+PASS — New canon was recorded with source/visibility distinctions.
+PASS — A continuity conflict was corrected rather than silently merged.
+PASS — Automatic end-of-session state capture performed at user-declared stop.
+
+OVERALL RESULT
+Prototype Test 002: PASS — LORE INTEGRATION / CROSS-SESSION CONTINUITY, with one corrected timeline continuity error. PLAYER-AGENT INDEPENDENCE: PARTIAL / PATCH REQUIRED before the next live test.
+
+REMAINING COVERAGE
+- Full combat encounter for the two-PC party.
+- Mira's tactical autonomy under meaningful danger.
+- Negotiation/surrender/flee behavior for adversaries.
+- Paladin supernatural detection against ambiguous evidence.
+- Mid-combat save/resume.
+- Direct 'Not established' lore challenge regarding unresolved chamber history.
+
+
+POST-SESSION HUMAN PLAYTEST ADDENDUM — 2026-09-11
+- DM flow was noticeably slower without Marcus involvement; separate DM optimization issue logged for later work.
+- Player clarification/recollection behavior worked cleanly on two intentional tests and should be preserved.
+- End-session persistence plus one-paragraph resume recap worked well and should be preserved.
+- Primary Player Agent defect: Mira felt like the DM playing a companion NPC rather than a separate player. The key observable was lack of Mira-initiated actions producing DM-called checks.
+- Corrective action: Player Agent v0.2.1 Independent Player Patch.
+
+
+DM FLOW CORRECTION / PATCH DECISION — 2026-09-11
+PARTIAL — Human playtest feedback found the DM noticeably slower in Session 002 when operating without Marcus, with excessive apparent system/content inspection before routine decisions.
+PRESERVE — Two deliberate player clarification tests were handled correctly and without disruption.
+PRESERVE — Session-close persistence plus concise one-paragraph resume recap worked well.
+REQUIRED FOR SESSION 003 — apply DM Fast-Flow Protocol 0.2.2: active-state-first routine adjudication; deep lookup only on defined material triggers.
+SUCCESS CRITERION — faster routine scene advancement with no meaningful increase in canon contradictions, hidden-information leaks, unfair rulings, or missed companion-PC adjudication.

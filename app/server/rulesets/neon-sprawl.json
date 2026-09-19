@@ -1,0 +1,178 @@
+{
+  "id": "neon-sprawl",
+  "name": "Neon Sprawl (cyberpunk-flavored)",
+  "description": "High-tech, low-life dystopia. An original setting name, not tied to any published cyberpunk property.",
+  "tone": "High-tech, low-life. Corporate power structures, chrome augmentation, and quiet desperation define the world. Violence is fast, often lethal, and rarely glamorous. Information and access are worth more than cash. Style masks how little control most people actually have.",
+  "vocabulary": {
+    "class": "Role",
+    "power_source": "Cyberware and street tech (no magic)",
+    "currency": "eurodollars (eb)",
+    "weapon_flavor": "firearms, monowire, and cybernetic weapons",
+    "armor_flavor": "subdermal plating and armored jackets",
+    "faction_flavor": "corporations, fixers, and gangs"
+  },
+  "abilities": {
+    "str": "Body",
+    "dex": "Reflexes",
+    "con": "Endurance",
+    "int": "Tech",
+    "wis": "Awareness",
+    "cha": "Cool"
+  },
+  "skill_examples": [
+    "Hacking",
+    "Streetwise",
+    "Ballistics",
+    "Stealth",
+    "Interface",
+    "Intimidation"
+  ],
+  "narration_notes": "Rename ability-driven checks to this pack's vocabulary (Body instead of Strength, Tech instead of Intelligence, etc.) even though the underlying numbers and math work exactly the same as any other campaign. No swords, no spellcasting, no fantasy-world nouns (kingdoms, gold pieces, magic) unless the campaign's own established canon has specifically introduced one. Prefer guns, hacking, and corporate leverage over blades and spells for how problems get solved.",
+  "theme": {
+    "bg": "#080b10",
+    "bgRaised": "#0c1219",
+    "bgCard": "#0f1922",
+    "border": "#1d3b45",
+    "text": "#d3fbf1",
+    "textDim": "#5f9aa8",
+    "accent": "#00e5c7",
+    "accentSoft": "#0aa88f",
+    "font": "'Courier New', 'Fira Code', ui-monospace, monospace"
+  },
+  "game": {
+    "partyColors": [
+      "#00e5c7",
+      "#ff2fd0",
+      "#f5d90a",
+      "#7a5cff",
+      "#ff5555"
+    ],
+    "areas": [
+      {
+        "id": "street",
+        "default": true,
+        "keywords": [],
+        "mapLayout": [
+          "################",
+          "#..............#",
+          "#..####..####..#",
+          "#.#....\"\"....#.#",
+          "#.#....\"\"....#.#",
+          "#..####..####..#",
+          "#..............#",
+          "#..~~......~~..#",
+          "#..............#",
+          "#..####..####..#",
+          "#..............#",
+          "################"
+        ],
+        "tileColors": {
+          "#": "#141b24",
+          ".": "#232f3a",
+          "\"": "#3a1f3a",
+          "~": "#0d3a44"
+        },
+        "impassableTiles": [
+          "#",
+          "~"
+        ],
+        "encounterTile": "\"",
+        "encounterChance": 0.35,
+        "playerStart": {
+          "col": 2,
+          "row": 1
+        },
+        "encounterIntro": "A corp security drone locks onto your position!",
+        "enemyTemplates": [
+          {
+            "name": "Corp Security Drone",
+            "hp": 16,
+            "ac": 13,
+            "attackBonus": 4,
+            "damageDie": 6,
+            "damageBonus": 2,
+            "color": "#c93a3a"
+          },
+          {
+            "name": "Corp Security Drone",
+            "hp": 16,
+            "ac": 13,
+            "attackBonus": 4,
+            "damageDie": 6,
+            "damageBonus": 2,
+            "color": "#c93a3a"
+          }
+        ]
+      },
+      {
+        "id": "interior",
+        "default": false,
+        "keywords": [
+          "office",
+          "building",
+          "interior",
+          "inside",
+          "room",
+          "apartment",
+          "tower",
+          "facility",
+          "server",
+          "corridor",
+          "lobby",
+          "floor"
+        ],
+        "mapLayout": [
+          "################",
+          "#..............#",
+          "#.############.#",
+          "#.#..........#.#",
+          "#.#.\"\"\"\"\"\"...#.#",
+          "#.#..........#.#",
+          "#.############.#",
+          "#..............#",
+          "#.############.#",
+          "#.#..........#.#",
+          "#.#..........#.#",
+          "################"
+        ],
+        "tileColors": {
+          "#": "#12181f",
+          ".": "#1c2530",
+          "\"": "#3a1414",
+          "~": "#142430"
+        },
+        "impassableTiles": [
+          "#",
+          "~"
+        ],
+        "encounterTile": "\"",
+        "encounterChance": 0.35,
+        "playerStart": {
+          "col": 2,
+          "row": 1
+        },
+        "encounterIntro": "A security turret spins up and locks on!",
+        "enemyTemplates": [
+          {
+            "name": "Corp Security Drone",
+            "hp": 16,
+            "ac": 13,
+            "attackBonus": 4,
+            "damageDie": 6,
+            "damageBonus": 2,
+            "color": "#c93a3a"
+          },
+          {
+            "name": "Corp Security Drone",
+            "hp": 16,
+            "ac": 13,
+            "attackBonus": 4,
+            "damageDie": 6,
+            "damageBonus": 2,
+            "color": "#c93a3a"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+<header class="top">
+  <div class="bar">
+    <div>
+      <a class="brand" href="/">D&amp;D Duo Engine<small>Visual UI prototype</small></a>
+    </div>
+    <% if (typeof campaignId !== 'undefined' && campaignId) { %>
+      <nav class="tabs">
+        <a href="/campaigns/<%= campaignId %>/play?role=<%= role %>" class="<%= active === 'play' ? 'active' : '' %>">Play</a>
+        <a href="/campaigns/<%= campaignId %>/game" class="<%= active === 'game' ? 'active' : '' %>">Play (Beta) 🎮</a>
+        <a href="/campaigns/<%= campaignId %>/party?role=<%= role %>" class="<%= active === 'party' || (active && active.indexOf('sheet-') === 0) ? 'active' : '' %>">Party</a>
+        <a href="/campaigns/<%= campaignId %>/quests?role=<%= role %>" class="<%= active === 'quests' ? 'active' : '' %>">Quests</a>
+        <a href="/campaigns/<%= campaignId %>/lore?role=<%= role %>" class="<%= active === 'lore' ? 'active' : '' %>">Lore &amp; Canon</a>
+        <a href="/campaigns/<%= campaignId %>/worldbuilding?role=<%= role %>" class="<%= active === 'worldbuilding' ? 'active' : '' %>">World Building</a>
+        <a href="/campaigns/<%= campaignId %>/relationships?role=<%= role %>" class="<%= active === 'relationships' ? 'active' : '' %>">Relationships</a>
+        <a href="/campaigns/<%= campaignId %>/recap?role=<%= role %>" class="<%= active === 'recap' ? 'active' : '' %>">Recap</a>
+        <a href="/campaigns/<%= campaignId %>/saves?role=<%= role %>" class="<%= active === 'saves' ? 'active' : '' %>">Save / Resume</a>
+      </nav>
+    <% } %>
+  </div>
+  <% if (typeof campaignId !== 'undefined' && campaignId) { %>
+    <div class="bar" style="padding-top:0;">
+      <div class="hint">Viewing as — each seat only receives what the server projects for that role.</div>
+      <div class="role-switch">
+        <a class="role-dm <%= role === 'dm' ? 'active' : '' %>" href="?role=dm">DM</a>
+        <a class="role-human <%= role === 'human' ? 'active' : '' %>" href="?role=human">Human Player</a>
+        <% (typeof companions !== 'undefined' ? companions : []).forEach(c => { %>
+          <a class="role-companion <%= (role === 'companion' && typeof companionId !== 'undefined' && companionId === c.character_id) ? 'active' : '' %>"
+             href="?role=companion&companionId=<%= c.character_id %>"><%= c.name %> (Player Agent)</a>
+        <% }) %>
+        <a class="role-lore <%= role === 'lore' ? 'active' : '' %>" href="?role=lore">Lore (record-keeper)</a>
+      </div>
+      <% if (typeof companions !== 'undefined' && !companions.length) { %>
+        <p class="hint">No AI companions yet &mdash; <a href="/campaigns/<%= campaignId %>/characters/companion/new">add one</a>.</p>
+      <% } %>
+    </div>
+  <% } %>
+</header>
+<div class="wrap">

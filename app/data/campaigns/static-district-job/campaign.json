@@ -1,0 +1,23 @@
+{
+  "campaign_id": "static-district-job",
+  "campaign_package_id": "static-district-job",
+  "campaign_title": "Static District Job",
+  "rules_baseline": "5e-style resolution, cyberpunk-flavored vocabulary",
+  "ruleset": "neon-sprawl",
+  "active_house_rulings": [],
+  "session_number": 1,
+  "in_world_date": "Night, rain, Lower Static District",
+  "status": "active",
+  "tone": {
+    "tone": "Grim & high-stakes",
+    "play_balance": "Balanced roleplay / exploration / combat",
+    "death_policy": "possible_uncommon",
+    "horror_intensity": "none",
+    "romance": "off",
+    "companion_dynamic": "wary_professional",
+    "difficulty": "standard",
+    "content_boundaries": "Broadly open unless changed by the human player during play."
+  },
+  "created_at": "2026-09-18T18:58:30.554Z",
+  "updated_at": "2026-09-18T18:58:30.557Z"
+}

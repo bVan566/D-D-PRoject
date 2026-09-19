@@ -1,0 +1,52 @@
+D&D DUO ENGINE — CAMPAIGN MANIFEST & RESUME PROTOCOL
+
+CAMPAIGN STATUS
+Campaign: Greymark Road / Brackenford
+Human PC: Dhovir DrunkFoot
+Companion PC: Mira Vey
+Current session state: end of Prototype Test 002 / Session 002; Dhovir and Mira are outside a narrow quarry-side drainage opening downslope from the Pell farm.
+Next session: Campaign Session 003 — continue actual play from the drainage opening.
+
+RESUME TRIGGER
+A human prompt equivalent to “Continue the D&D Duo campaign” starts resume mode. The runtime should load the authoritative sources below, restore the latest campaign state, apply active Agent Learning, then return directly to immersive play without exposing DM-private material or requiring routine setup confirmation.
+
+AUTHORITATIVE LOAD ORDER
+1. This Campaign Manifest & Resume Protocol.
+2. D&D Duo Engine — Lore Master State — Campaign 001 (latest revision).
+3. D&D Duo Engine — Prototype Test 002 Session Record & Evaluation (latest completed session), then Test 001 record for prior provenance.
+4. D&D Duo Engine — DM Private Runtime — Prototype Test 001, plus later DM continuation prep.
+5. D&D Duo Engine — Player Agent Companion — Prototype Test 001, plus later companion-state updates.
+6. D&D Duo Engine — Session Zero Record — Prototype Test 001.
+7. D&D Duo Engine — MVP 0.1 Core Architecture, including Audit Patch v0.1.1.
+8. Historical/superseded design documents only when design provenance is needed.
+
+CURRENT AUTHORITATIVE FILE IDS
+Core Architecture: 1NT9ESZZog309E3ekb26i_DOlRKE3M-MlLoPkARUKaYg
+Session Zero: 15fw4DfpAmPHA272T_wTUF55J8U7ywTILdfO9TCVrGJE
+Player Agent Companion — Mira Vey: 1rN8wIMGhVoRzG6Cc45MqoRi0i9MzNm3_jdqkzetRnG8
+DM Private Runtime: 1Sm98wLnZO6O3ooIgaUPAhB-4rQUJWH2D85d5msRK0_k
+Test 001 Session Record & Evaluation: 1jg7tH_EItXv9fdsp06PU5bruZYNlQGdZ3rkJFOgpF6c
+Historical prototype package: 1S310524EZNVNiHAzwF-iFf5kNwmDQ8WUZu9hevkf_O8
+Lore Master State: see current file titled D&D Duo Engine — Lore Master State — Campaign 001.
+
+CONFLICT RULE
+If records conflict, use the precedence rules in Core Architecture Audit Patch v0.1.1. Historical Sable Vey / Greywick March / Rook’s Hollow material is not current campaign canon and must never enter play unless Billy explicitly reintroduces it later.
+
+ACTIVE LEARNING TO CONSUME
+- Preserve flow-first adjudication and failure-forward checks.
+- Do not narrate Dhovir’s voluntary internal conclusions, motives, beliefs, or emotional decisions. Billy owns Dhovir’s interiority.
+- Continue testing Mira’s independence without turning her into a helper or plot compass.
+- Maintain strict public / companion-private / DM-private separation.
+- Preserve unresolved chamber history as unresolved unless actual play establishes it.
+- Treat knowledgeable-NPC additions as valid new canon when nonconflicting, while retaining claim-vs-fact provenance.
+- The conflicting improvised six-week disappearance timing is NOT canon; retain the locked previous-twelve-days window.
+
+TEST 002 RESULT
+Cross-session continuity, claim-vs-fact handling, continuity correction, relationship/resource persistence, and end-of-session canonical recording were exercised successfully. Combat/tactical companion autonomy and deeper supernatural/rules pressure remain untested.
+
+PLAYER EXPERIENCE RULE
+Engineering instrumentation remains behind the scenes. During active play, do not announce lore tests, acceptance criteria, hidden state updates, or agent evaluation unless Billy explicitly goes out of character to ask.
+
+CURRENT TEST 002 POINTERS
+Lore Master State file ID: 1w8xnHtP6AzJxy-Yl-y0A3tOvmONBhTvZst38fwt0ZeU
+DM Private Continuation Prep file ID: 15uHYyFbSOdLnsSZKEQsQEtz27PnCK0H318G2Ky_X_DU

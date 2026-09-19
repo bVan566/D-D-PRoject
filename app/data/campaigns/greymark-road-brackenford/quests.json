@@ -1,0 +1,27 @@
+[
+  {
+    "id": "quest-disappearances",
+    "title": "The Brackenford disappearances",
+    "player_visible_description": "Three people have vanished along the quarry-road stretch in the past twelve days: a quarry hand, peddler Caldus Marr, and farm boy Jory Pell. Dhovir and Mira are investigating in temporary cooperation with Sergeant Tann.",
+    "status": "open",
+    "originating_event": "Ambushed wagon and wounded watchman on the Greymark Road, Session 001",
+    "known_objectives": [
+      "Determine what happened to the missing travelers and watchmen",
+      "Investigate the old drainage/quarry workings"
+    ],
+    "hidden_stakes": "A deserter band under Hask Renn has been robbing travelers via the tunnels and disturbed a sealed chamber, releasing a weak supernatural presence now escalating the danger.",
+    "relevant_entities": [
+      "Sergeant Elra Tann",
+      "Orren Vale",
+      "Harlan Pell",
+      "Hask Renn (unrevealed)"
+    ],
+    "consequences_triggered": [],
+    "unresolved_questions": [
+      "What lies inside the drainage opening?",
+      "What produced the voice/scream phenomenon?"
+    ],
+    "visibility": "public",
+    "provenance": "Session 001–002"
+  }
+]

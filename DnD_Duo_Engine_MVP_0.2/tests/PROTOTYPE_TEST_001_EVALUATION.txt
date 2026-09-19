@@ -1,0 +1,111 @@
+D&D DUO ENGINE — PROTOTYPE TEST 001
+SESSION RECORD & EVALUATION
+
+STATUS: TEST STOPPED AT NATURAL SESSION BREAK
+Date: September 9, 2026
+
+SESSION END STATE
+Location: The Stone Cup, Brackenford — Dhovir has returned to his paid room and gone to sleep.
+
+Dhovir DrunkFoot
+- Level 4 Paladin (Oath of Devotion), Mountain Dwarf, Soldier.
+- HP: 32/32.
+- No combat resources expended during session.
+- Contract completed; medicine delivered safely.
+- Payment received: 20 gp. Dhovir subsequently paid for drinks/room/tip during tavern scene; exact remaining coin not locked because individual drink/room prices were not itemized in play.
+- Current intent: conflicted but leaning toward investigating the disappearances because he believes something harmful or evil is occurring and his vows still matter to him.
+- New player-established family lore: DrunkFoot surname dates back three generations. An ancestor, drunk while assigned to night guard duty during construction of a great mountain-city hall, kicked a cornerstone in exactly the wrong way and caused the unfinished hall to collapse. Only casualty was the ancestor’s foot. Details of the story traditionally change with the number of ales consumed.
+
+Mira Vey
+- HP: 27/27.
+- No combat resources expended.
+- Successfully delivered medicine with Dhovir and received 20 gp.
+- Currently asleep in her room at The Stone Cup.
+- Relationship state with Dhovir: practical cooperation has begun warming through shared danger, humor, drinking, and conversation. No predetermined friendship/romance state established.
+- Mira openly agreed that the Brackenford situation appears worth investigating, while still favoring enjoying the evening before doing so.
+
+REVEALED / PLAYER-KNOWN INFORMATION
+- Wagon was overturned on the Greymark Road and positioned so it nearly blocked travel.
+- Dhovir’s soldier experience recognized the obstruction as consistent with a deliberate ambush setup.
+- Horse harness had been deliberately cut.
+- Watchman Torris was wounded but ambulatory with assistance.
+- Four watchmen had gone after whoever attacked the wagon.
+- Torris heard screaming in his own voice; Dhovir and Mira subsequently heard the same phenomenon.
+- Something moved through brush parallel to Dhovir and Torris as they approached Brackenford, but Dhovir did not identify it.
+- Three people had disappeared along that stretch of road in the previous twelve days according to Sergeant Elra Tann.
+- Missing people had not been recovered as far as Orren Vale knew; belongings/signs of trouble had been found.
+- Old drainage cuts and abandoned quarry passages exist beneath/near that portion of road.
+- Orren Vale believes someone has been using those workings.
+- Orren admitted to unrecorded business involving goods moved without proper tolls and supplies from disapproved sources, explaining at least part of his fear of watch scrutiny.
+- Orren’s preexisting theory was that people were using the disappearances/ghost stories as cover for robbery or illicit activity. After hearing Dhovir’s account, Orren believes both human actors and something unexplained may be involved.
+- Dhovir noticed Orren was far more nervous about the Brackenford watch than about him.
+- Orren is a quarry clerk/bookkeeper associated with manifests and records. Distinctive observations: thin human male, roughly forties, brown practical coat, thinning dark hair, narrow clean-shaven face, pale limestone dust on boots/lower trousers, slight hitch in right leg, utility knife.
+
+NPC STATE
+- Sergeant Elra Tann: met Dhovir and Mira; knows they rescued Torris and heard the screaming. Asked for their account. Has not recruited them formally.
+- Torris: delivered alive to Brackenford for treatment. Condition at session end not subsequently checked.
+- Orren Vale: Dhovir followed and chased him, then questioned him privately in the quarry records office. Orren asked Dhovir not to tell Tann they spoke. Orren left before Dhovir returned to tavern. He knows Dhovir saw little beyond the wagon, Torris, screaming, and pursuit sounds.
+- Tavern keeper: identified Orren for Dhovir and noted Orren unusually left half a drink behind.
+- Bren: quarry worker who mentioned that Torris was not the first watchman to go into the woods; Dhovir declined further conversation.
+
+UNRESOLVED PLAYER QUESTIONS / THREADS
+- What happened to the missing travelers and watchmen?
+- Who deliberately staged/attacked the wagon?
+- What produced Torris’s voice in the woods?
+- What followed Dhovir and Torris toward Brackenford?
+- Who is using the abandoned workings, and why?
+- Is Orren hiding more than his admitted illicit trade?
+- Will Dhovir investigate, and will Mira join him by her own decision?
+
+ROLL / RULING SAMPLE
+- Perception 18: Dhovir found no detectable immediate attacker; soldier competence separately recognized deliberate obstruction without requiring another roll.
+- Horse injury inspection: no roll; routine visual assessment established minor scrapes/panic, no serious visible injury.
+- Insight 13 on Orren: established nervousness and stronger concern about watch than Dhovir, without revealing exact motive.
+- Survival 11 tracking Orren: trail lost in town traffic/rain, but scene advanced via uncertain sighting rather than dead-ending.
+- Stealth 2: Dhovir was clearly detected; consequence changed situation into chase.
+- Athletics 20: Dhovir caught Orren despite head start and dwarf speed disadvantage, supported by Orren’s impaired leg.
+
+PROTOTYPE EVALUATION
+DM Agent
+PASS — Strong start generated immediate choices without forcing a quest.
+PASS — Flow-first rules generally worked: routine competence did not require unnecessary checks; meaningful uncertainty did.
+PASS — Failed checks changed the situation instead of stopping play.
+PASS — Player repeatedly declined obvious exposition/quest hooks and the session continued naturally.
+PASS — Orren remained usable after the player pursued and confronted him; no single clue path became mandatory.
+PASS — Horror remained mild.
+PASS — No hidden DM truth was directly exposed during play.
+PASS — Dhovir’s personal history was not invented by DM; player-created DrunkFoot family lore was accepted as canon.
+WATCH — At a few points narration summarized Dhovir’s internal conclusion (for example that the situation was probably worth investigating). Future DM behavior should prefer reflecting established conflict/observations and let Billy state Dhovir’s final internal judgment himself.
+
+Player/Companion Agent
+PASS — Mira participated without becoming a quest compass.
+PASS — Mira acted independently in practical situations (freeing horse, carrying medicine, social reactions).
+PASS — She did not expose her private travel-paper motive or Orren connection.
+PASS — Humor/personality emerged naturally and supported the duo dynamic.
+PASS — She did not automatically obey or dominate Dhovir.
+WATCH — Companion independence was tested socially and operationally but not yet under tactical combat pressure, disagreement with meaningful stakes, or competing private objectives.
+
+Lore / State System
+PASS — Public facts, DM-private facts, and companion-private facts remained separated during play.
+PASS — Open/unresolved lore was not converted into a grand backstory.
+PASS — New human-created canon (DrunkFoot surname story) can be captured without disturbing DM truth.
+PASS — Session can stop mid-campaign with sufficient state to resume.
+
+TEST COVERAGE NOT YET EXERCISED
+- Full combat encounter for two level-4 PCs.
+- Companion tactical independence under danger.
+- Negotiation with an adversary who may surrender/bargain/flee.
+- Paladin supernatural detection interacting with ambiguous supernatural evidence.
+- Character death / severe consequence handling.
+- Lore Agent response to direct questions about unresolved chamber history.
+- Mid-combat save/resume.
+- Post-session adaptation across a second session.
+
+OVERALL RESULT
+Prototype Test 001 is a successful partial end-to-end play test. The core architecture demonstrated that it can sustain free player choice, natural social play, investigation, failed rolls, companion participation, hidden-information separation, and persistent campaign state without obvious railroading or clue dead ends.
+
+It is NOT a complete validation of the full Duo Engine because combat, high-stakes companion autonomy, deeper Lore Agent arbitration, and cross-session learning remain untested.
+
+RECOMMENDED DISPOSITION
+Mark Prototype Test 001: PASS — CORE LOOP / PARTIAL COVERAGE.
+Do not redesign the engine based on this session alone. Preserve the current architecture and carry the WATCH items and untested coverage into the next prototype or continued campaign session.
