@@ -20,4 +20,19 @@ function walkTo(pc, stamp, activeJob) {
   return { ok: true };
 }
 
-module.exports = { STAMPS, walkTo };
+// One district's attention level (0-3), shared by everything that reads or writes it --
+// the street table weights its roll off this, and job-site actions (e.g. Force at
+// job_site_1's entrance) are what raise it. A module-level counter, not a new session
+// object: there's only one district in Slice 1.
+let attention = 0;
+
+function getAttention() {
+  return attention;
+}
+
+function addAttention(amount) {
+  attention = Math.max(0, Math.min(3, attention + amount));
+  return attention;
+}
+
+module.exports = { STAMPS, walkTo, getAttention, addAttention };
