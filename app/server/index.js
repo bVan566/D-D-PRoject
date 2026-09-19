@@ -11,6 +11,7 @@ const campaignsRouter = require("./routes/campaigns");
 const playRouter = require("./routes/play");
 const recordsRouter = require("./routes/records");
 const gameRouter = require("./routes/game");
+const slice1Router = require("./routes/slice1");
 const { isConfigured } = require("./agents");
 
 const app = express();
@@ -39,6 +40,8 @@ app.use("/", campaignsRouter);
 app.use("/campaigns/:id", playRouter);
 app.use("/campaigns/:id", recordsRouter);
 app.use("/campaigns/:id", gameRouter);
+// Under the Slate -- separate loop, no campaignId, no shared state with the above.
+app.use("/slice1", slice1Router);
 
 app.use((req, res) => {
   res.status(404).render("not-found", { path: req.path });

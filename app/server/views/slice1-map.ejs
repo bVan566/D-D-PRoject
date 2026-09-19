@@ -1,0 +1,40 @@
+<%- include('partials/head', { title: 'Under the Slate — Map' }) %>
+<%- include('partials/nav', { campaignId: null, role: null, active: null }) %>
+
+<h1>District map</h1>
+<p class="subtitle">
+  Under the Slate — Slice 1. Map only; Fixer, site rooms, payout, and safehouse still run headless
+  (<code>node app/server/roguelike/headlessLoop.js</code>).
+</p>
+
+<div class="card">
+  <div class="hint">PC: <%= pc.archetype %> &middot; Rep <%= pc.rep %> &middot; at <%= pc.at_stamp %></div>
+</div>
+
+<div class="grid cols-2">
+  <% stamps.forEach(s => { %>
+    <div class="card campaign-list-item">
+      <div>
+        <h3><%= s.id %><% if (s.here) { %> <span class="badge">here</span><% } %></h3>
+        <div class="hint">
+          <%= s.kind %>
+          <% if (s.locked) { %> &middot; locked (<%= s.reason %>)<% } %>
+        </div>
+      </div>
+      <div class="btn-row">
+        <% if (s.here) { %>
+          <span class="hint">You are here.</span>
+        <% } else if (s.locked) { %>
+          <button class="btn secondary" disabled>Walk</button>
+        <% } else { %>
+          <form method="post" action="/slice1/map/walk" style="display:inline">
+            <input type="hidden" name="stamp_id" value="<%= s.id %>" />
+            <button class="btn" type="submit">Walk</button>
+          </form>
+        <% } %>
+      </div>
+    </div>
+  <% }) %>
+</div>
+
+<%- include('partials/foot') %>
