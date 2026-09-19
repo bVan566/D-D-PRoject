@@ -9,6 +9,7 @@
 
 <div class="card">
   <div class="hint">PC: <%= pc.archetype %> &middot; Rep <%= pc.rep %> &middot; at <%= pc.at_stamp %></div>
+  <% if (event) { %><div class="hint"><strong>Last:</strong> <%= event %></div><% } %>
 </div>
 
 <div class="grid cols-2">

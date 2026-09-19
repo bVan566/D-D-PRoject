@@ -17,8 +17,18 @@ const pc = newPC({
   locked_skills: lockedSkillsFor("Hacker"),
 });
 
+let lastEvent = null;
+
 function getPc() {
   return pc;
 }
 
-module.exports = { getPc };
+function getLastEvent() {
+  return lastEvent;
+}
+
+function setLastEvent(text) {
+  lastEvent = text;
+}
+
+module.exports = { getPc, getLastEvent, setLastEvent };
